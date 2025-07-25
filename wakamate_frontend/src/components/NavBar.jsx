@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -22,7 +21,7 @@ const Navbar = () => {
             <i className="fas fa-robot text-white text-xl"></i>
           </div>
           <Link to="/">
-          <span className="text-xl font-bold text-purple-600">WakaMate AI</span>
+            <span className="text-xl font-bold text-purple-600">WakaMate AI</span>
           </Link>
         </div>
 
@@ -38,7 +37,7 @@ const Navbar = () => {
             Testimonials
           </a>
           <Link to="/about" className="hover:text-purple-600 transition">
-          About Us
+            About Us
           </Link>
         </div>
 
@@ -50,9 +49,14 @@ const Navbar = () => {
           >
             <i className="fas fa-moon text-gray-600 dark:text-yellow-300"></i>
           </button>
-          <button className="hidden md:block btn-primary px-6 py-2 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition">
+          
+          {/* Fixed Desktop Get Started Button */}
+          <Link 
+            to="/register" 
+            className="hidden md:block btn-primary px-6 py-2 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition"
+          >
             Get Started
-          </button>
+          </Link>
           
           {/* Mobile Menu Button */}
           <button 
@@ -92,19 +96,22 @@ const Navbar = () => {
           >
             Testimonials
           </a>
-          <a 
-            href="#about-us" 
+          <Link 
+            to="/about"
             className="block py-3 px-2 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
             onClick={closeMobileMenu}
           >
             About Us
-          </a>
-          <button 
-            className="w-full mt-6 px-6 py-4 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition-all duration-200 text-lg shadow-lg"
+          </Link>
+          
+          {/* Fixed Mobile Get Started Button */}
+          <Link 
+            to="/register"
+            className="block w-full mt-6 px-6 py-4 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition-all duration-200 text-lg shadow-lg text-center"
             onClick={closeMobileMenu}
           >
             Get Started
-          </button>
+          </Link>
         </div>
       </div>
 

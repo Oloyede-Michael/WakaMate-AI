@@ -255,12 +255,12 @@ const TeamAboutPage = () => {
               <div className="relative">
                 <img 
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
-                  alt="Josepth Battney" 
+                  alt="Joseph Bassey " 
                   className="w-full h-64 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
                 <div className="absolute bottom-0 left-0 p-6">
-                  <h3 className="text-white text-xl font-bold">Josepth Battney</h3>
+                  <h3 className="text-white text-xl font-bold">Joseph Bassey</h3>
                   <p className="text-indigo-200">Designer</p>
                 </div>
               </div>
