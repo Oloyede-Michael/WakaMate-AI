@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { 
-  DollarSign, 
-  Package, 
-  Truck, 
-  TrendingUp, 
-  ShoppingCart, 
-  AlertTriangle, 
-  ArrowRight, 
+import React, { useState, useEffect } from 'react';
+import {
+  DollarSign,
+  Package,
+  Truck,
+  TrendingUp,
+  ShoppingCart,
+  AlertTriangle,
+  ArrowRight,
   Sparkles,
   Plus
 } from 'lucide-react';
 
 export default function Dashboard() {
+  const [user, setUser] = useState(null);
   const [sales, setSales] = useState([]);
   const [products, setProducts] = useState([
     { id: 1, name: 'Wireless Earbuds', stock: 3, minStock: 5 },
@@ -23,23 +24,31 @@ export default function Dashboard() {
   const [showSaleForm, setShowSaleForm] = useState(false);
   const [saleAmount, setSaleAmount] = useState('');
 
-  // Calculate stats
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error('Failed to parse user:', e);
+      }
+    }
+  }, []);
+
   const todaysSales = sales.reduce((sum, sale) => sum + sale.amount, 0);
   const totalProducts = products.length;
   const lowStockItems = products.filter(p => p.stock <= p.minStock);
   const pendingDeliveries = deliveries.filter(d => d.status === 'pending').length;
-  const totalRevenue = 32000; // Static for demo, would be calculated from all sales
+  const totalRevenue = 32000;
 
   const handleRecordSale = () => {
     if (!saleAmount || parseFloat(saleAmount) <= 0) return;
-    
     const newSale = {
       id: Date.now(),
       amount: parseFloat(saleAmount),
       date: new Date().toISOString(),
       time: new Date().toLocaleTimeString()
     };
-    
     setSales(prev => [...prev, newSale]);
     setSaleAmount('');
     setShowSaleForm(false);
@@ -64,17 +73,16 @@ export default function Dashboard() {
     }
   };
 
-  const formatCurrency = (amount) => {
-    return `₦${amount.toLocaleString()}`;
-  };
+  const formatCurrency = (amount) => `₦${amount.toLocaleString()}`;
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
+
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-            👋 Good Morning, Hustler!
+            👋 Good Morning{user?.firstName ? `, ${user.firstName}!` : ', Hustler!'}
           </h1>
           <p className="text-gray-600 text-lg">Let's make today profitable. Here's your business overview:</p>
         </div>

@@ -254,7 +254,7 @@ const TeamAboutPage = () => {
             <div className="team-card bg-white rounded-xl overflow-hidden shadow-md transition duration-500 ease-in-out">
               <div className="relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                  src="/images/joe.jpg" 
                   alt="Joseph Bassey " 
                   className="w-full h-64 object-cover"
                 />

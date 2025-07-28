@@ -2,6 +2,7 @@ const User = require("../model/User");
 const generateToken = require("../utils/generateToken");
 const sendVerificationEmail = require("../utils/sendVerificationEmail");
 const jwt = require("jsonwebtoken");
+
 //register logic
 exports.register = async (req, res) => {
     try {
@@ -95,4 +96,14 @@ exports.login = async (req, res) => {
     }
 };
 
-//logout
+
+// LOGOUT
+exports.logout = async (req, res) => {
+  try {
+    // For JWT-based auth, there's nothing to destroy on the server
+    res.status(200).json({ message: "Logout successful" });
+  } catch (err) {
+    console.error("Logout error:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
