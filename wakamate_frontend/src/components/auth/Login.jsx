@@ -17,21 +17,27 @@ export default function LoginPage() {
     }));
   };
 
+ 
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    if (!formData.email || !formData.password) {
-      alert('Please fill in all fields!');
-      return;
-    }
-    
-    alert('Login successful! (This is a demo)');
-    setFormData({
-      email: '',
-      password: '',
-      rememberMe: false
-    });
-  };
+  e.preventDefault();
+
+  if (!formData.email || !formData.password) {
+    alert('Please fill in all fields!');
+    return;
+  }
+
+  // Simulate login
+  alert('Login successful! (This is a demo)');
+  navigate('/dashboard'); // 🔁 Redirect after login
+
+  setFormData({
+    email: '',
+    password: '',
+    rememberMe: false
+  });
+};
+
 
   const FloatingInput = ({ 
     id, 
