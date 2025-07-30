@@ -267,12 +267,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const [userInfo] = useState(getUserInfo());
 
+  // Fixed: Updated paths to include /dashboard prefix
   const links = [
     { name: "Dashboard", path: "/dashboard", icon: <Home className="w-5 h-5 text-green-600" /> },
-    { name: "Delivery Assistant", path: "/delivery", icon: <Truck className="w-5 h-5 text-blue-600" /> },
-    { name: "Inventory Manager", path: "/inventory", icon: <Package className="w-5 h-5 text-purple-600" /> },
-    { name: "AI Assistant", path: "/ai-caption", icon: <Sparkles className="w-5 h-5 text-orange-600" /> },
-    { name: "Profit and Loss", path: "/profitNloss", icon: <TrendingUp className="w-5 h-5 text-green-600" /> },
+    { name: "Delivery Assistant", path: "/dashboard/delivery", icon: <Truck className="w-5 h-5 text-blue-600" /> },
+    { name: "Inventory Manager", path: "/dashboard/inventory", icon: <Package className="w-5 h-5 text-purple-600" /> },
+    { name: "AI Assistant", path: "/dashboard/ai-caption", icon: <Sparkles className="w-5 h-5 text-orange-600" /> },
+    { name: "Profit and Loss", path: "/dashboard/profitNloss", icon: <TrendingUp className="w-5 h-5 text-green-600" /> },
   ];
 
   const handleLogout = () => {
