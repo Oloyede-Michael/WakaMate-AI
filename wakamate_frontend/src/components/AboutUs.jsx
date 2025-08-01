@@ -128,7 +128,7 @@ const TeamAboutPage = () => {
                 <img 
                   src="/images/michael.jpg"
                   alt="Micheal Oloyede" 
-                  className="w-full h-64 object-cover"
+                  className="w-full h-64 object-fit"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
                 <div className="absolute bottom-0 left-0 p-6">
@@ -231,7 +231,7 @@ const TeamAboutPage = () => {
                 <img 
                   src="/images/dami.jpg"
                   alt="Emmanuel Damilola" 
-                  className="w-full h-64 object-cover"
+                  className="w-full h-64 object-fit"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
                 <div className="absolute bottom-0 left-0 p-6">

@@ -9,6 +9,7 @@ const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
+
 // Connect to MongoDB
 connectDB();
 
@@ -34,11 +35,17 @@ app.use(
   })
 );
 
+// Root route for base URL
+app.get("/", (req, res) => {
+  res.send("✅🚀 Welcome to Wakamate's backend API services.API services are running on this port for production");
+});
+
 // Routes
 app.use("/api/user", userRoutes);
 app.use("/api", productRoutes);
+
 // Server
 const PORT = process.env.PORT || 1050;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running ons http://localhost:${PORT}`);
 });
