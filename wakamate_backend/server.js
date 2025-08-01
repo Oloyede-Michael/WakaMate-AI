@@ -8,7 +8,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const userRoutes = require("./routes/userRoutes");
-
+const productRoutes = require("./routes/productRoutes");
 // Connect to MongoDB
 connectDB();
 
@@ -36,7 +36,7 @@ app.use(
 
 // Routes
 app.use("/api/user", userRoutes);
-
+app.use("/api", productRoutes);
 // Server
 const PORT = process.env.PORT || 1050;
 app.listen(PORT, () => {
