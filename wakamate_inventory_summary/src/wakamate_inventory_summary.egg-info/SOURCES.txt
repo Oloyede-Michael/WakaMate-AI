@@ -1,0 +1,10 @@
+pyproject.toml
+src/wakamate_inventory_summary/__init__.py
+src/wakamate_inventory_summary/register.py
+src/wakamate_inventory_summary/wakamate_inventory_summary_function.py
+src/wakamate_inventory_summary.egg-info/PKG-INFO
+src/wakamate_inventory_summary.egg-info/SOURCES.txt
+src/wakamate_inventory_summary.egg-info/dependency_links.txt
+src/wakamate_inventory_summary.egg-info/entry_points.txt
+src/wakamate_inventory_summary.egg-info/requires.txt
+src/wakamate_inventory_summary.egg-info/top_level.txt

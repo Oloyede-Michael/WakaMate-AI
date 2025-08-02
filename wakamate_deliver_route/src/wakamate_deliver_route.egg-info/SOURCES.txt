@@ -1,0 +1,10 @@
+pyproject.toml
+src/wakamate_deliver_route/__init__.py
+src/wakamate_deliver_route/register.py
+src/wakamate_deliver_route/wakamate_deliver_route_function.py
+src/wakamate_deliver_route.egg-info/PKG-INFO
+src/wakamate_deliver_route.egg-info/SOURCES.txt
+src/wakamate_deliver_route.egg-info/dependency_links.txt
+src/wakamate_deliver_route.egg-info/entry_points.txt
+src/wakamate_deliver_route.egg-info/requires.txt
+src/wakamate_deliver_route.egg-info/top_level.txt
