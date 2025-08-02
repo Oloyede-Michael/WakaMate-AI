@@ -1,11 +1,26 @@
 import { Sparkles, Truck, Package, TrendingUp, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export default function AIDashboard() {
+  // Simulate user data (in a real app, you'd get this from localStorage or an API)
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (e) {
+          console.error('Failed to parse user:', e);
+        }
+      }
+    }, []);
+
   return (
     <div className="p-6 bg-gray-50 min-h-screen text-gray-800">
       {/* Top Greeting */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Hi Wura 👋</h1>
+        <h1 className="text-2xl font-bold">Hi👋{user?.firstName ? `, ${user.firstName}!` : ', Hustler!'}</h1>
         <p className="text-sm text-gray-500">Welcome back! Here's your AI-powered dashboard summary.</p>
       </div>
 
