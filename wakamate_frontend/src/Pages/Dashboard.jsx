@@ -10,16 +10,12 @@ import {
   Sparkles,
   Plus
 } from 'lucide-react';
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [sales, setSales] = useState([]);
-  const [products, setProducts] = useState([
-    { id: 1, name: 'Wireless Earbuds', stock: 3, minStock: 5 },
-    { id: 2, name: 'Phone Case', stock: 15, minStock: 10 },
-    { id: 3, name: 'Bluetooth Speaker', stock: 8, minStock: 5 },
-    { id: 4, name: 'Power Bank', stock: 2, minStock: 8 }
-  ]);
+  const [products, setProducts] = useState([]);
   const [deliveries, setDeliveries] = useState([]);
   const [showSaleForm, setShowSaleForm] = useState(false);
   const [saleAmount, setSaleAmount] = useState('');
@@ -34,13 +30,13 @@ export default function Dashboard() {
       }
     }
   }, []);
-
+//Backend dev
   const todaysSales = sales.reduce((sum, sale) => sum + sale.amount, 0);
   const totalProducts = products.length;
   const lowStockItems = products.filter(p => p.stock <= p.minStock);
   const pendingDeliveries = deliveries.filter(d => d.status === 'pending').length;
   const totalRevenue = 32000;
-
+//Fix this part dani or raphael put the allocated data to it
   const handleRecordSale = () => {
     if (!saleAmount || parseFloat(saleAmount) <= 0) return;
     const newSale = {
@@ -152,66 +148,53 @@ export default function Dashboard() {
             <h2 className="text-xl font-semibold text-gray-900">Quick Actions</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Plan Route */}
-            <button
-              onClick={() => handleQuickAction('plan-route')}
-              className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-                  <Truck className="w-6 h-6 text-white" />
+            <Link to="delivery"  className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+                    <Truck className="w-6 h-6 text-white" />
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Plan Route</h3>
-              <p className="text-sm text-gray-600">Optimize your delivery route</p>
-            </button>
-
+                <h3 className="font-semibold text-gray-900 mb-1">Plan Route</h3>
+                <p className="text-sm text-gray-600">Optimize your delivery route</p>
+           </Link>
             {/* Add Stock */}
-            <button
-              onClick={() => handleQuickAction('add-stock')}
-              className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
-                  <Package className="w-6 h-6 text-white" />
+            <Link to="inventory" className="bg-white border border-gray-200 rounded-xl p-4  hover:shadow-md transition-all duration-200 cursor-pointer group text-left">
+              
+                <div className="flex items-center justify-between  mb-3">
+                  <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+                    <Package className="w-6 h-6 text-white" />
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Add Stock</h3>
-              <p className="text-sm text-gray-600">Update your inventory</p>
-            </button>
-
+                <h3 className="font-semibold text-gray-900 mb-1">Add Stock</h3>
+                <p className="text-sm text-gray-600">Update your inventory</p>
+              
+            </Link>
             {/* Generate Caption */}
-            <button
-              onClick={() => handleQuickAction('generate-caption')}
-              className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-white" />
+            <Link to="ai-caption"  className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center">
+                    <Sparkles className="w-6 h-6 text-white" />
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Generate Caption</h3>
-              <p className="text-sm text-gray-600">Create catchy posts</p>
-            </button>
-
+                <h3 className="font-semibold text-gray-900 mb-1">Generate Caption</h3>
+                <p className="text-sm text-gray-600">Create catchy posts</p>
+            </Link>
             {/* Record Sale */}
-            <button
-              onClick={() => handleQuickAction('record-sale')}
-              className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
-                  <DollarSign className="w-6 h-6 text-white" />
+            <Link to="profitNloss"  className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                    <DollarSign className="w-6 h-6 text-white" />
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Record Sale</h3>
-              <p className="text-sm text-gray-600">Log your latest sale</p>
-            </button>
+                <h3 className="font-semibold text-gray-900 mb-1">Record Sale</h3>
+                <p className="text-sm text-gray-600">Log your latest sale</p>
+            </Link>
           </div>
         </div>
 
@@ -287,14 +270,14 @@ export default function Dashboard() {
                   <p className="text-gray-500">All products are well stocked!</p>
                 </div>
               )}
-
+              <Link to="./inventory">
               <button
-                onClick={() => handleQuickAction('add-stock')}
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 rounded-lg transition-colors group"
+                className="w-full mt-16 flex items-center justify-between p-4 text-left hover:bg-gray-50 rounded-lg transition-colors group"
               >
-                <span className="font-medium text-gray-900">Manage Inventory</span>
+                <span className="font-medium  text-gray-900">Manage Inventory</span>
                 <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
               </button>
+              </Link>
             </div>
           </div>
         </div>

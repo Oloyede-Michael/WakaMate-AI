@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send, MapPin, DollarSign, CheckCircle, Plus, Calendar, Trash2, Phone, Clock, Navigation } from 'lucide-react';
 
 export default function DeliveryAss() {
   const [showAddForm, setShowAddForm] = useState(false);
-  const [deliveries, setDeliveries] = useState([
-    {
-      id: 1,
-      customerName: 'Chioma Okafor',
-      phone: '08099887766',
-      address: 'No 23, Allen Avenue, Ikeja',
-      cost: 600,
-      date: '2024-12-20',
-      priority: 'medium',
-      notes: 'First floor apartment, blue gate',
-      status: 'completed'
-    }
-  ]);
+
+  // ✅ Load from localStorage on first render
+  const [deliveries, setDeliveries] = useState(() => {
+    const saved = localStorage.getItem("deliveries");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // ✅ Save to localStorage whenever deliveries change
+  useEffect(() => {
+    localStorage.setItem("deliveries", JSON.stringify(deliveries));
+  }, [deliveries]);
 
   const [formData, setFormData] = useState({
     customerName: '',
@@ -126,11 +124,7 @@ export default function DeliveryAss() {
           </div>
         </div>
 
-        {/* Cancel Button */}
-        <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
-          <Plus className="w-4 h-4" />
-          Cancel
-        </button>
+       
 
         {/* Add New Delivery Section */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">

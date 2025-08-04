@@ -1,5 +1,14 @@
-import React, { useState } from 'react';
-import { Package, AlertTriangle, DollarSign, Filter, Search, Plus, Edit3, Trash2, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { 
+  Package, 
+  AlertTriangle, 
+  DollarSign, 
+  Filter, 
+  Search, 
+  Plus, 
+  Edit3, 
+  Trash2 
+} from 'lucide-react';
 
 export default function InventoryManager() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -7,60 +16,18 @@ export default function InventoryManager() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
 
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: 'African Print Dress',
-      category: 'Clothing',
-      currentStock: 15,
-      minimumStock: 5,
-      costPrice: 6000,
-      sellingPrice: 8500,
-      supplier: 'Mama Kemi - Balogun Market',
-      description: 'Beautiful Ankara dress, sizes S-XL available',
-      profitMargin: 70.0
-    },
-    {
-      id: 2,
-      name: 'Wireless Earbuds',
-      category: 'Electronics',
-      currentStock: 3,
-      minimumStock: 5,
-      costPrice: 8000,
-      sellingPrice: 12000,
-      supplier: 'Alaba Electronics',
-      description: 'High quality bluetooth earbuds with charging case',
-      profitMargin: 50.0
-    },
-    {
-      id: 3,
-      name: 'Shea Butter Cream',
-      category: 'Cosmetics',
-      currentStock: 25,
-      minimumStock: 10,
-      costPrice: 2000,
-      sellingPrice: 3000,
-      supplier: 'Northern Naturals',
-      description: '100% natural shea butter moisturizer, 100ml',
-      profitMargin: 100.0
-    },
-    {
-      id: 4,
-      name: 'Leather Handbag',
-      category: 'Bags',
-      currentStock: 8,
-      minimumStock: 3,
-      costPrice: 12000,
-      sellingPrice: 18000,
-      supplier: 'Kano Leather Works',
-      description: 'Genuine leather handbag, brown and black available',
-      profitMargin: 50.0
+  const [products, setProducts] = useState(() => {
+    try {
+      const saved = localStorage.getItem('inventory_products');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
     }
-  ]);
+  });
 
   const [formData, setFormData] = useState({
     name: '',
-    category: 'Other',
+    category: 'Others',
     currentStock: '',
     minimumStock: '',
     costPrice: '',
@@ -69,14 +36,25 @@ export default function InventoryManager() {
     description: ''
   });
 
-  const categories = ['All Categories', ...new Set(products.map(p => p.category)), 'Other'];
+  // Persist products whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem('inventory_products', JSON.stringify(products));
+    } catch (e) {
+      console.warn('Failed to persist products', e);
+    }
+  }, [products]);
+
+  const categories = ['All Categories', 'Clothing', 'Electronics', 'Cosmetics', 'Bags', 'Other'];  
   const lowStockItems = products.filter(p => p.currentStock <= p.minimumStock).length;
   const totalValue = products.reduce((sum, p) => sum + (p.currentStock * p.sellingPrice), 0);
 
   const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.supplier.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All Categories' || product.category === selectedCategory;
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.supplier.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === 'All Categories' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -88,16 +66,13 @@ export default function InventoryManager() {
     }));
   };
 
-const calculateProfitMargin = (cost, selling) => {
-  const costPrice = parseFloat(cost);
-  const sellingPrice = parseFloat(selling);
-
-  if (isNaN(costPrice) || isNaN(sellingPrice) || costPrice === 0) return 0;
-
-  const margin = ((sellingPrice - costPrice) / costPrice) * 100;
-  return margin;
-};
-
+  const calculateProfitMargin = (cost, selling) => {
+    const costPrice = parseFloat(cost);
+    const sellingPrice = parseFloat(selling);
+    if (isNaN(costPrice) || isNaN(sellingPrice) || costPrice === 0) return 0;
+    const margin = ((sellingPrice - costPrice) / costPrice) * 100;
+    return margin;
+  };
 
   const handleAddProduct = () => {
     if (!formData.name || !formData.costPrice || !formData.sellingPrice) return;
@@ -113,7 +88,6 @@ const calculateProfitMargin = (cost, selling) => {
       supplier: formData.supplier || 'Unknown Supplier',
       description: formData.description || 'No description provided',
       profitMargin: Number(calculateProfitMargin(formData.costPrice, formData.sellingPrice).toFixed(2))
-
     };
 
     setProducts(prev => [...prev, newProduct]);
@@ -138,23 +112,26 @@ const calculateProfitMargin = (cost, selling) => {
   const handleUpdateProduct = () => {
     if (!formData.name || !formData.costPrice || !formData.sellingPrice) return;
 
-    setProducts(prev => prev.map(product => 
-      product.id === editingProduct 
-        ? {
-            ...product,
-            name: formData.name,
-            category: formData.category,
-            currentStock: parseInt(formData.currentStock) || 0,
-            minimumStock: parseInt(formData.minimumStock) || 5,
-            costPrice: parseInt(formData.costPrice),
-            sellingPrice: parseInt(formData.sellingPrice),
-            supplier: formData.supplier || 'Unknown Supplier',
-            description: formData.description || 'No description provided',
-            profitMargin: Number(calculateProfitMargin(formData.costPrice, formData.sellingPrice).toFixed(2))
-
-          }
-        : product
-    ));
+    setProducts(prev =>
+      prev.map(product =>
+        product.id === editingProduct
+          ? {
+              ...product,
+              name: formData.name,
+              category: formData.category,
+              currentStock: parseInt(formData.currentStock) || 0,
+              minimumStock: parseInt(formData.minimumStock) || 5,
+              costPrice: parseInt(formData.costPrice),
+              sellingPrice: parseInt(formData.sellingPrice),
+              supplier: formData.supplier || 'Unknown Supplier',
+              description: formData.description || 'No description provided',
+              profitMargin: Number(
+                calculateProfitMargin(formData.costPrice, formData.sellingPrice).toFixed(2)
+              )
+            }
+          : product
+      )
+    );
     resetForm();
   };
 
@@ -252,8 +229,8 @@ const calculateProfitMargin = (cost, selling) => {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-colors"
             />
           </div>
-          
-          <div className="flex gap-3">
+
+          <div className="flex  gap-3">
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
@@ -263,26 +240,21 @@ const calculateProfitMargin = (cost, selling) => {
                 <option key={category} value={category}>{category}</option>
               ))}
             </select>
-            
-            <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
+
+            <button
+              onClick={() => setShowAddForm(prev => !prev)}
+              className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+            >
               <Plus className="w-4 h-4" />
-              Cancel
+              {showAddForm ? 'Close Form' : 'Add New Product'}
             </button>
           </div>
         </div>
 
-        {/* Add New Product Form */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-          <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="flex items-center gap-2 text-gray-900 font-medium mb-4 hover:text-purple-600 transition-colors"
-          >
-            <Plus className="w-5 h-5" />
-            Add New Product
-          </button>
-
-          {showAddForm && (
-            <div className="space-y-6 border-t border-gray-100 pt-6">
+        {/* Add / Edit Product Form */}
+        {showAddForm && (
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -418,8 +390,8 @@ const calculateProfitMargin = (cost, selling) => {
                 </button>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Products List */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
@@ -471,7 +443,9 @@ const calculateProfitMargin = (cost, selling) => {
 
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Selling Price:</span>
-                      <span className="font-semibold text-green-600">₦{product.sellingPrice.toLocaleString()}</span>
+                      <span className="font-semibold text-green-600">
+                        ₦{product.sellingPrice.toLocaleString()}
+                      </span>
                     </div>
 
                     <div className="flex items-center justify-between">
