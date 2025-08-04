@@ -1,0 +1,2 @@
+[aiq.components]
+wakamate_inventory_summary = wakamate_inventory_summary.register

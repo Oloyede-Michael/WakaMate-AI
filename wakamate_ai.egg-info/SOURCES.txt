@@ -1,0 +1,8 @@
+README.md
+pyproject.toml
+wakamate_ai.egg-info/PKG-INFO
+wakamate_ai.egg-info/SOURCES.txt
+wakamate_ai.egg-info/dependency_links.txt
+wakamate_ai.egg-info/requires.txt
+wakamate_ai.egg-info/top_level.txt
+wakamate_frontend/node_modules/flatted/python/flatted.py

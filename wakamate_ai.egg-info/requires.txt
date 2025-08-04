@@ -1,0 +1,9 @@
+aiqtoolkit>=1.1.0
+fastapi
+uvicorn[standard]
+
+[dev]
+pytest
+black
+isort
+flake8
