@@ -21,22 +21,22 @@ const Navbar = () => {
             <i className="fas fa-robot text-white text-xl"></i>
           </div>
           <Link to="/">
-            <span className="text-xl font-bold text-purple-600">WakaMate AI</span>
+            <span className="text-xl font-bold text-green-500">WakaMate AI</span>
           </Link>
         </div>
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-8 items-center">
-          <a href="#features" className="hover:text-purple-600 transition">
+          <a href="#features" className="hover:text-green-500 transition">
             Features
           </a>
-          <a href="#how-it-works" className="hover:text-purple-600 transition">
+          <a href="#how-it-works" className="hover:text-green-500 transition">
             How It Works
           </a>
-          <a href="#testimonials" className="hover:text-purple-600 transition">
+          <a href="#testimonials" className="hover:text-green-500 transition">
             Testimonials
           </a>
-          <Link to="/about" className="hover:text-purple-600 transition">
+          <Link to="/about" className="hover:text-green-500 transition">
             About Us
           </Link>
         </div>
@@ -53,17 +53,17 @@ const Navbar = () => {
           {/* Fixed Desktop Get Started Button */}
           <Link 
             to="/register" 
-            className="hidden md:block btn-primary px-6 py-2 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition"
+            className="hidden md:block btn-primary px-6 py-2 rounded-full bg-green-500 text-white font-medium hover:bg-green-600 transition"
           >
             Get Started
           </Link>
           
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden p-3 rounded-xl hover:bg-purple-50 transition-all duration-200 border border-gray-200"
+            className="md:hidden p-3 rounded-xl hover:bg-green-50 transition-all duration-200 border border-gray-200"
             onClick={toggleMobileMenu}
           >
-            <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-lg text-purple-600`}></i>
+            <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-lg text-green-500`}></i>
           </button>
         </div>
       </div>
@@ -77,28 +77,28 @@ const Navbar = () => {
         <div className="px-6 py-6 space-y-6">
           <a 
             href="#features" 
-            className="block py-3 px-2 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
+            className="block py-3 px-2 hover:text-green-500 hover:bg-green-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
             onClick={closeMobileMenu}
           >
             Features
           </a>
           <a 
             href="#how-it-works" 
-            className="block py-3 px-2 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
+            className="block py-3 px-2 hover:text-green-500 hover:bg-green-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
             onClick={closeMobileMenu}
           >
             How It Works
           </a>
           <a 
             href="#testimonials" 
-            className="block py-3 px-2 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
+            className="block py-3 px-2 hover:text-green-500 hover:bg-green-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
             onClick={closeMobileMenu}
           >
             Testimonials
           </a>
           <Link 
             to="/about"
-            className="block py-3 px-2 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
+            className="block py-3 px-2 hover:text-green-500 hover:bg-green-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
             onClick={closeMobileMenu}
           >
             About Us
@@ -107,7 +107,7 @@ const Navbar = () => {
           {/* Fixed Mobile Get Started Button */}
           <Link 
             to="/register"
-            className="block w-full mt-6 px-6 py-4 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition-all duration-200 text-lg shadow-lg text-center"
+            className="block w-full mt-6 px-6 py-4 rounded-full bg-green-500 text-white font-medium hover:bg-green-600 transition-all duration-200 text-lg shadow-lg text-center"
             onClick={closeMobileMenu}
           >
             Get Started

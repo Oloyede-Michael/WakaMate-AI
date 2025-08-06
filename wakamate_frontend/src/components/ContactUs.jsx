@@ -20,7 +20,7 @@ const ContactSection = () => {
                 <input 
                   type="text" 
                   id="name" 
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent dark:bg-gray-700 dark:border-gray-600"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent dark:bg-neutral-500 dark:border-neutral-600"
                 />
               </div>
               <div>
@@ -28,7 +28,7 @@ const ContactSection = () => {
                 <input 
                   type="email" 
                   id="email" 
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent dark:bg-gray-700 dark:border-gray-600"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent dark:bg-neutral-500  dark:border-neutral-600"
                 />
               </div>
               <div>
@@ -36,12 +36,12 @@ const ContactSection = () => {
                 <textarea 
                   id="message" 
                   rows={4} 
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent dark:bg-gray-700 dark:border-gray-600"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent dark:bg-neutral-500  dark:border-neutral-600"
                 ></textarea>
               </div>
               <button 
                 type="submit" 
-                className="btn-primary px-6 py-3 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition"
+                className="btn-primary px-6 py-3 rounded-full bg-green-500 text-white font-medium hover:bg-green-600 transition"
               >
                 Send Message
               </button>

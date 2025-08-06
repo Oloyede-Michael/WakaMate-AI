@@ -6,13 +6,13 @@ const HeroSection = () => {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            <span className="text-primary text-purple-600">AI-Powered</span> Business Assistant for Nigerian Vendors
+            <span className="text-primary text-green-500">AI-Powered</span> Business Assistant for Nigerian Vendors
           </h1>
           <p className="text-secondary text-lg text-gray-600 mb-8 dark:text-gray-300">
             WakaMate AI helps small vendors in Nigeria plan smarter delivery routes, manage inventory, create engaging captions, and track finances — all in one easy-to-use app.
           </p>
           <div className="flex flex-wrap gap-4">
-            <button className="btn-primary px-8 py-3 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition">
+            <button className="btn-primary px-8 py-3 rounded-full bg-green-500 text-white font-medium hover:bg-green-600 transition">
               Download Now
             </button>
             <button className="btn-secondary px-8 py-3 rounded-full bg-white text-gray-800 font-medium border border-gray-300 hover:bg-gray-700 transition dark:bg-gray-800 dark:text-white dark:border-gray-700">
@@ -47,8 +47,8 @@ const HeroSection = () => {
               className="w-full max-w-md mx-auto"
             />
           </div>
-          <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-purple-100 rounded-full -z-10 dark:bg-purple-900/30"></div>
-          <div className="absolute -top-8 -right-8 w-24 h-24 bg-yellow-100 rounded-full -z-10 dark:bg-yellow-900/30"></div>
+          <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-green-100 rounded-full -z-10 dark:bg-green-800/30"></div>
+          <div className="absolute -top-8 -right-8 w-24 h-24 bg-purple-100 rounded-full -z-10 dark:bg-purple-900/30"></div>
         </div>
       </div>
     </section>

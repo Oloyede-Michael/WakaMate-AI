@@ -158,8 +158,8 @@ export default function EmailVerify() {
           {/* Left Branding */}
           <div className="hidden lg:flex flex-col flex-1 max-w-md">
             <div className="mb-6">
-              <span className="font-extrabold text-3xl text-purple-600 flex items-center gap-3">
-                <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+              <span className="font-extrabold text-3xl text-green-500 flex items-center gap-3">
+                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
                   <i className="fas fa-brain text-white text-sm"></i>
                 </div>
                 WAKAMATE AI
@@ -176,15 +176,15 @@ export default function EmailVerify() {
             <div className="bg-white rounded-2xl shadow-xl p-8 w-full">
               <div className="text-center mb-6">
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <i className="fas fa-envelope-open-text text-xl text-purple-600"></i>
+                  <i className="fas fa-envelope-open-text text-xl text-green-500"></i>
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900 mb-1">
-                  Confirm Email Change
+                  Confirm Email Verification
                 </h1>
                 <p className="text-gray-600 text-sm">
                   To verify new email, please enter the six-digit code we sent to
                 </p>
-                <p className="text-purple-600 font-semibold text-sm mt-1">{email}</p>
+                <p className="text-green-500 font-semibold text-sm mt-1">{email}</p>
               </div>
 
               {/* Input Form */}
@@ -224,7 +224,7 @@ export default function EmailVerify() {
                   className={`w-full py-3 rounded-full font-semibold text-base transition-all duration-200 ${
                     loading || code.join('').length !== 6
                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-purple-600 text-white hover:bg-purple-700 hover:shadow-lg transform hover:-translate-y-0.5"
+                      : "bg-green-500 text-white hover:bg-green-600 hover:shadow-lg transform hover:-translate-y-0.5"
                   }`}
                 >
                   {loading ? (

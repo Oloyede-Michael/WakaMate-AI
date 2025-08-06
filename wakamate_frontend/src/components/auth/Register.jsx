@@ -11,7 +11,7 @@ const FloatingInput = ({
   onChange,
   required,
   icon,
-  iconColor = "text-purple-600",
+  iconColor = "text-gray-500",
   isPassword = false,
 }) => {
   const [show, setShow] = useState(false);
@@ -26,12 +26,12 @@ const FloatingInput = ({
         value={value}
         onChange={onChange}
         required={required}
-        className="w-full px-3 py-3 pl-10 border border-gray-300 rounded-md focus:border-purple-600 focus:outline-none transition-colors duration-300 peer placeholder-transparent bg-white text-sm"
+        className="w-full px-3 py-3 pl-10 border border-gray-300 rounded-md focus:border-green-500 focus:outline-none transition-colors duration-300 peer placeholder-transparent bg-white text-sm"
         placeholder={label}
       />
       <label
         htmlFor={id}
-        className="absolute left-10 -top-2.5 bg-white px-1 text-gray-500 transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-purple-600"
+        className="absolute left-10 -top-2.5 bg-white px-1 text-gray-500 transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-green-500"
       >
         {label}
       </label>
@@ -43,7 +43,7 @@ const FloatingInput = ({
       {isPassword && (
         <button
           type="button"
-          className="absolute right-3 top-3 text-gray-400 hover:text-purple-600 focus:outline-none"
+          className="absolute right-3 top-3 text-gray-400 hover:text-gray-500 focus:outline-none"
           onClick={() => setShow(!show)}
         >
           <i className={`fas ${show ? "fa-eye-slash" : "fa-eye"}`}></i>
@@ -120,8 +120,8 @@ export default function Register() {
         <div className="flex w-full max-w-7xl mx-auto items-center justify-between gap-12">
           <div className="hidden lg:flex flex-col flex-1 max-w-md">
             <div className="mb-6">
-              <span className="font-extrabold text-3xl text-purple-600 flex items-center gap-3">
-                <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+              <span className="font-extrabold text-3xl text-green-500 flex items-center gap-3">
+                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
                   <i className="fas fa-brain text-white text-sm"></i>
                 </div>
                 WAKAMATE AI
@@ -140,7 +140,7 @@ export default function Register() {
               </h1>
 
               <div className="mt-2 mb-8">
-                <span className="font-semibold text-purple-600 text-base block">Sign Up</span>
+                <span className="font-semibold text-green-500 text-base block">Sign Up</span>
                 <span className="text-gray-600 text-sm">
                   Enter your details to create an account
                 </span>
@@ -205,7 +205,7 @@ export default function Register() {
                   isPassword
                 />
 
-                <div className="text-sm text-purple-700 mt-2">
+                <div className="text-sm text-green-600 mt-2">
                   * Use uppercase, lowercase, numbers & special characters
                 </div>
 
@@ -220,8 +220,8 @@ export default function Register() {
                   disabled={loading}
                   className={`w-full mt-6 py-3 rounded-full font-semibold text-base transition-all duration-200 ${
                     loading
-                      ? "bg-purple-300 text-white cursor-not-allowed"
-                      : "bg-purple-600 text-white hover:bg-purple-700 hover:shadow-lg transform hover:-translate-y-0.5"
+                      ? "bg-purple-500 text-white cursor-not-allowed"
+                      : "bg-green-500 text-white hover:bg-green-600 hover:shadow-lg transform hover:-translate-y-0.5"
                   }`}
                 >
                   {loading ? (
@@ -238,7 +238,7 @@ export default function Register() {
                   Already have an account?{' '}
                   <Link
                     to="/login"
-                    className="text-purple-700 underline underline-offset-2 hover:text-purple-500 font-medium"
+                    className="text-green-700 underline underline-offset-2 hover:text-green-500 font-medium"
                   >
                     Login
                   </Link>

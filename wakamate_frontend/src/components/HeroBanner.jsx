@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroBanner = () => {
   return (
-    <section className="py-20 px-6 bg-purple-100 dark:bg-purple-900/30">
+    <section className="py-20 px-6 bg-green-100 dark:bg-green-900/30">
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-800 dark:text-white">
@@ -14,7 +14,7 @@ const HeroBanner = () => {
         </div>
 
         <div className="flex justify-center mb-12">
-          <button className="px-8 py-4 rounded-full bg-purple-600 text-white font-medium text-lg hover:bg-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+          <button className="px-8 py-4 rounded-full bg-green-500 text-white font-medium text-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
             Check it Out
           </button>
         </div>

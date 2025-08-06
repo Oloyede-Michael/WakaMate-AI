@@ -132,7 +132,7 @@ const Feature = () => {
   return (
     <div className="w-full px-6 md:px-12 py-16 bg-white overflow-hidden">
       <h1 className="text-4xl md:text-5xl font-black mb-16 text-center text-black">
-        Benefits of <span className="text-purple-600">WakaMate AI</span>
+        Benefits of <span className="text-green-500">WakaMate AI</span>
       </h1>
       {renderRow(featuresRow1, "left")}
       {renderRow(featuresRow2, "right")}

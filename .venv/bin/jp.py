@@ -1,4 +1,4 @@
-#!/home/nagini/WakaMate-AI/.venv/bin/python3
+#!/root/WakaMate-AI/.venv/bin/python3
 
 import sys
 import json

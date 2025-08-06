@@ -26,11 +26,11 @@ const FloatingInput = ({
         onChange={onChange}
         required={required}
         placeholder=" "
-        className="peer w-full px-4 pt-5 pb-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+        className="peer w-full px-4 pt-5 pb-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
       />
       <label
         htmlFor={id}
-        className="absolute left-4 top-2 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-purple-600"
+        className="absolute left-4 top-2 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-green-600"
       >
         <i className={`${icon} mr-2`}></i>
         {label}
@@ -41,7 +41,7 @@ const FloatingInput = ({
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600"
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-500"
         >
           <i className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
         </button>
@@ -122,8 +122,8 @@ export default function Login() {
           {/* Left Side – Branding */}
           <div className="hidden lg:flex flex-col flex-1 max-w-md">
             <div className="mb-6">
-              <span className="font-extrabold text-3xl text-purple-600 flex items-center gap-3">
-                <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+              <span className="font-extrabold text-3xl text-green-500 flex items-center gap-3">
+                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
                   <i className="fas fa-brain text-white text-sm"></i>
                 </div>
                 WAKAMATE AI
@@ -144,7 +144,7 @@ export default function Login() {
               </h1>
 
               <div className="mt-2 mb-8">
-                <span className="font-semibold text-purple-600 text-base block">Sign In</span>
+                <span className="font-semibold text-green-500 text-base block">Sign In</span>
                 <span className="text-gray-600 text-sm">
                   Enter your credentials to access your account
                 </span>
@@ -187,7 +187,7 @@ export default function Login() {
 
                   <Link 
                     to="/forgot-password" 
-                    className="text-sm font-medium text-purple-600 hover:text-purple-500 underline underline-offset-2"
+                    className="text-sm font-medium text-green-500 hover:text-green-400 underline underline-offset-2"
                   >
                     Forgot password?
                   </Link>
@@ -204,8 +204,8 @@ export default function Login() {
                   disabled={loading}
                   className={`w-full mt-6 py-3 rounded-full font-semibold text-base transition-all duration-200 cursor-pointer ${
                     loading
-                      ? "bg-purple-300 text-white cursor-not-allowed"
-                      : "bg-purple-600 text-white hover:bg-purple-700 hover:shadow-lg transform hover:-translate-y-0.5"
+                      ? "bg-green-300 text-white cursor-not-allowed"
+                      : "bg-green-500 text-white hover:bg-green-600 hover:shadow-lg transform hover:-translate-y-0.5"
                   }`}
                 >
                   {loading ? (
@@ -222,7 +222,7 @@ export default function Login() {
                   Don't have an account?{" "}
                   <Link
                     to="/register"
-                    className="text-purple-700 underline underline-offset-2 hover:text-purple-500 font-medium"
+                    className="text-green-700 underline underline-offset-2 hover:text-green-500 font-medium"
                   >
                     Register here
                   </Link>

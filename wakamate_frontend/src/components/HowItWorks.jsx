@@ -47,7 +47,7 @@ const HowItWorks = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <button className="btn-primary px-8 py-3 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition">
+          <button className="btn-primary px-8 py-3 rounded-full bg-green-500 text-white font-medium hover:bg-green-600 transition">
             Watch Full Tutorial <i className="fas fa-play-circle ml-2"></i>
           </button>
         </div>

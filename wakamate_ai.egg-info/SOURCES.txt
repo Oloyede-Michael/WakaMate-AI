@@ -5,4 +5,9 @@ wakamate_ai.egg-info/SOURCES.txt
 wakamate_ai.egg-info/dependency_links.txt
 wakamate_ai.egg-info/requires.txt
 wakamate_ai.egg-info/top_level.txt
-wakamate_frontend/node_modules/flatted/python/flatted.py
+wakamate_deliver_route/src/wakamate_deliver_route/__init__.py
+wakamate_deliver_route/src/wakamate_deliver_route/register.py
+wakamate_deliver_route/src/wakamate_deliver_route/wakamate_deliver_route_function.py
+wakamate_inventory_summary/src/wakamate_inventory_summary/__init__.py
+wakamate_inventory_summary/src/wakamate_inventory_summary/register.py
+wakamate_inventory_summary/src/wakamate_inventory_summary/wakamate_inventory_summary_function.py

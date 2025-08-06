@@ -40,7 +40,7 @@ const FAQ = () => {
     <div className="bg-white py-20 px-4 sm:px-6 lg:px-12">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-4xl sm:text-5xl font-bold mb-10 text-black font-black tracking-tight">
-          Frequently Asked <span className="text-purple-600">Questions</span>
+          Frequently Asked <span className="text-green-500">Questions</span>
         </h2>
         <div className="divide-y divide-violet-200">
           {faqData.map((faq, index) => (
@@ -54,7 +54,7 @@ const FAQ = () => {
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full text-left flex justify-between items-center font-medium text-lg text-black focus:outline-none cursor-pointer hover:text-purple-600 transition-colors duration-200"
+                className="w-full text-left flex justify-between items-center font-medium text-lg text-black focus:outline-none cursor-pointer hover:text-green-500 transition-colors duration-200"
               >
                 {faq.question}
                 <motion.span

@@ -5,7 +5,7 @@ const TeamAboutPage = () => {
     <div className="font-sans antialiased text-gray-800">
       <style jsx>{`
         .gradient-bg {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, #225623ff 0%, #3c8250ff 100%);
         }
         .team-card:hover {
           transform: translateY(-10px);
@@ -139,10 +139,10 @@ const TeamAboutPage = () => {
               <div className="p-6">
                 <p className="text-gray-600 mb-4">Visionary leader with 3+years of experience in digital transformation and business strategy.</p>
                 <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fas fa-envelope"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
                 </div>
               </div>
             </div>
@@ -164,10 +164,10 @@ const TeamAboutPage = () => {
               <div className="p-6">
                 <p className="text-gray-600 mb-4">Tech wizard specializing in scalable architectures and emerging technologies.</p>
                 <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fas fa-envelope"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
                 </div>
               </div>
             </div>
@@ -189,10 +189,10 @@ const TeamAboutPage = () => {
               <div className="p-6">
                 <p className="text-gray-600 mb-4">Award-winning designer with a passion for creating memorable brand experiences.</p>
                 <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fas fa-envelope"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
                 </div>
               </div>
             </div>
@@ -217,10 +217,10 @@ const TeamAboutPage = () => {
               <div className="p-6">
                 <p className="text-gray-600 mb-4">Full-stack developer with expertise in JavaScript frameworks and cloud technologies.</p>
                 <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fas fa-envelope"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
                 </div>
               </div>
             </div>
@@ -242,10 +242,10 @@ const TeamAboutPage = () => {
               <div className="p-6">
                 <p className="text-gray-600 mb-4">Strategic marketing expert with a passion for building brand awareness and driving growth.</p>
                 <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-instagram"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fas fa-envelope"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-instagram"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
                 </div>
               </div>
             </div>
@@ -267,10 +267,10 @@ const TeamAboutPage = () => {
               <div className="p-6">
                 <p className="text-gray-600 mb-4">Infrastructure specialist focused on scalable cloud solutions and automation.</p>
                 <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-indigo-600 transition"><i className="fas fa-envelope"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
+                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
                 </div>
               </div>
             </div>

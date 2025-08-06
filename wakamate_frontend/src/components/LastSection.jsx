@@ -2,7 +2,7 @@ import React from 'react';
 
 const CTASection = () => {
   return (
-    <section className="py-20 px-6 bg-gradient-to-r from-purple-600 to-blue-600 text-white">
+    <section className="py-20 px-6 bg-gradient-to-r from-green-600 via-emerald-500 to-teal-400 text-white">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Business?</h2>
         <p className="text-xl mb-8 max-w-2xl mx-auto">

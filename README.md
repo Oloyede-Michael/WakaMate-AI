@@ -1,6 +1,6 @@
 # WakaMate AI
 
-WakaMate AI is an advanced, AI-powered delivery, logistics, and management platform designed specifically for small business owners. Our mission is to help you optimize delivery routes, manage logistics, and streamline operations—saving you time, reducing costs, and boosting your business growth.
+WakaMate AI is an advanced, AI-powered delivery, logistics, and management platform designed for small business owners. Our mission is to help you optimize delivery routes, manage logistics, and streamline operations—saving you time, reducing costs, and boosting your business growth.
 
 ---
 
@@ -16,6 +16,7 @@ WakaMate AI is an advanced, AI-powered delivery, logistics, and management platf
 - [Team](#team)
 - [FAQ](#faq)
 - [License](#license)
+- [Contributing](#contributing)
 
 ---
 
@@ -55,7 +56,7 @@ Founded in 2025 by a passionate team, WakaMate AI started with a vision to empow
 
 - **React**: Component-based UI library for building dynamic user experiences.
 - **Vite**: Lightning-fast build tool and development server for modern JavaScript projects.
-- **Tailwind CSS** (implied via class names): Utility-first CSS framework for rapid UI development.
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
 - **ESLint**: Linting tool for code quality and consistency.
 - **Framer Motion**: Animation library for React.
 - **React Router**: Declarative routing for React apps.
@@ -142,6 +143,12 @@ WakaMate-AI/
 │   │   └── App.jsx
 │   ├── README.md
 │   └── ...
+├── wakamate_deliver_route/   # Python delivery route microservice
+│   ├── configs/
+│   └── src/
+├── wakamate_inventory_summary/   # Python inventory summary microservice
+│   ├── configs/
+│   └── src/
 └── README.md            # Project documentation (you are here)
 ```
 
@@ -159,8 +166,18 @@ WakaMate-AI/
 
 Meet the minds behind WakaMate AI:
 
+- **Micheal Oloyede** – Team lead & Full stack Developer  
+  Visionary leader with 3+ years of experience in digital transformation and business strategy.
 - **Omilabu Wuraola** – Front-end Developer  
   Tech wizard specializing in scalable architectures and emerging technologies.
+- **Abibi Daniella** – Backend Developer  
+  Award-winning designer with a passion for creating memorable brand experiences.
+- **Eniaiyejuni Raphael** – AI/ML Engineer  
+  Full-stack developer with expertise in JavaScript frameworks and cloud technologies.
+- **Emmanuel Damilola** – Product Designer  
+  Product designer focused on user experience and visual storytelling.
+- **Joseph Bassey** – Designer  
+  Infrastructure specialist focused on scalable cloud solutions and automation.
 
 *(More team members can be added here as the project grows!)*
 
@@ -192,6 +209,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 We welcome contributions! Please fork the repo, create your feature branch, and submit a pull request.
 
----
-
-For further questions or support, please open an issue or contact the maintainer.
+For further questions or support, please open an issue or contact the
