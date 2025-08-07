@@ -46,6 +46,19 @@ from aiq.cli.register_workflow import register_function
 from aiq.data_models.component_ref import EmbedderRef, FunctionRef, LLMRef
 from aiq.data_models.function import FunctionBaseConfig
 from aiq.data_models.api_server import AIQChatRequest, AIQChatResponse
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with your frontend URL
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+    expose_headers=["*"]
+)
 
 logger = logging.getLogger(__name__)
 
@@ -78,36 +91,39 @@ class Location:
     
     def __post_init__(self):
         if self.latitude == 0.0 and self.longitude == 0.0:
-            self.geocode()
+            self.geocode()  # This calls the geocode method
         self._analyze_district()
     
+    # THIS METHOD IS MISSING - ADD IT:
     def geocode(self):
-        """Enhanced geocoding with district detection"""
-        max_retries = 3
-        retry_delay = 1.5
+        """Simplified geocoding with better error handling"""
+        if not self.address or len(self.address.strip()) < 3:
+            logger.warning(f"⚠️ Address too short: {self.address}")
+            return
+            
+        max_retries = 2
         
         for attempt in range(max_retries):
             try:
-                geolocator = Nominatim(user_agent="elite_delivery_optimizer_v2", timeout=12)
+                geolocator = Nominatim(user_agent="delivery_optimizer", timeout=8)
+                
+                # Try with Lagos context first
                 location = geolocator.geocode(f"{self.address}, Lagos, Nigeria")
+                
                 if location:
-                    self.latitude = location.latitude
-                    self.longitude = location.longitude
-                    logger.info(f"🎯 Locked onto {self.name}: {self.latitude:.4f}, {self.longitude:.4f}")
-                    return
-                else:
-                    # Fallback strategy
-                    location = geolocator.geocode(self.address)
-                    if location:
+                    # Verify coordinates are reasonable for Lagos area
+                    if 6.0 <= location.latitude <= 7.0 and 3.0 <= location.longitude <= 4.5:
                         self.latitude = location.latitude
                         self.longitude = location.longitude
-                        logger.info(f"📍 Located {self.name} via fallback: {self.latitude:.4f}, {self.longitude:.4f}")
+                        logger.info(f"🎯 Located {self.name}: {self.latitude:.4f}, {self.longitude:.4f}")
                         return
+                        
             except Exception as e:
-                logger.warning(f"⚠️ Geocoding attempt {attempt + 1} failed for {self.address}: {str(e)}")
+                logger.warning(f"⚠️ Geocoding attempt {attempt + 1} failed: {str(e)}")
                 if attempt < max_retries - 1:
-                    time.sleep(retry_delay)
-                    retry_delay *= 1.5
+                    time.sleep(1.0)
+        
+        logger.error(f"❌ Failed to geocode: {self.address}")
     
     def _analyze_district(self):
         """Analyze district characteristics for enhanced routing"""
@@ -1192,126 +1208,113 @@ async def delivery_route_optimizer_function(
     llm = await builder.get_llm(config.llm_name, wrapper_type=LLMFrameworkEnum.LANGCHAIN)
     
     # Enhanced system prompt with Lagos expertise
-    system_message = f"""You are an elite delivery route optimization specialist with deep expertise in Lagos, Nigeria logistics. 
+    system_message = """You are a Lagos delivery route optimization expert.
 
-Your capabilities include:
-- Advanced TSP optimization with traffic intelligence
-- Real-time Lagos traffic pattern analysis
-- Cost-effective route planning
-- Environmental impact assessment
-- Performance analytics and insights
+Your job is to help optimize delivery routes in Lagos, Nigeria using the available tools.
 
-Personality: {config.agent_personality}
-Focus: Provide actionable, data-driven route optimization with Lagos-specific intelligence
+When a user asks for route optimization:
+1. Use suggest_route_with_traffic with the provided addresses
+2. After getting the result, provide a clear Final Answer
 
-Always use suggest_route_with_traffic for comprehensive route optimization requests.
-Provide clear, professional responses with specific metrics and actionable advice."""
+IMPORTANT: Always end your response with "Final Answer: [your response]" 
+
+Available tools:
+- suggest_route_with_traffic: Use this for comprehensive route optimization
+- geocode_address: Use this to find coordinates for addresses
+- get_traffic_info: Use this for traffic information between locations
+
+When a user asks for route optimization:
+1. Use suggest_route_with_traffic with the provided addresses
+2. Provide clear, actionable advice
+3. Always format your response professionally
+
+Be direct and use tools appropriately. Don't overthink the response format."""
     
-    # Create advanced agent with enhanced prompt
-    prompt_template = ChatPromptTemplate.from_messages([
-        ("system", system_message),
-        MessagesPlaceholder(variable_name="chat_history", optional=True),
-        ("human", "{input}"),
-        ("ai", "I'll analyze your delivery optimization needs and provide expert recommendations."),
-        MessagesPlaceholder(variable_name="agent_scratchpad")
-    ])
     
-    # Use standard React agent but with enhanced capabilities
-    react_prompt = hub.pull("hwchase17/react")
-    react_prompt.template = system_message + "\n\n" + react_prompt.template
-    
-    agent = create_react_agent(llm=llm, tools=all_tools, prompt=react_prompt)
+    try:
+        react_prompt = hub.pull("hwchase17/react")
+        # Make the prompt more explicit about Final Answer
+        react_prompt.template = react_prompt.template.replace(
+            "Final Answer: the final answer to the original input question",
+            "Final Answer: Provide a complete response to the user's question. This should be the actual answer they're looking for, not just a summary."
+        )
+        
+        agent = create_react_agent(llm=llm, tools=all_tools, prompt=react_prompt)
+    except Exception as e:
+        logger.error(f"Error with react prompt: {e}")
+        # Fallback prompt that's very explicit
+        fallback_prompt = PromptTemplate.from_template("""
+    You are a Lagos delivery route optimization expert.
+
+    Answer the following questions as best you can. You have access to the following tools:
+
+    {tools}
+
+    Use the following format EXACTLY:
+
+    Question: the input question you must answer
+    Thought: you should always think about what to do
+    Action: the action to take, should be one of [{tool_names}]
+    Action Input: the input to the action
+    Observation: the result of the action
+    ... (this Thought/Action/Action Input/Observation can repeat N times)
+    Thought: I now know the final answer
+    Final Answer: Give the user the complete information they requested
+
+    Begin!
+
+    Question: {input}
+    Thought:{agent_scratchpad}""")
+        
+        agent = create_react_agent(llm=llm, tools=all_tools, prompt=fallback_prompt)
+
     agent_executor = AgentExecutor(
         agent=agent,
         tools=all_tools,
-        max_iterations=8,  # Increased for complex optimizations
+        max_iterations=3,  # Reduced from 8
         handle_parsing_errors=True,
         verbose=True,
         return_intermediate_steps=False,
-        max_execution_time=120,  # Extended timeout for complex routes
-        early_stopping_method="generate"
+        max_execution_time=60  # Reduced from 200
     )
     
     # Conversation history management
     conversation_history = []
     
-    async def _enhanced_response_fn(input_message: str) -> str:
-        """Process delivery optimization requests with advanced intelligence"""
-        try:
-            # Trim conversation history
-            if len(conversation_history) > config.max_history * 2:
-                conversation_history[:] = conversation_history[-config.max_history:]
-            
-            # Enhanced input processing
-            extracted_addresses = doc_processor.extract_addresses_with_intelligence(input_message)
-            
-            # Create context-aware enhanced input
-            if extracted_addresses:
-                high_confidence_addresses = [addr["address"] for addr in extracted_addresses if addr["confidence"] > 0.7]
+    async def _simple_response_fn(input_message: str) -> str:
+            """Simplified response function"""
+            try:
+                # Keep conversation history simple
+                if len(conversation_history) > 10:
+                    conversation_history[:] = conversation_history[-5:]
                 
-                if high_confidence_addresses:
-                    enhanced_input = f"""I need advanced route optimization for these Lagos delivery locations:
-{', '.join(high_confidence_addresses)}
+                # Don't over-process the input - let the agent handle it
+                result = await agent_executor.ainvoke({
+                    "input": input_message
+                })
+                
+                # Update conversation history
+                conversation_history.extend([
+                    HumanMessage(content=input_message),
+                    AIMessage(content=result["output"])
+                ])
+                
+                return result["output"]
+                
+            except Exception as e:
+                logger.error(f"Error: {str(e)}")
+                return f"I apologize, but I encountered an error processing your request: {str(e)}. Please try again with a simpler format."
 
-Original request: {input_message}
+# **Error Type:** {type(e).__name__}  
+# **Details:** {str(e)}
 
-Please use suggest_route_with_traffic to provide:
-1. Optimized route with traffic analysis
-2. Cost and efficiency metrics  
-3. Environmental impact assessment
-4. Performance insights and recommendations
-5. Lagos-specific traffic intelligence
+# **Recovery Options:**
+# 1. 🔄 **Retry:** Try your request again with simplified input
+# 2. 📍 **Address Format:** Ensure addresses include Lagos landmarks
+# 3. 🛠️ **Fallback:** Use basic optimization: "optimize route for [address1], [address2]"
+# 4. 💬 **Support:** Contact technical support if issue persists
 
-Focus on actionable insights for maximum delivery efficiency."""
-                else:
-                    enhanced_input = f"""Delivery optimization request with some address extraction challenges.
-
-Request: {input_message}
-Extracted addresses (lower confidence): {[addr['address'] for addr in extracted_addresses[:3]]}
-
-Please analyze and provide route optimization guidance. If addresses need clarification, ask for specific Lagos locations."""
-            else:
-                enhanced_input = f"""Lagos delivery route optimization consultation:
-
-{input_message}
-
-Please analyze the request and provide expert guidance. Use available tools to deliver comprehensive route optimization insights."""
-            
-            # Execute with conversation context
-            result = await agent_executor.ainvoke({
-                "input": enhanced_input,
-                "chat_history": conversation_history[-6:] if conversation_history else []
-            })
-            
-            # Update conversation history
-            conversation_history.extend([
-                HumanMessage(content=input_message),
-                AIMessage(content=result["output"])
-            ])
-            
-            # Add performance footer
-            performance_footer = f"""
-
----
-*🚀 Powered by Wakamate Advanced Route Intelligence *  
-*Processing time: ~{len(input_message) * 0.01:.1f}s | Confidence: 96%+ accuracy*"""
-            
-            return result["output"] + performance_footer
-            
-        except Exception as e:
-            logger.error(f"🚨 Enhanced delivery optimization error: {str(e)}")
-            error_response = f"""## 🚨 Optimization System Error
-
-**Error Type:** {type(e).__name__}  
-**Details:** {str(e)}
-
-**Recovery Options:**
-1. 🔄 **Retry:** Try your request again with simplified input
-2. 📍 **Address Format:** Ensure addresses include Lagos landmarks
-3. 🛠️ **Fallback:** Use basic optimization: "optimize route for [address1], [address2]"
-4. 💬 **Support:** Contact technical support if issue persists
-
-**System Status:** Attempting automatic recovery..."""
+# **System Status:** Attempting automatic recovery..."""
             
             # Attempt simple fallback
             try:
@@ -1324,7 +1327,7 @@ Please analyze the request and provide expert guidance. Use available tools to d
             return error_response
     
     try:
-        yield FunctionInfo.create(single_fn=_enhanced_response_fn)
+        yield FunctionInfo.create(single_fn=_simple_response_fn)
     except GeneratorExit:
         logger.info("🏁 Enhanced delivery route optimizer function exited gracefully")
     finally:

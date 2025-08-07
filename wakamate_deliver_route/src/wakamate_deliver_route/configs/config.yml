@@ -16,7 +16,7 @@ llms:
   nim_llm:
     _type: nim
     model_name: moonshotai/kimi-k2-instruct
-    temperature: 0.0
+    temperature: 0.7
     max_tokens: 2048
     api_key: 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
 
