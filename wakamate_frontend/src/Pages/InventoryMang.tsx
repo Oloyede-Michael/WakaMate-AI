@@ -7,58 +7,259 @@ import {
   Search, 
   Plus, 
   Edit3, 
-  Trash2 
+  Trash2,
+  Loader2 
 } from 'lucide-react';
+
+// API configuration
+const API_BASE_URL = 'http://localhost:1050/api';
+
+// Types
+interface Product {
+  _id: string;
+  name: string;
+  category: string;
+  costPrice: number;
+  sellingPrice: number;
+  stock: number;
+  unitsSold: number;
+  minStock: number;
+  sales: Array<{
+    quantity: number;
+    price: number;
+    amountMade: number;
+    date: string;
+  }>;
+  user: string;
+  createdAt: string;
+  updatedAt: string;
+  lowStock?: boolean;
+}
+
+interface FormData {
+  name: string;
+  category: string;
+  currentStock: string;
+  minimumStock: string;
+  costPrice: string;
+  sellingPrice: string;
+}
+
+// Get auth token from localStorage with multiple possible keys
+const getAuthToken = (): string | null => {
+  // Try different possible token keys that might be used
+  const possibleKeys = ['authToken', 'token', 'accessToken', 'jwt', 'userToken'];
+  
+  for (const key of possibleKeys) {
+    const token = localStorage.getItem(key);
+    if (token) {
+      console.log(`Found token with key: ${key}`);
+      return token;
+    }
+  }
+  
+  console.warn('No auth token found in localStorage');
+  return null;
+};
+
+// API service functions
+const apiService = {
+  async getAllProducts(): Promise<Product[]> {
+    const token = getAuthToken();
+    
+    if (!token) {
+      throw new Error('Authentication token not found. Please login again.');
+    }
+
+    const response = await fetch(`${API_BASE_URL}/products/getAll`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (response.status === 401) {
+      throw new Error('Authentication failed. Please login again.');
+    }
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `Failed to fetch products: ${response.status}`);
+    }
+    
+    return response.json();
+  },
+
+  async createProduct(productData: {
+    name: string;
+    category: string;
+    costPrice: number;
+    sellingPrice: number;
+    stock: number;
+    minStock: number;
+  }): Promise<{ message: string; product: Product }> {
+    const token = getAuthToken();
+    
+    if (!token) {
+      throw new Error('Authentication token not found. Please login again.');
+    }
+
+    const response = await fetch(`${API_BASE_URL}/products`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(productData),
+    });
+
+    if (response.status === 401) {
+      throw new Error('Authentication failed. Please login again.');
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `Failed to create product: ${response.status}`);
+    }
+
+    return response.json();
+  },
+
+  async restockProduct(productId: string, quantity: number, costPrice?: number): Promise<{ message: string; product: Product }> {
+    const token = getAuthToken();
+    
+    if (!token) {
+      throw new Error('Authentication token not found. Please login again.');
+    }
+
+    console.log('Restocking product:', { productId, quantity, costPrice });
+
+    const requestBody: { quantity: number; costPrice?: number } = { quantity };
+    if (costPrice !== undefined && costPrice > 0) {
+      requestBody.costPrice = costPrice;
+    }
+
+    const response = await fetch(`${API_BASE_URL}/products/${productId}/restock`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    console.log('Restock response status:', response.status);
+
+    if (response.status === 401) {
+      throw new Error('Authentication failed. Please login again.');
+    }
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Restock error response:', errorText);
+      
+      try {
+        const errorData = JSON.parse(errorText);
+        throw new Error(errorData.message || errorData.error || `Failed to restock product: ${response.status}`);
+      } catch {
+        throw new Error(`Failed to restock product: ${response.status} - ${errorText}`);
+      }
+    }
+
+    return response.json();
+  }
+};
 
 export default function InventoryManager() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
   const [showAddForm, setShowAddForm] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [editingProduct, setEditingProduct] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [restockingProduct, setRestockingProduct] = useState<string | null>(null);
+  const [restockQuantity, setRestockQuantity] = useState<{[key: string]: string}>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const [products, setProducts] = useState(() => {
-    try {
-      const saved = localStorage.getItem('inventory_products');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
-
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
-    category: 'Others',
+    category: 'Other',
     currentStock: '',
     minimumStock: '',
     costPrice: '',
-    sellingPrice: '',
-    supplier: '',
-    description: ''
+    sellingPrice: ''
   });
 
-  // Persist products whenever they change
+  // Load products on component mount
   useEffect(() => {
-    try {
-      localStorage.setItem('inventory_products', JSON.stringify(products));
-    } catch (e) {
-      console.warn('Failed to persist products', e);
-    }
-  }, [products]);
+    loadProducts();
+  }, []);
 
-  const categories = ['All Categories', 'Clothing', 'Electronics', 'Cosmetics', 'Bags', 'Other'];  
-  const lowStockItems = products.filter(p => p.currentStock <= p.minimumStock).length;
-  const totalValue = products.reduce((sum, p) => sum + (p.currentStock * p.sellingPrice), 0);
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Debug: Check what tokens are available
+      const allTokens: { key: string; token: string }[] = [];
+      const possibleKeys = ['authToken', 'token', 'accessToken', 'jwt', 'userToken'];
+      for (const key of possibleKeys) {
+        const token = localStorage.getItem(key);
+        if (token) {
+          allTokens.push({ key, token: token.substring(0, 20) + '...' });
+        }
+      }
+      console.log('Available tokens:', allTokens);
+      
+      const fetchedProducts = await apiService.getAllProducts();
+      setProducts(fetchedProducts);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load products');
+      console.error('Error loading products:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // FIXED: Move handleQuickRestock outside of the map function
+  const handleQuickRestock = async (productId: string) => {
+    const qtyStr = restockQuantity[productId];
+    const quantity = parseInt(qtyStr || '0', 10);
+    
+    if (!quantity || quantity <= 0) {
+      setError('Please enter a valid quantity to restock.');
+      return;
+    }
+
+    setRestockingProduct(productId);
+    setError(null);
+    
+    try {
+      console.log('Starting restock for product:', productId, 'with quantity:', quantity);
+      await apiService.restockProduct(productId, quantity);
+      await loadProducts();
+      setRestockQuantity(prev => ({ ...prev, [productId]: '' }));
+      console.log('Restock successful');
+    } catch (err) {
+      console.error('Restock failed:', err);
+      setError(err instanceof Error ? err.message : 'Failed to restock product');
+    } finally {
+      setRestockingProduct(null);
+    }
+  };
+
+  const categories = ['All Categories', 'Clothing', 'Electronics', 'Cosmetics', 'Bags', 'Other'];
+  const lowStockItems = products.filter(p => p.lowStock || p.stock <= p.minStock).length;
+  const totalValue = products.reduce((sum, p) => sum + (p.stock * p.sellingPrice), 0);
 
   const filteredProducts = products.filter(product => {
-    const matchesSearch =
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.supplier.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === 'All Categories' || product.category === selectedCategory;
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'All Categories' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -66,7 +267,7 @@ export default function InventoryManager() {
     }));
   };
 
-  const calculateProfitMargin = (cost, selling) => {
+  const calculateProfitMargin = (cost: string, selling: string): number => {
     const costPrice = parseFloat(cost);
     const sellingPrice = parseFloat(selling);
     if (isNaN(costPrice) || isNaN(sellingPrice) || costPrice === 0) return 0;
@@ -74,69 +275,111 @@ export default function InventoryManager() {
     return margin;
   };
 
-  const handleAddProduct = () => {
-    if (!formData.name || !formData.costPrice || !formData.sellingPrice) return;
+  const handleAddProduct = async () => {
+    if (!formData.name || !formData.costPrice || !formData.sellingPrice) {
+      setError('Please fill in all required fields');
+      return;
+    }
 
-    const newProduct = {
-      id: Date.now(),
-      name: formData.name,
-      category: formData.category,
-      currentStock: parseInt(formData.currentStock) || 0,
-      minimumStock: parseInt(formData.minimumStock) || 5,
-      costPrice: parseInt(formData.costPrice),
-      sellingPrice: parseInt(formData.sellingPrice),
-      supplier: formData.supplier || 'Unknown Supplier',
-      description: formData.description || 'No description provided',
-      profitMargin: Number(calculateProfitMargin(formData.costPrice, formData.sellingPrice).toFixed(2))
-    };
+    try {
+      setSubmitting(true);
+      setError(null);
 
-    setProducts(prev => [...prev, newProduct]);
-    resetForm();
+      const productData = {
+        name: formData.name,
+        category: formData.category,
+        costPrice: parseFloat(formData.costPrice),
+        sellingPrice: parseFloat(formData.sellingPrice),
+        stock: parseInt(formData.currentStock) || 0,
+        minStock: parseInt(formData.minimumStock) || 0,
+      };
+
+      await apiService.createProduct(productData);
+      
+      // Reload products to get the latest data
+      await loadProducts();
+      resetForm();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to add product');
+      console.error('Error adding product:', err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const handleEditProduct = (product) => {
-    setEditingProduct(product.id);
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product._id);
     setFormData({
       name: product.name,
       category: product.category,
-      currentStock: product.currentStock.toString(),
-      minimumStock: product.minimumStock.toString(),
+      currentStock: product.stock.toString(),
+      minimumStock: product.minStock.toString(),
       costPrice: product.costPrice.toString(),
       sellingPrice: product.sellingPrice.toString(),
-      supplier: product.supplier,
-      description: product.description
     });
     setShowAddForm(true);
   };
 
-  const handleUpdateProduct = () => {
-    if (!formData.name || !formData.costPrice || !formData.sellingPrice) return;
+  const handleUpdateProduct = async () => {
+    if (!editingProduct || !formData.name || !formData.costPrice || !formData.sellingPrice) {
+      setError('Please fill in all required fields');
+      return;
+    }
 
-    setProducts(prev =>
-      prev.map(product =>
-        product.id === editingProduct
-          ? {
-              ...product,
-              name: formData.name,
-              category: formData.category,
-              currentStock: parseInt(formData.currentStock) || 0,
-              minimumStock: parseInt(formData.minimumStock) || 5,
-              costPrice: parseInt(formData.costPrice),
-              sellingPrice: parseInt(formData.sellingPrice),
-              supplier: formData.supplier || 'Unknown Supplier',
-              description: formData.description || 'No description provided',
-              profitMargin: Number(
-                calculateProfitMargin(formData.costPrice, formData.sellingPrice).toFixed(2)
-              )
-            }
-          : product
-      )
-    );
-    resetForm();
-  };
+    try {
+      setSubmitting(true);
+      setError(null);
 
-  const handleDeleteProduct = (id) => {
-    setProducts(prev => prev.filter(p => p.id !== id));
+      const currentProduct = products.find(p => p._id === editingProduct);
+      if (!currentProduct) {
+        throw new Error('Product not found');
+      }
+
+      // Calculate stock difference for restocking
+      const newStock = parseInt(formData.currentStock) || 0;
+      const stockDifference = newStock - currentProduct.stock;
+      const newCostPrice = parseFloat(formData.costPrice);
+
+      console.log('Update data:', {
+        currentStock: currentProduct.stock,
+        newStock,
+        stockDifference,
+        newCostPrice,
+        currentCostPrice: currentProduct.costPrice
+      });
+
+      if (stockDifference !== 0) {
+        if (stockDifference > 0) {
+          // If stock is being increased, use the restock endpoint
+          console.log('Restocking with quantity:', stockDifference);
+          await apiService.restockProduct(editingProduct, stockDifference, newCostPrice);
+        } else {
+          // If stock is being decreased, you might need a different endpoint
+          // For now, we'll show a message that stock can only be increased
+          throw new Error('Stock can only be increased. Use the sales function to reduce stock.');
+        }
+      } else if (newCostPrice !== currentProduct.costPrice) {
+        // If only cost price is being updated, restock with 0 quantity but new cost price
+        console.log('Updating cost price only');
+        await apiService.restockProduct(editingProduct, 0, newCostPrice);
+      } else {
+        // No stock or price changes, just reload to show current data
+        console.log('No changes detected');
+      }
+
+      // Note: For full product updates (name, category, selling price, etc.), 
+      // you need to add an update endpoint to your backend like:
+      // PUT /api/products/:id (for updating name, category, sellingPrice, etc.)
+      
+      // Reload products to get the latest data
+      await loadProducts();
+      resetForm();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update product');
+      console.error('Error updating product:', err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const resetForm = () => {
@@ -146,19 +389,29 @@ export default function InventoryManager() {
       currentStock: '',
       minimumStock: '',
       costPrice: '',
-      sellingPrice: '',
-      supplier: '',
-      description: ''
+      sellingPrice: ''
     });
     setShowAddForm(false);
     setEditingProduct(null);
+    setError(null);
   };
 
-  const getStockStatus = (current, minimum) => {
+  const getStockStatus = (current: number, minimum: number) => {
     if (current === 0) return { status: 'Out of Stock', color: 'bg-red-100 text-red-700' };
     if (current <= minimum) return { status: 'Low Stock', color: 'bg-yellow-100 text-yellow-700' };
     return { status: 'In Stock', color: 'bg-green-100 text-green-700' };
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
+          <p className="text-gray-600">Loading inventory...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -173,6 +426,22 @@ export default function InventoryManager() {
             <p className="text-gray-600">Keep track of your stock and never run out again 📦</p>
           </div>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-red-600" />
+              <p className="text-red-800">{error}</p>
+              <button
+                onClick={() => setError(null)}
+                className="ml-auto text-red-600 hover:text-red-800"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -223,14 +492,14 @@ export default function InventoryManager() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
-              placeholder="Search products or suppliers..."
+              placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-colors"
             />
           </div>
 
-          <div className="flex  gap-3">
+          <div className="flex gap-3">
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
@@ -247,6 +516,15 @@ export default function InventoryManager() {
             >
               <Plus className="w-4 h-4" />
               {showAddForm ? 'Close Form' : 'Add New Product'}
+            </button>
+
+            <button
+              onClick={loadProducts}
+              disabled={loading}
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+            >
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Package className="w-4 h-4" />}
+              Refresh
             </button>
           </div>
         </div>
@@ -313,7 +591,7 @@ export default function InventoryManager() {
                     name="minimumStock"
                     value={formData.minimumStock}
                     onChange={handleInputChange}
-                    placeholder="5"
+                    placeholder="0"
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-colors"
                   />
                 </div>
@@ -347,44 +625,28 @@ export default function InventoryManager() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Supplier
-                </label>
-                <input
-                  type="text"
-                  name="supplier"
-                  value={formData.supplier}
-                  onChange={handleInputChange}
-                  placeholder="Where do you buy this from?"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-colors"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Description
-                </label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  placeholder="Product details, size, color, etc."
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-colors resize-none"
-                />
-              </div>
+              {/* Profit Margin Preview */}
+              {formData.costPrice && formData.sellingPrice && (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                  <p className="text-sm text-green-700">
+                    <span className="font-medium">Estimated Profit Margin:</span> ~{calculateProfitMargin(formData.costPrice, formData.sellingPrice).toFixed(1)}%
+                  </p>
+                </div>
+              )}
 
               <div className="flex gap-3">
                 <button
                   onClick={editingProduct ? handleUpdateProduct : handleAddProduct}
-                  className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                  disabled={submitting}
+                  className="bg-purple-500 hover:bg-purple-600 disabled:bg-purple-300 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
                 >
+                  {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                   {editingProduct ? 'Update Product' : 'Add Product'}
                 </button>
                 <button
                   onClick={resetForm}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium transition-colors"
+                  disabled={submitting}
+                  className="bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 text-gray-700 px-6 py-2 rounded-lg font-medium transition-colors"
                 >
                   Cancel
                 </button>
@@ -404,9 +666,11 @@ export default function InventoryManager() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((product) => {
-              const stockStatus = getStockStatus(product.currentStock, product.minimumStock);
+              const stockStatus = getStockStatus(product.stock, product.minStock);
+              const profitMargin = ((product.sellingPrice - product.costPrice) / product.costPrice) * 100;
+              
               return (
-                <div key={product.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
+                <div key={product._id} className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">{product.name}</h3>
@@ -418,14 +682,9 @@ export default function InventoryManager() {
                       <button
                         onClick={() => handleEditProduct(product)}
                         className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                        disabled={submitting}
                       >
                         <Edit3 className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteProduct(product.id)}
-                        className="p-1 text-gray-400 hover:text-red-600 transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
@@ -434,7 +693,7 @@ export default function InventoryManager() {
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Stock:</span>
                       <div className="flex items-center gap-2">
-                        <span className="font-medium">{product.currentStock}</span>
+                        <span className="font-medium">{product.stock}</span>
                         <span className={`text-xs px-2 py-1 rounded-full ${stockStatus.color}`}>
                           {stockStatus.status}
                         </span>
@@ -449,15 +708,48 @@ export default function InventoryManager() {
                     </div>
 
                     <div className="flex items-center justify-between">
+                      <span className="text-gray-600">Units Sold:</span>
+                      <span className="font-medium">{product.unitsSold}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
                       <span className="text-gray-600">Profit Margin:</span>
-                      <span className="text-green-600 font-medium">~{product.profitMargin}%</span>
+                      <span className="text-green-600 font-medium">~{profitMargin.toFixed(1)}%</span>
                     </div>
 
                     <div className="pt-2 border-t border-gray-100">
-                      <p className="text-gray-600 text-xs mb-1">
-                        <span className="font-medium">Supplier:</span> {product.supplier}
-                      </p>
-                      <p className="text-gray-500 text-xs">{product.description}</p>
+                      <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+                        <span>Min Stock: {product.minStock}</span>
+                        <span>Cost: ₦{product.costPrice.toLocaleString()}</span>
+                      </div>
+                      
+                      {/* Quick Restock */}
+                      <div className="flex items-center gap-2 mt-2">
+                        <input
+                          type="number"
+                          placeholder="Qty"
+                          value={restockQuantity[product._id] || ''}
+                          onChange={(e) => setRestockQuantity(prev => ({ 
+                            ...prev, 
+                            [product._id]: e.target.value 
+                          }))}
+                          className="flex-1 px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-purple-500 focus:border-purple-500 outline-none"
+                          disabled={restockingProduct === product._id}
+                          min="1"
+                        />
+                        <button
+                          onClick={() => handleQuickRestock(product._id)}
+                          disabled={restockingProduct === product._id || !restockQuantity[product._id] || parseInt(restockQuantity[product._id] || '0') <= 0}
+                          className="px-3 py-1 text-xs bg-green-500 hover:bg-green-600 disabled:bg-green-300 text-white rounded transition-colors flex items-center gap-1"
+                        >
+                          {restockingProduct === product._id ? (
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                          ) : (
+                            <Plus className="w-3 h-3" />
+                          )}
+                          Restock
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -465,10 +757,16 @@ export default function InventoryManager() {
             })}
           </div>
 
+          {/* Empty State */}
           {filteredProducts.length === 0 && (
-            <div className="text-center py-8 text-gray-500">
-              <Package className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p>No products found matching your criteria.</p>
+            <div className="text-center py-12">
+              <Package className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
+              <p className="text-gray-600">
+                {searchTerm || selectedCategory !== 'All Categories'
+                  ? 'Try adjusting your search or filter criteria'
+                  : 'Start by adding some products to your inventory'}
+              </p>
             </div>
           )}
         </div>
