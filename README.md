@@ -167,17 +167,17 @@ WakaMate-AI/
 Meet the minds behind WakaMate AI:
 
 - **Micheal Oloyede** – Team lead & Full stack Developer  
-  Visionary leader with 3+ years of experience in digital transformation and business strategy.
+  Meet our amazing team leader, Michael. A full-stack developer with a passion for building cool and functional projects. He’s not just skilled, he’s also fun, encouraging, and always bringing good energy to the team. Leading by example, Michael makes working together a great experience.
 - **Omilabu Wuraola** – Front-end Developer  
-  Tech wizard specializing in scalable architectures and emerging technologies.
+  Wuraola is the creative spirit of our team. From animations to clean interfaces, she knows how to turn vision into vibrant web experiences. With a blend of design flair and coding skills, she bridges the gap between aesthetics and functionality. She’s fun, imaginative, and a joy to collaborate with.
 - **Abibi Daniella** – Backend Developer  
-  Award-winning designer with a passion for creating memorable brand experiences.
+  Daniella keeps our team organized and on track while also handling the backend magic. She's the calm in the chaos, making sure tasks are done, deadlines are met, and everyone stays focused. With a sharp mind for logic and a knack for structure, se’s the kind of teammate who just gets things done. she is very reliably and efficiently.
 - **Eniaiyejuni Raphael** – AI/ML Engineer  
-  Full-stack developer with expertise in JavaScript frameworks and cloud technologies.
+  Raphael is our AI GUY! He handles the AI integration that make our project secure and AI-dependent. Quietly brilliant and deeply focused, he brings technical depth with a cool-headed approach. You can trust him to write clean, reliable code and explain even the complex stuff in simple terms.
 - **Emmanuel Damilola** – Product Designer  
-  Product designer focused on user experience and visual storytelling.
+  Dami brings our ideas to life with stunning visuals and user-friendly designs. He has a natural talent for combining creativity with functionality, making sure our users always have a great experience. Easy to talk to, collaborative, and super thoughtful .
 - **Joseph Bassey** – Designer  
-  Infrastructure specialist focused on scalable cloud solutions and automation.
+  JOEA is a designer with a passion for creating memorable brand experiences.
 
 *(More team members can be added here as the project grows!)*
 
