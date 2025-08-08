@@ -177,7 +177,7 @@ Meet the minds behind WakaMate AI:
 - **Emmanuel Damilola** – Product Designer  
   Dami brings our ideas to life with stunning visuals and user-friendly designs. He has a natural talent for combining creativity with functionality, making sure our users always have a great experience. Easy to talk to, collaborative, and super thoughtful .
 - **Joseph Bassey** – Designer  
-  JOEA is a designer with a passion for creating memorable brand experiences.
+  JOE is a designer with a passion for creating memorable brand experiences and he also brings our ideas to life with stunning visuals and user-friendly designs...an amazing designer and makes magic with figma, canva...you name it and he delivers..
 
 *(More team members can be added here as the project grows!)*
 
