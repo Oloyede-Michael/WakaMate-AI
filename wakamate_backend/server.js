@@ -49,3 +49,7 @@ const PORT = process.env.PORT || 1050;
 app.listen(PORT, () => {
   console.log(`Server running ons http://localhost:${PORT}`);
 });
+
+//mongodb+srv://officialswiftfund:<db_password>@wakamateaidb.bxmcyla.mongodb.net/ (compass connection)
+
+//atlas in the future (mongodb+srv://officialswiftfund:NextGenAlpha@wakamateaidb.bxmcyla.mongodb.net/?retryWrites=true&w=majority&appName=WakamateAiDB)

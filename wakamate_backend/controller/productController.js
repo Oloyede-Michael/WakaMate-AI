@@ -4,8 +4,8 @@ const { checkStockAlert } = require("../utils/stockNotifier");
 //add a product
 exports.createProduct = async (req, res) => {
     try {
-        const { name, costPrice, sellingPrice, stock = 0, minStock = 0 } = req.body;
-        const product = new Product({ name, costPrice, sellingPrice, stock, minStock, user: req.user._id });
+        const { name, category, costPrice, sellingPrice, stock = 0, minStock = 0 } = req.body;
+        const product = new Product({ name, category, costPrice, sellingPrice, stock, minStock, user: req.user._id });
         await product.save();
         res.status(201).json({ message: "Product created", product})
     } catch (err) {
