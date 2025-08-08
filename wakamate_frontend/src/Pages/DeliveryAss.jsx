@@ -35,7 +35,7 @@ export default function DeliveryAss() {
     notes: ''
   });
 
-  const API_BASE_URL = 'http://localhost:3001/api';
+  const API_BASE_URL = 'http://localhost:3002/api';
 
   const pendingDeliveries = deliveries.filter(d => d.status === 'pending').length;
   const completedToday = deliveries.filter(d => d.status === 'completed').length;
