@@ -168,26 +168,123 @@ export default function AIDashboard() {
     if (!content) return '';
     
     return content
+      // Handle headers first
+      .replace(/^\*\*(.*?)\*\*$/gm, '<h2 class="text-xl font-bold text-blue-800 mt-6 mb-3 border-b border-blue-200 pb-1">$1</h2>')
       .replace(/^### (.*$)/gm, '<h3 class="text-lg font-semibold text-blue-700 mt-4 mb-2">$1</h3>')
       .replace(/^## (.*$)/gm, '<h2 class="text-xl font-bold text-blue-800 mt-6 mb-3 border-b border-blue-200 pb-1">$1</h2>')
       .replace(/^# (.*$)/gm, '<h1 class="text-2xl font-bold text-blue-900 mt-8 mb-4">$1</h1>')
+      
+      // Handle your specific table format first
+      .replace(/\|([^|\n]*Product[^|\n]*)\|([^|\n]*Stock[^|\n]*)\|([^|\n]*Margin[^|\n]*)\|([^|\n]*)\|([^|\n]*)\|\s*\n\|[-:\s|]*\|\s*\n((?:\|[^|\n]*\|[^|\n]*\|[^|\n]*\|[^|\n]*\|[^|\n]*\|\s*\n)*)/g, function(match) {
+        const lines = match.split('\n').filter(line => line.trim() && !line.match(/^\|[-:\s|]+\|$/));
+        
+        let tableHtml = '<div class="overflow-x-auto my-4"><table class="min-w-full border-collapse border border-gray-300 text-sm bg-white rounded-lg shadow-sm">';
+        
+        lines.forEach((line, index) => {
+          const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
+          if (cells.length === 0) return;
+          
+          if (index === 0) {
+            // Header row
+            tableHtml += `<thead><tr class="bg-blue-600 text-white">`;
+            cells.forEach(cell => {
+              tableHtml += `<th class="border border-gray-300 px-4 py-3 font-semibold text-left">${cell}</th>`;
+            });
+            tableHtml += `</tr></thead><tbody>`;
+          } else {
+            // Data rows
+            const rowClass = index % 2 === 1 ? 'bg-gray-50' : 'bg-white';
+            tableHtml += `<tr class="${rowClass}">`;
+            cells.forEach(cell => {
+              tableHtml += `<td class="border border-gray-300 px-4 py-2 text-gray-700">${cell}</td>`;
+            });
+            tableHtml += `</tr>`;
+          }
+        });
+        
+        tableHtml += '</tbody></table></div>';
+        return tableHtml;
+      })
+      
+      // Handle simple single-row table data
+      .replace(/^\|([^|\n]+(?:\|[^|\n]+)*)\|$/gm, function(match) {
+        const cells = match.split('|').map(cell => cell.trim()).filter(cell => cell);
+        if (cells.length === 0) return match;
+        
+        // Check if this looks like a data row
+        const hasNumbers = cells.some(cell => /\d/.test(cell));
+        const hasProductName = cells.some(cell => /iPhone|MacBook|Samsung|Nike|Galaxy/i.test(cell));
+        
+        if (hasNumbers || hasProductName) {
+          let tableHtml = '<div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-4 my-3 shadow-sm"><div class="grid gap-3">';
+          
+          // First cell is usually product name
+          if (cells.length > 0) {
+            tableHtml += `<div class="text-lg font-semibold text-blue-900">${cells[0]}</div>`;
+            tableHtml += `<div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">`;
+            
+            for (let i = 1; i < cells.length; i++) {
+              const labels = ['Stock', 'Margin', 'Revenue Potential', 'Action Status'];
+              const label = labels[i-1] || `Info ${i}`;
+              tableHtml += `<div class="bg-white rounded p-2 border border-gray-200">
+                <div class="text-gray-600 text-xs font-medium">${label}</div>
+                <div class="text-gray-900 font-medium">${cells[i]}</div>
+              </div>`;
+            }
+            tableHtml += `</div>`;
+          }
+          
+          tableHtml += '</div></div>';
+          return tableHtml;
+        }
+        
+        return match;
+      })
+      
+      // Handle horizontal rules
+      .replace(/^[-=]{3,}$/gm, '<hr class="border-gray-300 my-4">')
+      
+      // Handle bullet points and lists
+      .replace(/^[•‑]\s+(.*$)/gm, '<li class="ml-4 mb-1 list-disc list-inside">$1</li>')
+      .replace(/^-\s+(.*$)/gm, '<li class="ml-4 mb-1 list-disc list-inside">$1</li>')
+      .replace(/^\*\s+(.*$)/gm, '<li class="ml-4 mb-1 list-disc list-inside">$1</li>')
+      
+      // Group consecutive list items
+      .replace(/(<li[^>]*>.*?<\/li>\s*)+/g, function(match) {
+        return '<ul class="my-2 space-y-1">' + match + '</ul>';
+      })
+      
+      // Handle checkboxes
+      .replace(/^\[\s?\]\s+(.*$)/gm, '<div class="flex items-center gap-2 my-1"><input type="checkbox" class="w-4 h-4"> <span>$1</span></div>')
+      .replace(/^\[x\]\s+(.*$)/gm, '<div class="flex items-center gap-2 my-1"><input type="checkbox" checked class="w-4 h-4"> <span class="line-through text-gray-600">$1</span></div>')
+      
+      // Handle bold and italic text
       .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>')
       .replace(/\*(.*?)\*/g, '<em class="italic text-gray-700">$1</em>')
+      
+      // Handle code blocks and inline code
       .replace(/```([\s\S]*?)```/g, '<pre class="bg-gray-100 p-3 rounded-lg overflow-x-auto my-2 text-sm border-l-4 border-blue-400"><code>$1</code></pre>')
       .replace(/`(.*?)`/g, '<code class="bg-gray-100 px-2 py-1 rounded text-sm font-mono">$1</code>')
+      
+      // Handle line breaks - do this after other replacements
       .replace(/\n\n/g, '<br><br>')
       .replace(/\n/g, '<br>')
-      .replace(/^[•\-\*]\s+(.*$)/gm, '<li class="ml-4 mb-1">$1</li>')
-      .replace(/(<li>.*<\/li>)/g, function(match) {
-        return '<ul class="list-disc list-inside my-2">' + match + '</ul>';
-      })
+      
+      // Handle emojis and special characters
       .replace(/❌/g, '<span class="text-red-600">❌</span>')
       .replace(/✅/g, '<span class="text-green-600">✅</span>')
       .replace(/💰/g, '<span class="text-yellow-600">💰</span>')
       .replace(/📊/g, '<span class="text-blue-600">📊</span>')
       .replace(/🔴/g, '<span class="text-red-600">🔴</span>')
       .replace(/🟡/g, '<span class="text-yellow-600">🟡</span>')
-      .replace(/🟢/g, '<span class="text-green-600">🟢</span>');
+      .replace(/🟢/g, '<span class="text-green-600">🟢</span>')
+      .replace(/🔄/g, '<span class="text-blue-600">🔄</span>')
+      .replace(/📈/g, '<span class="text-green-600">📈</span>')
+      .replace(/💎/g, '<span class="text-purple-600">💎</span>')
+      .replace(/🏆/g, '<span class="text-yellow-600">🏆</span>')
+      .replace(/⚠️/g, '<span class="text-orange-600">⚠️</span>')
+      .replace(/🚨/g, '<span class="text-red-600">🚨</span>')
+      .replace(/💬/g, '<span class="text-blue-600">💬</span>');
   };
 
   const getStatusColor = () => {
