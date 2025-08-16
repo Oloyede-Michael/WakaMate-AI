@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ isDarkMode, setIsDarkMode }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -12,113 +21,179 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
-    <nav className="navbar fixed w-full z-50 py-4 px-6 shadow-sm bg-white border-b border-gray-100 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
-            <i className="fas fa-robot text-white text-xl"></i>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${
+      scrolled 
+        ? isDarkMode 
+          ? 'bg-gray-900/95 backdrop-blur-xl border-gray-800/50 shadow-2xl shadow-green-500/5' 
+          : 'bg-white/95 backdrop-blur-xl border-gray-200/50 shadow-2xl'
+        : isDarkMode
+          ? 'bg-transparent backdrop-blur-sm'
+          : 'bg-transparent backdrop-blur-sm'
+    } border-b ${isDarkMode ? 'border-gray-800/30' : 'border-gray-200/30'}`}>
+      
+      {/* Animated background glow */}
+      <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-purple-500/5 animate-pulse"></div>
+      
+      <div className="relative max-w-7xl mx-auto px-6 py-4">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <div className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                <span className="text-white font-bold text-lg">W</span>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+            </div>
+            <a href="/" className="group">
+              <span className={`text-2xl font-black transition-colors duration-300 ${
+                isDarkMode ? 'text-white group-hover:text-green-400' : 'text-gray-900 group-hover:text-green-600'
+              }`}>
+                WakaMate
+                <span className="text-green-500 animate-pulse">AI</span>
+              </span>
+            </a>
           </div>
-          <Link to="/">
-            <span className="text-xl font-bold text-green-500">WakaMate AI</span>
-          </Link>
-        </div>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex space-x-8 items-center">
-          <a href="#features" className="hover:text-green-500 transition">
-            Features
-          </a>
-          <a href="#how-it-works" className="hover:text-green-500 transition">
-            How It Works
-          </a>
-          <a href="#testimonials" className="hover:text-green-500 transition">
-            Testimonials
-          </a>
-          <Link to="/about" className="hover:text-green-500 transition">
-            About Us
-          </Link>
-        </div>
+          {/* Desktop Links */}
+          <div className="hidden md:flex space-x-8 items-center">
+            {[
+              { href: "#features", label: "Features" },
+              { href: "#how-it-works", label: "How It Works" },
+              { href: "#testimonials", label: "Testimonials" },
+              { href: "#about", label: "About Us" }
+            ].map((item, index) => (
+              <a
+                key={index}
+                href={item.href}
+                className={`relative px-4 py-2 font-medium transition-all duration-300 hover:scale-105 ${
+                  isDarkMode ? 'text-gray-300 hover:text-green-400' : 'text-gray-600 hover:text-green-600'
+                }`}
+              >
+                {item.label}
+                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-green-500 transform scale-x-0 hover:scale-x-100 transition-transform duration-300"></div>
+              </a>
+            ))}
+          </div>
 
-        {/* Right Side Buttons */}
-        <div className="flex items-center space-x-4">
-          <button
-            id="theme-toggle"
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-          >
-            <i className="fas fa-moon text-gray-600 dark:text-yellow-300"></i>
-          </button>
-          
-          {/* Fixed Desktop Get Started Button */}
-          <Link 
-            to="/register" 
-            className="hidden md:block btn-primary px-6 py-2 rounded-full bg-green-500 text-white font-medium hover:bg-green-600 transition"
-          >
-            Get Started
-          </Link>
-          
-          {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden p-3 rounded-xl hover:bg-green-50 transition-all duration-200 border border-gray-200"
-            onClick={toggleMobileMenu}
-          >
-            <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-lg text-green-500`}></i>
-          </button>
+          {/* Right Side Controls */}
+          <div className="flex items-center space-x-4">
+            {/* Theme Toggle Switch */}
+            <div className="relative">
+              <button
+                onClick={toggleTheme}
+                className={`relative w-14 h-7 rounded-full p-1 transition-all duration-300 focus:outline-none ${
+                  isDarkMode 
+                    ? 'bg-gray-700 shadow-inner' 
+                    : 'bg-gray-300 shadow-inner'
+                }`}
+              >
+                {/* Toggle Circle */}
+                <div className={`w-5 h-5 rounded-full transition-all duration-300 transform flex items-center justify-center text-xs ${
+                  isDarkMode 
+                    ? 'translate-x-7 bg-yellow-400 text-gray-900' 
+                    : 'translate-x-0 bg-white text-gray-600 shadow-md'
+                }`}>
+                  {isDarkMode ? '☀️' : '🌙'}
+                </div>
+              </button>
+            </div>
+            
+            {/* Get Started Button */}
+            <a 
+              href="/register" 
+              className="hidden md:block group relative px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-2xl overflow-hidden hover:scale-105 transition-all duration-300 shadow-lg shadow-green-500/25"
+            >
+              <span className="relative z-10">Get Started</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-700 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+            </a>
+            
+            {/* Mobile Menu Button */}
+            <button 
+              className={`md:hidden p-3 rounded-xl backdrop-blur-sm border transition-all duration-300 hover:scale-110 ${
+                isDarkMode 
+                  ? 'bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50' 
+                  : 'bg-white/50 border-gray-200/50 hover:bg-white/70'
+              }`}
+              onClick={toggleMobileMenu}
+            >
+              <div className="w-6 h-6 relative">
+                <span className={`absolute h-0.5 w-6 transform transition-all duration-300 ${
+                  isMobileMenuOpen ? 'rotate-45 translate-y-0 bg-green-500' : '-translate-y-2 bg-current'
+                } ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}></span>
+                <span className={`absolute h-0.5 w-6 transform transition-all duration-300 ${
+                  isMobileMenuOpen ? 'opacity-0 bg-green-500' : 'opacity-100 bg-current'
+                } ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}></span>
+                <span className={`absolute h-0.5 w-6 transform transition-all duration-300 ${
+                  isMobileMenuOpen ? '-rotate-45 translate-y-0 bg-green-500' : 'translate-y-2 bg-current'
+                } ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}></span>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 shadow-lg transition-all duration-300 ${
+      <div className={`md:hidden absolute top-full left-0 w-full transition-all duration-500 ${
         isMobileMenuOpen 
           ? 'opacity-100 translate-y-0 visible' 
           : 'opacity-0 -translate-y-4 invisible'
-      }`}>
-        <div className="px-6 py-6 space-y-6">
-          <a 
-            href="#features" 
-            className="block py-3 px-2 hover:text-green-500 hover:bg-green-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
-            onClick={closeMobileMenu}
-          >
-            Features
-          </a>
-          <a 
-            href="#how-it-works" 
-            className="block py-3 px-2 hover:text-green-500 hover:bg-green-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
-            onClick={closeMobileMenu}
-          >
-            How It Works
-          </a>
-          <a 
-            href="#testimonials" 
-            className="block py-3 px-2 hover:text-green-500 hover:bg-green-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
-            onClick={closeMobileMenu}
-          >
-            Testimonials
-          </a>
-          <Link 
-            to="/about"
-            className="block py-3 px-2 hover:text-green-500 hover:bg-green-50 rounded-lg transition-all duration-200 text-lg font-medium border-b border-gray-50 pb-4"
-            onClick={closeMobileMenu}
-          >
-            About Us
-          </Link>
+      } ${
+        isDarkMode 
+          ? 'bg-gray-900/95 backdrop-blur-xl border-gray-800/50' 
+          : 'bg-white/95 backdrop-blur-xl border-gray-200/50'
+      } border-b shadow-2xl`}>
+        
+        {/* Mobile menu glow effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 to-transparent"></div>
+        
+        <div className="relative px-6 py-8 space-y-6">
+          {[
+            { href: "#features", label: "Features", icon: "⚡" },
+            { href: "#how-it-works", label: "How It Works", icon: "🔧" },
+            { href: "#testimonials", label: "Testimonials", icon: "💬" },
+            { href: "#about", label: "About Us", icon: "👋" }
+          ].map((item, index) => (
+            <a
+              key={index}
+              href={item.href}
+              className={`flex items-center space-x-4 py-4 px-6 rounded-2xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
+                isDarkMode 
+                  ? 'bg-gray-800/30 border-gray-700/50 text-gray-300 hover:text-green-400 hover:border-green-500/50' 
+                  : 'bg-white/30 border-gray-200/50 text-gray-600 hover:text-green-600 hover:border-green-500/50'
+              }`}
+              onClick={closeMobileMenu}
+            >
+              <span className="text-2xl">{item.icon}</span>
+              <span className="font-medium text-lg">{item.label}</span>
+            </a>
+          ))}
           
-          {/* Fixed Mobile Get Started Button */}
-          <Link 
-            to="/register"
-            className="block w-full mt-6 px-6 py-4 rounded-full bg-green-500 text-white font-medium hover:bg-green-600 transition-all duration-200 text-lg shadow-lg text-center"
+          {/* Mobile Get Started Button */}
+          <a 
+            href="/register"
+            className="block w-full group relative px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold text-lg rounded-2xl text-center overflow-hidden hover:scale-105 transition-all duration-300 shadow-lg shadow-green-500/25 mt-8"
             onClick={closeMobileMenu}
           >
-            Get Started
-          </Link>
+            <span className="relative z-10 flex items-center justify-center space-x-2">
+              <span>🚀</span>
+              <span>Get Started</span>
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-700 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+          </a>
         </div>
       </div>
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="md:hidden fixed inset-0 bg-white bg-opacity-25 -z-10"
+          className={`md:hidden fixed inset-0 -z-10 transition-all duration-500 ${
+            isDarkMode ? 'bg-gray-900/50' : 'bg-white/50'
+          } backdrop-blur-sm`}
           onClick={closeMobileMenu}
         ></div>
       )}

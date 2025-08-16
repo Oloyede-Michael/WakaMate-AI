@@ -1,5 +1,5 @@
-// App.jsx
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Navbar from './components/NavBar';
 import AboutUs from './components/AboutUs';
 import HeroSection from './components/HeroSection';
@@ -14,19 +14,20 @@ import ScrollFeature from './components/ScrollFeature';
 import LastSection from './components/LastSection';
 import HeroBanner from './components/HeroBanner';
 import Footer from './components/Footer';
-import AnimatedRoutes from './routes/AnimatedRoutes'; // 👈 Dashboard routes
+import AnimatedRoutes from './routes/AnimatedRoutes'; // Dashboard routes
 
-function LandingPage() {
+// ✅ Updated LandingPage to accept and pass isDarkMode prop
+function LandingPage({ isDarkMode }) {
   return (
     <>
-      <HeroSection />
-      <HeroBanner />
-      <FeaturesSection />
-      <HowItWorks />
-      <ScrollFeature />
-      <Faq />
-      <ContactSection />
-      <LastSection />
+      <HeroSection isDarkMode={isDarkMode} />
+      <HeroBanner isDarkMode={isDarkMode} />
+      <FeaturesSection isDarkMode={isDarkMode} />
+      <HowItWorks isDarkMode={isDarkMode} />
+      <ScrollFeature isDarkMode={isDarkMode} />
+      <Faq isDarkMode={isDarkMode} />
+      <ContactSection isDarkMode={isDarkMode} />
+      <LastSection isDarkMode={isDarkMode} />
     </>
   );
 }
@@ -40,7 +41,19 @@ function App() {
   const location = useLocation();
   const path = location.pathname;
 
-  // 🛠️ Hide navbar and footer on auth pages and dashboard
+  // 🌓 Dark mode state
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Sync with <html> for Tailwind dark: classes
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
+  // Hide navbar and footer on auth pages and dashboard
   const hideNavFooter =
     path.startsWith("/dashboard") ||
     path === "/Dashboard" ||
@@ -49,15 +62,21 @@ function App() {
     path === "/verify";
 
   return (
-    <div className="font-sans text-gray-800">
-      {!hideNavFooter && <Navbar />}
+    <div className={`min-h-screen transition-colors duration-300 ${
+      isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+    }`}>
+      {!hideNavFooter && (
+        <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+      )}
 
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        {/* ✅ Pass isDarkMode to LandingPage */}
+        <Route path="/" element={<LandingPage isDarkMode={isDarkMode} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify" element={<EmailVerify />} />
-        <Route path="/about" element={<AboutUs />} />
+        {/* ✅ Pass isDarkMode to AboutUs if it needs it */}
+        <Route path="/about" element={<AboutUs isDarkMode={isDarkMode} />} />
 
         {/* ✅ Protected route for dashboard */}
         <Route
@@ -66,7 +85,7 @@ function App() {
         />
       </Routes>
 
-      {!hideNavFooter && <Footer />}
+      {!hideNavFooter && <Footer isDarkMode={isDarkMode} />}
     </div>
   );
 }

@@ -153,7 +153,7 @@ export default function EmailVerify() {
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       />
-      <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-100">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-gray-900">
         <div className="flex w-full max-w-6xl mx-auto items-center justify-between gap-12">
           {/* Left Branding */}
           <div className="hidden lg:flex flex-col flex-1 max-w-md">
