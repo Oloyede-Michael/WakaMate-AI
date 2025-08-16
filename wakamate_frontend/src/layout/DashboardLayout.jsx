@@ -2,7 +2,6 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import logo from "../assets/logo.png";
 import {
   Home,
   Truck,
@@ -131,11 +130,11 @@ const UserProfileModal = ({ isOpen, onClose, userInfo, onLogout, onSettingsClick
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">Last Login:</span>
-                <span className="text-gray-700">2 hours ago</span>
+                <span className="text-gray-700">1 minute ago</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">Member Since:</span>
-                <span className="text-gray-700">Jan 2024</span>
+                <span className="text-gray-700">August 22, 2025</span>
               </div>
             </div>
           </div>
@@ -189,7 +188,7 @@ const UserProfileModal = ({ isOpen, onClose, userInfo, onLogout, onSettingsClick
   );
 };
 
-// User Profile Section Component (Simplified)
+// User Profile Section Component
 const UserProfileSection = ({ userInfo, onProfileClick, onLogout }) => {
   return (
     <div className="border-t border-gray-200 mt-4 pt-4">
@@ -208,20 +207,17 @@ const UserProfileSection = ({ userInfo, onProfileClick, onLogout }) => {
           </div>
         </div>
         
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center">
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onLogout();
+              onProfileClick(); // Changed from onLogout to onProfileClick
             }}
-            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-            title="Logout"
+            className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+            title="View Profile"
           >
-            <LogOut size={16} />
+            <LogOut size={16} /> {/*User icon */}
           </button>
-          <div className="text-gray-400">
-            <ChevronUp size={16} />
-          </div>
         </div>
       </div>
     </div>
@@ -318,7 +314,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {/* Header */}
         <div className="flex items-center justify-between pt-7 pl-7 pr-4 flex-shrink-0">
           <div className="flex gap-3 items-center">
-            <img className="w-10 h-10 rounded-2xl" src={logo} alt="Logo" />
+            <img 
+              src="/images/logo.png" 
+              alt="WakaMate AI Logo" 
+              className="w-10 h-10 object-contain"
+            />
             <h2 className="text-xl font-bold">
               WakaMate AI
               <div className="text-green-600 text-[12px] font-medium">
