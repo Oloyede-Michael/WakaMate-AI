@@ -68,14 +68,14 @@ const Home = () => {
           </div>
           <div className='  py-30 bg-zinc-900'>
             <div className='flex flex-col items-center justify-center h-full  gap-5'>
-              <h1 className=' text-white px-25 items-center text-center text-5xl'>
+              <h1 className=' text-white px-5 md:px-25 items-center text-center text-5xl'>
                               
               <BlurText
                 text=" Your customers are waiting. Let Wakamate deliver, sell and grow with you."
                 delay={150}
                 animateBy="words"
                 direction="top"
-                className="text-center flex justify-center"
+                 className="text-center sm:text-3xl text-2xl md:text-5xl flex justify-center"
               />
                 </h1>
               <a 
