@@ -1,5 +1,4 @@
 
-
 // routes/AnimatedRoutes.jsx
 import { Routes, Route } from "react-router-dom";
 import DashboardLayout from "../layout/DashboardLayout";
@@ -22,3 +21,4 @@ export default function AnimatedRoutes() {
     </Routes>
   );
 }
+

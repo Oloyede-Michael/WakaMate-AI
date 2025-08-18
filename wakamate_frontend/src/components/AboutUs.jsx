@@ -1,305 +1,298 @@
-import React from 'react';
+import React from 'react'
+  import BlurText from "./BlurText";
+import { motion } from 'framer-motion';
+import ScrollReveal from './ScrollReveal';
+import michael from '../assets/michael.jpg'
+import we from '../assets/team.jpg';
+import wura from '../assets/wura.jpg';
+import raphael from '../assets/raphael.jpg';
+import joe from '../assets/joe.jpg';
+import dami from '../assets/dami.jpg';
+import dani from '../assets/dani.jpg';
+import TiltedCard from './TiltedCard';
+import { createLucideIcon } from "lucide-react";
+export const GrowthZigZagArrow = createLucideIcon("GrowthZigZagArrow", [
+  [
 
-const TeamAboutPage = () => {
+    "polyline",
+    {
+      points: "3 17 7 13 11 15 15 9 19 11 23 5", // zig-zag growth path
+      key: "zigzag-path"
+    }
+  ],
+  [
+    "polyline",
+    {
+      points: "20 2 23 5 20 8", // arrowhead at the top
+      key: "arrow-head"
+    }
+  ]
+]);
+
+
+const AboutUs = () => {
   return (
-    <div className="font-sans antialiased text-gray-800">
-      <style jsx>{`
-        .gradient-bg {
-          background: linear-gradient(135deg, #225623ff 0%, #3c8250ff 100%);
-        }
-        .team-card:hover {
-          transform: translateY(-10px);
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .wave-shape {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          overflow: hidden;
-          line-height: 0;
-        }
-        .wave-shape svg {
-          position: relative;
-          display: block;
-          width: calc(100% + 1.3px);
-          height: 150px;
-        }
-        .wave-shape .shape-fill {
-          fill: #FFFFFF;
-        }
-        .rotate-180 {
-          transform: rotate(180deg);
-        }
-      `}</style>
+    <div className='bg-zinc-900 text-white'>
+      <div className='flex flex-col'>
+       <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="text-8xl font-semibold z-10 uppercase pt-[120px] px-7"
+      >
+        We transform <br /> hustle into lasting growth
+      </motion.div>
 
-      {/* Hero Section */}
-      <div className="gradient-bg text-white relative">
-        <div className="container mx-auto px-6 py-24 text-center relative z-10">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">About Our Team</h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-            We're a passionate group of creatives, developers, and strategists dedicated to building amazing digital experiences.
-          </p>
-          <div className="mt-12">
-            <a 
-              href="#team" 
-              className="bg-white text-indigo-700 font-semibold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 inline-block"
-            >
-              Meet the Team
-            </a>
-          </div>
-        </div>
-        <div className="wave-shape">
-          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
-          </svg>
+        <GrowthZigZagArrow className="w-20 h-20 text-green-500" strokeWidth={3} />
+        <div className='w-full'>
+        <img src={we} alt="" className='w-25 absolute top-70 right-50 rotate-10' />
         </div>
       </div>
+        <hr  className='text-white/70 mx-10 mt-20'/>
+        <div className='flex gap-20 w-full justify-between py-20 px-10'>
+           <h1 className='text-lg w-[30%] text-white/70'>WakaMate is your smart business companion, built to help vendors, riders, and small business owners work faster, sell more, and worry less.</h1>
+            <h1 className="flex flex-col text-white pt-20 w-[70%] text-4xl">
+              <ScrollReveal
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={5}
+                blurStrength={15}
+              >
+                  We believe that technology should be simple, friendly, and built for real
+                  life. That’s why WakaMate uses AI to handle the hard stuff — from planning
+                  delivery routes, tracking stock, and suggesting restock dates, to creating
+                  ready-made captions for your social media.
+                
+              </ScrollReveal>
 
-      {/* Our Story */}
-      <div className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">Our Story</h2>
-              <p className="text-gray-600 mb-4">
-                Founded in 2025, we started as a small team of five friends with a shared vision to create digital solutions that make a difference. What began in a university has now grown into a thriving startup with unlimited potential.
-              </p>
-              <p className="text-gray-600 mb-4">
-                We believe in the power of collaboration, creativity, and cutting-edge technology to solve complex problems. Our approach combines strategic thinking with beautiful design and robust engineering.
-              </p>
-              <p className="text-gray-600">
-                Today, we've worked with over 200 clients worldwide, delivering projects that range from mobile apps to enterprise software solutions.
-              </p>
-            </div>
-            <div className="md:w-1/2">
-              <div className="bg-gray-100 rounded-xl overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                  alt="Team working together" 
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Values */}
-      <div className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-16">Our Core Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="bg-white p-8 rounded-xl shadow-md text-center hover:shadow-lg transition duration-300">
-              <div className="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
-                <i className="fas fa-lightbulb text-indigo-600 text-2xl"></i>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Innovation</h3>
-              <p className="text-gray-600">We constantly push boundaries and explore new ideas to deliver cutting-edge solutions.</p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-md text-center hover:shadow-lg transition duration-300">
-              <div className="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
-                <i className="fas fa-users text-indigo-600 text-2xl"></i>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Collaboration</h3>
-              <p className="text-gray-600">Great things happen when diverse minds work together towards a common goal.</p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-md text-center hover:shadow-lg transition duration-300">
-              <div className="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
-                <i className="fas fa-heart text-indigo-600 text-2xl"></i>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Passion</h3>
-              <p className="text-gray-600">We love what we do, and that enthusiasm shines through in every project we undertake.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Team Section */}
-      <div id="team" className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-16">Meet Our Team</h2>
-          
-          {/* Top Row - 3 members */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            {/* Team Member 1 */}
-            <div className="team-card bg-white rounded-xl overflow-hidden shadow-md transition duration-500 ease-in-out">
-              <div className="relative">
-                <img 
-                  src="/images/michael.jpg"
-                  alt="Micheal Oloyede" 
-                  className="w-full h-64 object-fit"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h3 className="text-white text-xl font-bold">Micheal Oloyede</h3>
-                  <p className="text-indigo-200">Team lead & Full stack Developer</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-gray-600 mb-4">Visionary leader with 3+years of experience in digital transformation and business strategy.</p>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
-                </div>
-              </div>
-            </div>
-
-            {/* Team Member 2 */}
-            <div className="team-card bg-white rounded-xl overflow-hidden shadow-md transition duration-500 ease-in-out">
-              <div className="relative">
-                <img 
-                  src="/images/wura.jpg" 
-                  alt="Omilabu Wuraola" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h3 className="text-white text-xl font-bold">Omilabu Wuraola</h3>
-                  <p className="text-indigo-200">Front-end Developer</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-gray-600 mb-4">Tech wizard specializing in scalable architectures and emerging technologies.</p>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
-                </div>
-              </div>
-            </div>
-
-            {/* Team Member 3 */}
-            <div className="team-card bg-white rounded-xl overflow-hidden shadow-md transition duration-500 ease-in-out">
-              <div className="relative">
-                <img 
-                  src="/images/dani.jpg"
-                  alt="Abibi Daniella" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h3 className="text-white text-xl font-bold">Abibi Daniella</h3>
-                  <p className="text-indigo-200">Backend Developer</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-gray-600 mb-4">Award-winning designer with a passion for creating memorable brand experiences.</p>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Row - 3 members */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Team Member 4 */}
-            <div className="team-card bg-white rounded-xl overflow-hidden shadow-md transition duration-500 ease-in-out">
-              <div className="relative">
-                <img 
-                  src="/images/raphael.jpg"
-                  alt="Eniaiyejuni Raphael" 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h3 className="text-white text-xl font-bold">Eniaiyejuni Raphael</h3>
-                  <p className="text-indigo-200">AI/ML Engineer</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-gray-600 mb-4">Full-stack developer with expertise in JavaScript frameworks and cloud technologies.</p>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
-                </div>
-              </div>
-            </div>
-
-            {/* Team Member 5 */}
-            <div className="team-card bg-white rounded-xl overflow-hidden shadow-md transition duration-500 ease-in-out">
-              <div className="relative">
-                <img 
-                  src="/images/dami.jpg"
-                  alt="Emmanuel Damilola" 
-                  className="w-full h-64 object-fit"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h3 className="text-white text-xl font-bold">Emmanuel Damilola</h3>
-                  <p className="text-indigo-200">Product Designer</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-gray-600 mb-4">Strategic marketing expert with a passion for building brand awareness and driving growth.</p>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-instagram"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
-                </div>
-              </div>
-            </div>
+              <ScrollReveal
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={5}
+                blurStrength={15}
+              >
+                  For us, growth is more than just profit — it’s about helping you connect
+                  with your customers, deliver on time, and run your business with
+                  confidence. We focus on tools that save you time, cut stress, and give you
+                  insights you can trust.
             
-            {/* Team Member 6 */}
-            <div className="team-card bg-white rounded-xl overflow-hidden shadow-md transition duration-500 ease-in-out">
-              <div className="relative">
-                <img 
-                  src="/images/joe.jpg" 
-                  alt="Joseph Bassey " 
-                  className="w-full h-64 object-cover"
+              </ScrollReveal>
+
+              <ScrollReveal
+                baseOpacity={0}
+                enableBlur={true}
+                baseRotation={5}
+                blurStrength={15}
+              >
+                  Our approach combines real-time data, practical AI suggestions, and a deep
+                  understanding of how vendors work. The result? A smarter way to hustle,
+                  every single day.
+              </ScrollReveal>
+            </h1>
+
+        </div>
+        <div className='pt-40'>
+          <h1 className='text-center font-semibold text-4xl'>OUR TEAM</h1>
+          <div className="flex justify-center items-center min-h-screen">
+            <div className="grid grid-cols-3 gap-20 px-10 py-10 max-w-6xl mx-auto">
+              <div className=''>
+                <TiltedCard
+                  imageSrc={michael}
+                  altText="Oloyede Michael"
+                  captionText="Oloyede Michael"
+                  containerHeight="300px"
+                  containerWidth="300px"
+                  imageHeight="300px"
+                  imageWidth="300px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.2}
+                  showMobileWarning={false}
+                  showTooltip={true}
+                  displayOverlayContent={true}
+                  overlayContent={
+                    <p className="tilted-card-demo-text border-green-500 border-2 backdrop-blur-lg bg-black/60 rounded-2xl px-10">
+                      Oloyede Michael
+                    </p>
+                  }
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h3 className="text-white text-xl font-bold">Joseph Bassey</h3>
-                  <p className="text-indigo-200">Designer</p>
-                </div>
+               <h2 className="text-lg text-center pt-2 text-white pb-5">Team Leader and Full Stack Developer</h2>
+               <div className="socials ">
+                  <a href=" " className=""> <i className="bx px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-twitter text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=""><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-linkedin text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=" "><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bx-envelope text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" />
+                  </a>
+               </div>
               </div>
-              <div className="p-6">
-                <p className="text-gray-600 mb-4">Infrastructure specialist focused on scalable cloud solutions and automation.</p>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-twitter"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-linkedin"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fab fa-github"></i></a>
-                  <a href="#" className="text-gray-500 hover:text-green-500 transition"><i className="fas fa-envelope"></i></a>
-                </div>
+              <div className=''>
+                <TiltedCard
+                  imageSrc={wura}
+                  altText="elizabeth"
+                  captionText="Wuraola Omilabu"
+                  containerHeight="300px"
+                  containerWidth="300px"
+                  imageHeight="300px"
+                  imageWidth="300px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.2}
+                  showMobileWarning={false}
+                  showTooltip={true}
+                  displayOverlayContent={true}
+                  overlayContent={
+                   <p className="tilted-card-demo-text border-green-500 border-2 backdrop-blur-lg bg-black/60 rounded-2xl px-10">
+                     Wuraola Omilabu
+                    </p>
+                  }
+                />
+                <h2 className="text-lg text-center pt-2 text-white pb-5">Creative Developer and Frontend Engineer</h2>
+               <div className="socials ">
+                  <a href=" " className=""> <i className="bx px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-twitter text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=""><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-linkedin text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=" "><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bx-envelope text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" />
+                  </a>
+               </div>
+              </div>
+              <div className=''>
+                <TiltedCard
+                  imageSrc={raphael}
+                  altText="raphael"
+                  captionText="Raphael Eniaiyejuni"
+                  containerHeight="300px"
+                  containerWidth="300px"
+                  imageHeight="300px"
+                  imageWidth="300px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.2}
+                  showMobileWarning={false}
+                  showTooltip={true}
+                  displayOverlayContent={true}
+                  overlayContent={
+                   <p className="tilted-card-demo-text border-green-500 border-2 backdrop-blur-lg bg-black/60 rounded-2xl px-10">
+                      Raphael Eniaiyejuni
+                    </p>
+                  }
+                />
+                <h2 className="text-lg text-center pt-2 text-white pb-5">Smart-contract Developer and AI Engineer</h2>
+               <div className="socials ">
+                  <a href=" " className=""> <i className="bx px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-twitter text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=""><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-linkedin text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=" "><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bx-envelope text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" />
+                  </a>
+               </div>
+              </div>
+              <div className=''>
+                <TiltedCard
+                  imageSrc={joe}
+                  captionText="Joseph Bassey"
+                  containerHeight="300px"
+                  containerWidth="300px"
+                  imageHeight="300px"
+                  imageWidth="300px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.2}
+                  showMobileWarning={false}
+                  showTooltip={true}
+                  displayOverlayContent={true}
+                  overlayContent={
+                    <p className="tilted-card-demo-text border-green-500 border-2 backdrop-blur-lg bg-black/60 rounded-2xl px-10">
+                     Joseph Bassey
+                    </p>
+                  }
+                />
+                <h2 className="text-lg text-center pt-2 text-white pb-5">Progect Manager and UI/UX Designer</h2>
+               <div className="socials ">
+                  <a href=" " className=""> <i className="bx px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-twitter text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=""><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-linkedin text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=" "><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bx-envelope text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" />
+                  </a>
+               </div>
+              </div>
+              <div className=''>
+                <TiltedCard
+                  imageSrc={dani}
+                  altText="daniella"
+                  captionText="Daniella Abibi"
+                  containerHeight="300px"
+                  containerWidth="300px"
+                  imageHeight="300px"
+                  imageWidth="300px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.2}
+                  showMobileWarning={false}
+                  showTooltip={true}
+                  displayOverlayContent={true}
+                  overlayContent={
+                    <p className="tilted-card-demo-text border-green-500 border-2 backdrop-blur-lg bg-black/60 rounded-2xl px-10">
+                      Daniella Abibi
+                    </p>
+                  }
+                />
+                <h2 className="text-lg text-center pt-2 text-white pb-5">Backend Engineer</h2>
+               <div className="socials ">
+                  <a href=" " className=""> <i className="bx px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-twitter text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=""><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-linkedin text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=" "><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bx-envelope text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" />
+                  </a>
+               </div>
+              </div>
+             
+              <div className=''>
+                <TiltedCard
+                  imageSrc={dami}
+                  altText="dami"
+                  captionText="Damilola Emanuel"
+                  containerHeight="300px"
+                  containerWidth="300px"
+                  imageHeight="300px"
+                  imageWidth="300px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.2}
+                  showMobileWarning={false}
+                  showTooltip={true}
+                  displayOverlayContent={true}
+                  overlayContent={
+                    <p className="tilted-card-demo-text border-2 border-green-500 backdrop-blur-lg bg-black/60 rounded-2xl px-10">
+                      Damilola Emanuel
+                    </p>
+                  }
+                />
+                <h2 className="text-lg text-center pt-2 text-white pb-5">LOGO Designer and UI/US Designer</h2>
+               <div className="socials ">
+                  <a href=" " className=""> <i className="bx px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-twitter text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=""><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bxl-linkedin text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" /></a>
+                  <a href=" "><i className="bx  px-2 hover:border-green-500 mx-2 pt-2 border-2 border-white rounded-full w-10 h-10 bx-envelope text-white text-xl cursor-pointer transition-colors duration-300 hover:text-green-500" />
+                  </a>
+               </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Join Us CTA */}
-      <div className="gradient-bg text-white py-20 relative">
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Want to Join Our Team?</h2>
-          <p className="text-xl max-w-2xl mx-auto mb-10">
-            We're always looking for talented individuals to join our growing family. Check out our current openings.
-          </p>
-          <a 
-            href="#" 
-            className="bg-white text-indigo-700 font-semibold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 inline-block"
-          >
-            View Open Positions
-          </a>
-        </div>
-        <div className="wave-shape rotate-180">
-          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
-          </svg>
-        </div>
-      </div>
+         <div className=' pb-20 pt-30 bg-zinc-900'>
+            <div className='flex flex-col items-center justify-center h-full  gap-5'>
+              <h1 className=' text-white px-25 items-center text-center text-5xl'>
+                              
+              <BlurText
+                text=" Your customers are waiting. Let Wakamate deliver, sell and grow with you."
+                delay={150}
+                animateBy="words"
+                direction="top"
+                className="text-center flex justify-center"
+              />
+                </h1>
+              <a 
+                href="/register"
+                className="relative group overflow-hidden border-2 font-semibold text-black rounded-br-3xl rounded-tl-3xl text-xl border-green-500 py-4 mt-4 px-9 bg-green-500 transition-transform duration-300 hover:scale-105"
+              >
+                <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                 Try Wakamate Now
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-700 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+              </a>
+            </div>
+             <hr className='text-white/70 mx-10 mt-20 '/>
+          </div>
     </div>
-  );
-};
+  )
+}
 
-export default TeamAboutPage;
+export default AboutUs

@@ -1,35 +1,45 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
-const faqData = [
-  {
-    question: "What is WakaMateAI?",
-    answer:
-      "WakaMateAI is an AI-powered delivery, logistics, and management tool designed specifically for small business owners. It helps optimize delivery routes, manage logistics, and streamline operations to save time and reduce costs.",
-  },
-  {
-    question: "Is WakaMate AI free to use?",
-    answer:
-      "Yes, our core features are free for small business owners. Premium tools coming soon.",
-  },
-  {
-    question: "Does it work on my small phone?",
-    answer:
-      "Yes! WakaMate AI is web-application for now but it works great on low-end devices.",
-  },
-  {
-    question: "Is my business data secure?",
-    answer:
-      "Absolutely. We use bank-level encryption and never share your data with third parties. Your business information stays private.",
-  },
-  {
-    question: "How does WakaMate AI help with delivery routes?",
-    answer:
-      "Our AI analyzes traffic patterns, delivery locations, and vehicle capacity to create the most efficient routes, saving you time and fuel costs. It also learns from your feedback to continuously improve its suggestions.",
-  },
-];
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const FAQ = () => {
+  const faqs = [
+    {
+      question: "What is WakaMate AI?",
+      answer:
+        "WakaMate is a smart assistant designed for vendors, riders, and small business owners. It helps you plan delivery routes, track and restock inventory, calculate profit and loss, and even generate social media captions to promote your business.",
+    },
+    {
+      question: "Who can use WakaMate?",
+      answer:
+        "Anyone running a small or growing business can use it — market sellers, delivery vendors, food suppliers, riders, and even online sellers who deliver to customers.",
+    },
+    {
+      question: "How does the Delivery Assistant work?",
+      answer:
+        "You simply tell WakaMate the locations you want to deliver to, and it calculates the fastest and most cost-effective route. This saves you time, fuel, and stress.",
+    },
+    {
+      question: "What can the Trade Assistant do for me?",
+      answer:
+        "The Trade Assistant tracks your stock, suggests when to restock based on sales patterns, and shows you if you’re making profit or loss. It also gives tips on how to increase profit and cut losses.",
+    },
+    {
+      question: "How does the AI Captions feature work?",
+      answer:
+        "You tell WakaMate what you’re selling or promoting, and it instantly generates engaging captions you can post on WhatsApp, Instagram, or Facebook to attract more customers.",
+    },
+    {
+      question: "Do I need technical knowledge to use WakaMate?",
+      answer:
+        "Not at all. WakaMate is designed to be as simple as chatting with a friend. You type in your question or task, and the AI gives you clear answers.",
+    },
+    {
+      question: "How do I get started?",
+      answer:
+        "Just sign up, create an account, and start chatting with the AI. No setup or complicated process required.",
+    },
+  ];
+
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
@@ -37,48 +47,47 @@ const FAQ = () => {
   };
 
   return (
-    <div className="bg-white py-20 px-4 sm:px-6 lg:px-12">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-10 text-black font-black tracking-tight">
-          Frequently Asked <span className="text-green-500">Questions</span>
-        </h2>
-        <div className="divide-y divide-violet-200">
-          {faqData.map((faq, index) => (
+    <div className="pt-10 pb-20 my-10 rounded-4xl bg-green-500">
+      <div className="flex justify-between ">
+        <div>
+          <h1 className="text-8xl text-black text-start pl-10 uppercase my-10">
+            FAQ
+          </h1>
+          <h2 className="pl-10 w-100">
+            Got any question?, We've got answer! In this section we address the
+            most inquiries about Wakamate AI.
+          </h2>
+        </div>
+
+        {/* FAQ List */}
+        <div className="p-4 w-[55%] pt-25">
+          {faqs.map((faq, index) => (
             <motion.div
               key={index}
-              className="py-6"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
+              className="mb-4 border rounded-xl shadow-md p-4 bg-white/80"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }} // 👈 stagger effect
             >
+              {/* Question */}
               <button
+                className="flex justify-between w-full text-left font-semibold text-lg"
                 onClick={() => toggleFAQ(index)}
-                className="w-full text-left flex justify-between items-center font-medium text-lg text-black focus:outline-none cursor-pointer hover:text-green-500 transition-colors duration-200"
               >
                 {faq.question}
-                <motion.span
-                  className="text-xl font-bold ml-4 cursor-pointer"
-                  animate={{ rotate: openIndex === index ? 45 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  +
-                </motion.span>
+                <span>{openIndex === index ? "-" : "+"}</span>
               </button>
 
-              <AnimatePresence initial={false}>
-                {openIndex === index && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="mt-3 text-base text-gray-800 font-light"
-                  >
-                    <p>{faq.answer}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* Answer with transition */}
+              <div
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                  openIndex === index
+                    ? "max-h-40 opacity-100 mt-2"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <p className="text-gray-600">{faq.answer}</p>
+              </div>
             </motion.div>
           ))}
         </div>

@@ -1,1 +1,32 @@
 @import "tailwindcss";
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #60e557; /* Tailwind's gray-100 */
+}
+/* Roboto Condensed */
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("/fonts/Roboto_Condensed-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Karen */
+@font-face {
+  font-family: "Karen";
+  src: url("/fonts/karen-webfont.woff2") format("woff2"),
+       url("/fonts/karen-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Optional custom classes */
+.SmallFont {
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.BigFont {
+  font-family: "Karen", sans-serif;
+}
+
