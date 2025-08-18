@@ -48,9 +48,9 @@ const FAQ = () => {
 
   return (
     <div className="pt-10 pb-20 my-10 rounded-4xl bg-green-500">
-      <div className="flex justify-between ">
+      <div className="flex flex-col md:flex-row justify-between ">
         <div>
-          <h1 className="text-8xl text-black text-start pl-10 uppercase my-10">
+          <h1 className="md:text-8xl text-5xl text-black text-start pl-10 uppercase my-10">
             FAQ
           </h1>
           <h2 className="pl-10 w-100">
@@ -60,7 +60,7 @@ const FAQ = () => {
         </div>
 
         {/* FAQ List */}
-        <div className="p-4 w-[55%] pt-25">
+        <div className="p-4  md:w-[55%] pt-25">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}

@@ -115,7 +115,7 @@ export default function PhoneSection() {
           return (
             <motion.div
               key={feature.id}
-              className={`p-6 rounded-xl  transition-all duration-500 cursor-pointer ${
+              className={`p-6 mx-4 md:mx-0 rounded-xl  transition-all duration-500 cursor-pointer ${
                 isActive
                   ? `border-${feature.color}-500 bg-${feature.color}-50 shadow-lg`
                   : "border-zinc-700  border-4 hover:border-green-500 bg-zinc-700"

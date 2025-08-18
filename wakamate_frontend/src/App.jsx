@@ -93,9 +93,10 @@ function App() {
     path === "/verify";
 
   return (
-    <div className=" relative">
-      {!hideNavFooter && <Navbar />}
-
+    <div className="">
+      <div className="relative">
+         {!hideNavFooter && <Navbar />}
+       </div>
       <Routes>
         {/* Landing + Auth routes */}
         <Route path="/*" element={<LandingPage />} />

@@ -101,7 +101,7 @@ const testimonials = [
             whileInView={{ opacity: 1, x: 0}}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}>
-           <h1 className='text-7xl text-start pl-10 uppercase  my-10'>What Our <br /> <span className='ml-15'>Users Say</span> </h1>
+           <h1 className='md:text-7xl text-5xl text-start pl-2 md:pl-10 uppercase  my-10'>What Our <br /> <span className='ml-15'>Users Say</span> </h1>
           </motion.div>
         </div>
       <div className="relative">
