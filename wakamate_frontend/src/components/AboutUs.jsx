@@ -39,7 +39,7 @@ const AboutUs = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="text-8xl font-semibold z-10 uppercase pt-[120px] px-7"
+        className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl  font-semibold z-10 uppercase pt-[120px] px-7"
       >
         We transform <br /> hustle into lasting growth
       </motion.div>
@@ -50,9 +50,9 @@ const AboutUs = () => {
         </div>
       </div>
         <hr  className='text-white/70 mx-10 mt-20'/>
-        <div className='flex gap-20 w-full justify-between py-20 px-10'>
-           <h1 className='text-lg w-[30%] text-white/70'>WakaMate is your smart business companion, built to help vendors, riders, and small business owners work faster, sell more, and worry less.</h1>
-            <h1 className="flex flex-col text-white pt-20 w-[70%] text-4xl">
+        <div className='flex md:flex-row flex-col gap-20 w-full justify-between py-20 px-10'>
+           <h1 className='text-lg md:w-[30%] text-white/70'>WakaMate is your smart business companion, built to help vendors, riders, and small business owners work faster, sell more, and worry less.</h1>
+            <h1 className="flex flex-col text-white md:pt-20 w-[80%] md:w-[70%] text-4xl">
               <ScrollReveal
                 baseOpacity={0}
                 enableBlur={true}
@@ -95,7 +95,7 @@ const AboutUs = () => {
         <div className='pt-40'>
           <h1 className='text-center font-semibold text-4xl'>OUR TEAM</h1>
           <div className="flex justify-center items-center min-h-screen">
-            <div className="grid grid-cols-3 gap-20 px-10 py-10 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 px-10 py-10 max-w-6xl mx-auto">
               <div className=''>
                 <TiltedCard
                   imageSrc={michael}
@@ -269,14 +269,14 @@ const AboutUs = () => {
         </div>
          <div className=' pb-20 pt-30 bg-zinc-900'>
             <div className='flex flex-col items-center justify-center h-full  gap-5'>
-              <h1 className=' text-white px-25 items-center text-center text-5xl'>
+              <h1 className=' text-white px-5 md:px-25 items-center text-center text-5xl'>
                               
               <BlurText
                 text=" Your customers are waiting. Let Wakamate deliver, sell and grow with you."
                 delay={150}
                 animateBy="words"
                 direction="top"
-                className="text-center flex justify-center"
+                className="text-center sm:text-3xl text-2xl md:text-5xl flex justify-center"
               />
                 </h1>
               <a 

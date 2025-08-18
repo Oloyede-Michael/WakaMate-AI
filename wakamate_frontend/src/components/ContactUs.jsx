@@ -7,7 +7,7 @@ const ContactUs = () => {
        <div style={{ height: '600px', position: 'relative' }}>
          <CircularGallery bend={3} textColor="#ffffff" borderRadius={0.05} scrollEase={0.02}/>
         </div>
-      <h1 className='text-7xl pt-30 px-10 text-white'>HAVE QUESTIONS? <br />  LET'S CONNECT</h1>
+      <h1 className='text-4xl sm:text-6xl md:text-8xl lg:text-8xl  pt-30 px-10 text-white'>HAVE QUESTIONS? <br />  LET'S CONNECT</h1>
          <div className='flex pt-20 px-10 justify-between items-center flex-col md:flex-row'>
         <form className="space-y-6 text-white w-full max-w-xl">
             <div className="flex flex-col md:flex-row gap-6">
@@ -41,7 +41,7 @@ const ContactUs = () => {
             </button>
           </form>
                 {/* Right Side - Contact Info */}
-                <section>
+                <section className='pt-10'>
                 <div className="w-full text-white">
                   <h2 className="text-xl font-medium mb-4">Get in touch</h2>
                   <a
