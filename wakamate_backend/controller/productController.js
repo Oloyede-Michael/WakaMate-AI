@@ -28,7 +28,7 @@ exports.getAllProducts = async (req, res) => {
 exports.sellProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const { quantity } = req.body;
+        const { quantity, price, date } = req.body;
 
         const product = await Product.findOne({ _id: id, user: req.user._id });
         if (!product) return res.status(404).json({ message: "Product not found" });
@@ -36,15 +36,19 @@ exports.sellProduct = async (req, res) => {
         if (product.stock < quantity) {
             return res.status(400).json({ message: "Insufficient stock" });
         }
+        //use provided price to sellingprice
+        const salePrice = price ?? product.sellingPrice
 
+        //total sale amount
         const totalAmount = quantity * product.sellingPrice;
         product.stock -= quantity;
         product.unitsSold += quantity;
 
         product.sales.push({
             quantity,
-            price: product.sellingPrice,
+            price: salePrice,
             amountMade: totalAmount,
+            date: date ? new Date(date) : new Date()
         });
         await product.save();
 
@@ -118,5 +122,33 @@ exports.getWeeklySummary = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: "Error generating weekly summary" });
+  }
+};
+
+//getlowstock
+exports.getLowStockProducts = async (req, res) => {
+  try {
+    const products = await Product.find({
+      user: req.user._id,
+      $expr: { $lte: ["$stock", "$minStock"] },
+    });
+
+    const items = products.map(p => ({
+      productId: p._id,
+      name: p.name,
+      category: p.category,
+      stock: p.stock,
+      minStock: p.minStock,
+      deficit: Math.max(p.minStock - p.stock, 0),
+      updatedAt: p.updatedAt,
+    }));
+
+    res.status(200).json({
+      count: items.length,
+      items,
+    });
+  } catch (err) {
+    console.error("Low stock fetch error:", err);
+    res.status(500).json({ message: "Error fetching low stock products", err });
   }
 };

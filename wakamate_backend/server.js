@@ -9,7 +9,8 @@ const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
-
+const analysisRoutes = require("./routes/analysisRoutes");
+const deliveryRoutes = require("./routes/deliveryRoutes");
 // Connect to MongoDB
 connectDB();
 
@@ -43,11 +44,13 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/user", userRoutes);
 app.use("/api", productRoutes);
+app.use("/api", analysisRoutes)
+app.use("/api", deliveryRoutes);
 
 // Server
 const PORT = process.env.PORT || 1050;
 app.listen(PORT, () => {
-  console.log(`Server running ons http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
 
 //mongodb+srv://officialswiftfund:<db_password>@wakamateaidb.bxmcyla.mongodb.net/ (compass connection)
