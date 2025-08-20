@@ -1,0 +1,25 @@
+general:
+  use_uvloop: true
+  logging:
+    console:
+      _type: console
+      level: INFO
+
+  front_end:
+    _type: fastapi
+
+llms:
+  nim_llm:
+    _type: nim
+    model_name: moonshotai/kimi-k2-instruct
+    temperature: 0.7  # Higher temperature for creative captions
+    max_tokens: 2048
+    api_key: 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
+
+workflow:
+  _type: wakamate_ai_caption
+  llm_name: nim_llm
+  max_history: 15
+  api_base_url: "http://localhost:1050"
+  auth_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OGUzMmMyMDgxOGY4ZjI3MzU0MzczMyIsImlhdCI6MTc1NTY4MzE4MywiZXhwIjoxNzU2Mjg3OTgzfQ.Blskf_LmiE-ox5h4X39CHrbwPMXdnQtocc3RoznlBD0"  
+  description: "AI-Powered Social Media Caption Generator - Wakamate Assistant"
