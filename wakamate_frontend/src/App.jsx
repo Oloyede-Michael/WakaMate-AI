@@ -3,7 +3,7 @@
 // App.jsx
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBar';
 import About from './components/AboutUs';
 import Register from './components/auth/Register';
 import EmailVerify from './components/auth/EmailVerify';
@@ -91,6 +91,7 @@ function App() {
     path === "/register" ||
     path === "/login" ||
     path === "/verify";
+    path === "/caption-generator";
 
   return (
     <div className="">

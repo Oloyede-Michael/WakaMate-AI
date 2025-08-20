@@ -1,5 +1,6 @@
 import { Sparkles, Truck, Package, TrendingUp, CheckCircle, MessageSquare, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AIDashboard() {
   // Simulate user data (in a real app, you'd get this from localStorage or an API)
@@ -9,8 +10,9 @@ export default function AIDashboard() {
   const [profitResponse, setProfitResponse] = useState(null);
   const [connectionStatus, setConnectionStatus] = useState('disconnected');
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // API Configuration - using the same pattern as DeliveryAss
+  // API Configuration 
   const API_BASE_URL = 'http://localhost:3001/api';
 
   useEffect(() => {
@@ -405,8 +407,7 @@ export default function AIDashboard() {
             title="AI-Generated Caption" 
             description="Let AI write a caption for your next product post."
             onClick={() => {
-              // This would connect to another AI service
-              alert("This feature would connect to a caption generation AI service.");
+              navigate('/dashboard/ai-caption/caption-generator');
             }}
           />
         </div>
