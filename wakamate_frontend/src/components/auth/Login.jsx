@@ -117,7 +117,7 @@ export default function Login() {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       />
 
-      <div className="min-h-screen flex items-center justify-center px-4 bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-zinc-900">
         <div className="flex w-full max-w-7xl mx-auto items-center justify-between gap-12">
           {/* Left Side – Branding */}
           <div className="hidden lg:flex flex-col flex-1 max-w-md">
@@ -129,7 +129,7 @@ export default function Login() {
                 WAKAMATE AI
               </span>
             </div>
-            <p className="text-gray-700 text-base leading-relaxed">
+            <p className="text-gray-100 text-base leading-relaxed">
               "Welcome back! Continue your journey to smarter sales. 
               Connect with your customers like never before."
             </p>

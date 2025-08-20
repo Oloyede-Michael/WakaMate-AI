@@ -116,7 +116,7 @@ export default function Register() {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       />
 
-      <div className="min-h-screen flex items-center justify-center px-4 bg-gray-900">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-zinc-900">
         <div className="flex w-full max-w-7xl mx-auto items-center justify-between gap-12">
           <div className="hidden lg:flex flex-col flex-1 max-w-md">
             <div className="mb-6">
@@ -127,7 +127,7 @@ export default function Register() {
                 WAKAMATE AI
               </span>
             </div>
-            <p className="text-gray-700 text-base leading-relaxed">
+            <p className="text-gray-100 text-base leading-relaxed">
               "Step into a world where smarter sales is no longer a privilege — it's a mission.
               Sell smarter. Connect faster. Thrive together."
             </p>

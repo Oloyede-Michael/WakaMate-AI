@@ -26,7 +26,7 @@ embedders:
     model_name: nvidia/nv-embedqa-e5-v5
 
 workflow:
-  _type: wakamate_inventory_summary
+  _type: wakamate_inventory
   tool_names:
     - current_datetime
   llm_name: nim_llm

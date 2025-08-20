@@ -24,7 +24,7 @@ exports.getAllProducts = async (req, res) => {
     }
 };
 
-//sell a product
+//sell a product - FIXED VERSION
 exports.sellProduct = async (req, res) => {
     try {
         const { id } = req.params;
@@ -36,30 +36,48 @@ exports.sellProduct = async (req, res) => {
         if (product.stock < quantity) {
             return res.status(400).json({ message: "Insufficient stock" });
         }
-        //use provided price to sellingprice
-        const salePrice = price ?? product.sellingPrice
 
-        //total sale amount
-        const totalAmount = quantity * product.sellingPrice;
+        // Use provided price or fallback to sellingPrice
+        const salePrice = price ?? product.sellingPrice;
+
+        // BUG FIX: Calculate total amount using salePrice, not product.sellingPrice
+        const totalAmount = quantity * salePrice;
+        
         product.stock -= quantity;
         product.unitsSold += quantity;
 
         product.sales.push({
             quantity,
             price: salePrice,
-            amountMade: totalAmount,
+            amountMade: totalAmount, // Now correctly uses salePrice
             date: date ? new Date(date) : new Date()
         });
+        
         await product.save();
 
         res.status(200).json({
-            message: "Sale recorded",
+            message: "Sale recorded successfully",
+            success: true, // Added for frontend consistency
+            data: { // Wrapped in data object for consistency
+                sale: {
+                    quantity,
+                    price: salePrice,
+                    amountMade: totalAmount,
+                    date: date ? new Date(date) : new Date()
+                },
+                updatedStock: product.stock,
+                totalUnitsSold: product.unitsSold
+            },
             product,
             lowStock: checkStockAlert(product)
         });
     } catch (err) {
-        console.error("Sell error:", err)
-        res.status(500).json({ error: "Sale error" });
+        console.error("Sell error:", err);
+        res.status(500).json({ 
+            success: false,
+            error: "Sale error",
+            message: err.message 
+        });
     }
 };
 
