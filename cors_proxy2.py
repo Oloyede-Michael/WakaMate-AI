@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
 Simple CORS proxy server to test your delivery agent
-Run this on port 3001 to proxy requests to your agent on port 8000
+<<<<<<< HEAD
+Run this on port 3003 to proxy requests to your agent on port 8000
+=======
+Run this on port 3003 to proxy requests to your agent on port 8000
+>>>>>>> 14fa354313b461054c84565c07e1c6b90fc6114c
 """
 
 from flask import Flask, request, jsonify, Response
