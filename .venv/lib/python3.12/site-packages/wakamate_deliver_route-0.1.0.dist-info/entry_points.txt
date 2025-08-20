@@ -1,0 +1,2 @@
+[aiq.components]
+wakamate_deliver_route = wakamate_deliver_route.register
