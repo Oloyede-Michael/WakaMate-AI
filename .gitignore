@@ -1,0 +1,17 @@
+# Ignore Python virtual environment
+.venv/
+
+# Ignore common Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+
+# Ignore logs
+*.log
+
+# Ignore IDE/editor settings (optional, if you use any of these)
+.vscode/
+.idea/
+*.swp
