@@ -1,0 +1,10 @@
+pyproject.toml
+src/wakamate_ai_caption/__init__.py
+src/wakamate_ai_caption/register.py
+src/wakamate_ai_caption/wakamate_ai_caption_function.py
+src/wakamate_ai_caption.egg-info/PKG-INFO
+src/wakamate_ai_caption.egg-info/SOURCES.txt
+src/wakamate_ai_caption.egg-info/dependency_links.txt
+src/wakamate_ai_caption.egg-info/entry_points.txt
+src/wakamate_ai_caption.egg-info/requires.txt
+src/wakamate_ai_caption.egg-info/top_level.txt
