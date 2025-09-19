@@ -1,12 +1,94 @@
-# React + Vite
+# WakaMate Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend application for WakaMate AI, an advanced AI-powered delivery, logistics, and management platform designed for small business owners.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The WakaMate frontend provides a modern, responsive user interface built with React and Vite, delivering a seamless experience for managing deliveries, inventory, and business operations.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **AI-Driven Delivery Optimization**: Interactive route planning and optimization
+- **Business Management Dashboard**: Easily manage products, suppliers, and delivery areas
+- **Inventory Management**: Real-time tracking and AI-powered insights
+- **Responsive Design**: Works great on all devices, including low-end phones
+- **Secure Authentication**: Robust user registration and login system
+- **Business Intelligence**: Profit tracking and performance analytics
+
+## Tech Stack
+
+- **React**: Component-based UI library
+- **Vite**: Build tool and development server
+- **Tailwind CSS**: Utility-first styling
+- **Framer Motion**: Smooth animations
+- **React Router**: Client-side routing
+- **ESLint**: Code quality and consistency
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (Latest LTS version recommended)
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/Oloyede-Michael/WakaMate-AI.git
+```
+
+2. Navigate to the frontend directory
+```bash
+cd wakamate_frontend
+```
+
+3. Install dependencies
+```bash
+npm install
+```
+
+4. Start the development server
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+## Project Structure
+
+```
+wakamate_frontend/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── pages/         # Route-level components
+│   ├── assets/        # Static resources
+│   └── ...
+```
+
+## Core Features
+
+- **Home Dashboard**: Overview of business metrics and quick actions
+- **Delivery Planning**: AI-powered route optimization
+- **Inventory Management**: Stock tracking and reordering
+- **Profit Analytics**: Business performance insights
+- **Marketing Tools**: AI-generated social media content
+
+## Security
+
+- Secure authentication using JWT
+- Data encryption for sensitive information
+- Protected API endpoints
+- Cross-Origin Resource Sharing (CORS) enabled
+
+## Support
+
+For questions or issues, please open an issue in the main repository or contact the development team.
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit pull requests with your improvements.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file in the main repository for details.

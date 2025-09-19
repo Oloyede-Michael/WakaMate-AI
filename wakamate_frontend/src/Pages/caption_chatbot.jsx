@@ -12,7 +12,9 @@ import {
   Check,
   Zap,
   Heart,
-  Smile
+  Smile,
+  Moon,
+  Sun
 } from 'lucide-react';
 
 export default function CaptionChatbot() {
@@ -30,6 +32,7 @@ export default function CaptionChatbot() {
   const [connectionStatus, setConnectionStatus] = useState('disconnected');
   const [error, setError] = useState(null);
   const [copiedMessageId, setCopiedMessageId] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -206,43 +209,45 @@ export default function CaptionChatbot() {
   };
   
   const formatMessage = (content) => {
+    const darkClass = isDarkMode ? 'dark' : '';
+    
     return content
       // Headers
-      .replace(/^\*\*(.*?)\*\*$/gm, '<h3 class="text-lg font-bold text-purple-800 mt-4 mb-2 border-b border-purple-200 pb-1">$1</h3>')
-      .replace(/^### (.*$)/gm, '<h4 class="text-md font-semibold text-purple-700 mt-3 mb-2">$1</h4>')
-      .replace(/^## (.*$)/gm, '<h3 class="text-lg font-bold text-purple-800 mt-4 mb-2 border-b border-purple-200 pb-1">$1</h3>')
-      .replace(/^# (.*$)/gm, '<h2 class="text-xl font-bold text-purple-900 mt-6 mb-3">$1</h2>')
+      .replace(/^\*\*(.*?)\*\*$/gm, `<h3 class="text-lg font-bold ${isDarkMode ? 'text-purple-300' : 'text-purple-800'} mt-4 mb-2 border-b ${isDarkMode ? 'border-purple-600' : 'border-purple-200'} pb-1">$1</h3>`)
+      .replace(/^### (.*$)/gm, `<h4 class="text-md font-semibold ${isDarkMode ? 'text-purple-400' : 'text-purple-700'} mt-3 mb-2">$1</h4>`)
+      .replace(/^## (.*$)/gm, `<h3 class="text-lg font-bold ${isDarkMode ? 'text-purple-300' : 'text-purple-800'} mt-4 mb-2 border-b ${isDarkMode ? 'border-purple-600' : 'border-purple-200'} pb-1">$1</h3>`)
+      .replace(/^# (.*$)/gm, `<h2 class="text-xl font-bold ${isDarkMode ? 'text-purple-200' : 'text-purple-900'} mt-6 mb-3">$1</h2>`)
       
       // Lists
-      .replace(/^[•·]\s+(.*$)/gm, '<li class="ml-4 mb-1 list-disc list-inside text-gray-700">$1</li>')
-      .replace(/^-\s+(.*$)/gm, '<li class="ml-4 mb-1 list-disc list-inside text-gray-700">$1</li>')
-      .replace(/^\*\s+(.*$)/gm, '<li class="ml-4 mb-1 list-disc list-inside text-gray-700">$1</li>')
-      .replace(/^(\d+)\.\s+(.*$)/gm, '<li class="ml-4 mb-1 list-decimal list-inside text-gray-700">$2</li>')
+      .replace(/^[•·]\s+(.*$)/gm, `<li class="ml-4 mb-1 list-disc list-inside ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}">$1</li>`)
+      .replace(/^-\s+(.*$)/gm, `<li class="ml-4 mb-1 list-disc list-inside ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}">$1</li>`)
+      .replace(/^\*\s+(.*$)/gm, `<li class="ml-4 mb-1 list-disc list-inside ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}">$1</li>`)
+      .replace(/^(\d+)\.\s+(.*$)/gm, `<li class="ml-4 mb-1 list-decimal list-inside ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}">$2</li>`)
       
       // Group consecutive list items
       .replace(/(<li[^>]*>.*?<\/li>\s*)+/g, function(match) {
-        return '<ul class="my-2 space-y-1 bg-gray-50 rounded-lg p-3 border-l-4 border-purple-300">' + match + '</ul>';
+        return `<ul class="my-2 space-y-1 ${isDarkMode ? 'bg-gray-800/50 border-purple-600' : 'bg-gray-50 border-purple-300'} rounded-lg p-3 border-l-4">${match}</ul>`;
       })
       
       // Text formatting
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em class="italic text-gray-700">$1</em>')
-      .replace(/`(.*?)`/g, '<code class="bg-gray-100 px-2 py-1 rounded text-sm font-mono text-purple-700">$1</code>')
+      .replace(/\*\*(.*?)\*\*/g, `<strong class="font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}">$1</strong>`)
+      .replace(/\*(.*?)\*/g, `<em class="italic ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}">$1</em>`)
+      .replace(/`(.*?)`/g, `<code class="${isDarkMode ? 'bg-gray-700 text-purple-300' : 'bg-gray-100 text-purple-700'} px-2 py-1 rounded text-sm font-mono">$1</code>`)
       
       // Code blocks
-      .replace(/```([\s\S]*?)```/g, '<pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto my-3 text-sm border-l-4 border-purple-400"><code>$1</code></pre>')
+      .replace(/```([\s\S]*?)```/g, `<pre class="${isDarkMode ? 'bg-gray-800 border-purple-500' : 'bg-gray-100 border-purple-400'} p-4 rounded-lg overflow-x-auto my-3 text-sm border-l-4"><code>$1</code></pre>`)
       
       // Emojis and special formatting
-      .replace(/❌/g, '<span class="text-red-600">❌</span>')
-      .replace(/✅/g, '<span class="text-green-600">✅</span>')
-      .replace(/🚀/g, '<span class="text-blue-600">🚀</span>')
-      .replace(/💡/g, '<span class="text-yellow-600">💡</span>')
-      .replace(/📦/g, '<span class="text-purple-600">📦</span>')
-      .replace(/🔧/g, '<span class="text-gray-600">🔧</span>')
-      .replace(/⚠️/g, '<span class="text-orange-600">⚠️</span>')
-      .replace(/🎯/g, '<span class="text-red-600">🎯</span>')
-      .replace(/💰/g, '<span class="text-green-600">💰</span>')
-      .replace(/📱/g, '<span class="text-blue-600">📱</span>')
+      .replace(/❌/g, '<span class="text-red-500">❌</span>')
+      .replace(/✅/g, '<span class="text-green-500">✅</span>')
+      .replace(/🚀/g, '<span class="text-blue-500">🚀</span>')
+      .replace(/💡/g, '<span class="text-yellow-500">💡</span>')
+      .replace(/📦/g, '<span class="text-purple-500">📦</span>')
+      .replace(/🔧/g, '<span class="text-gray-500">🔧</span>')
+      .replace(/⚠️/g, '<span class="text-orange-500">⚠️</span>')
+      .replace(/🎯/g, '<span class="text-red-500">🎯</span>')
+      .replace(/💰/g, '<span class="text-green-500">💰</span>')
+      .replace(/📱/g, '<span class="text-blue-500">📱</span>')
       .replace(/🔥/g, '<span class="text-red-500">🔥</span>')
       
       // Line breaks
@@ -252,10 +257,10 @@ export default function CaptionChatbot() {
   
   const getConnectionStatus = () => {
     const statusConfig = {
-      connected: { color: 'bg-green-500', text: '🟢 Caption AI Connected', textColor: 'text-green-700' },
-      connecting: { color: 'bg-yellow-500', text: '🟡 Connecting...', textColor: 'text-yellow-700' },
-      warning: { color: 'bg-orange-500', text: '🟠 Connection Uncertain', textColor: 'text-orange-700' },
-      disconnected: { color: 'bg-red-500', text: '🔴 Disconnected', textColor: 'text-red-700' }
+      connected: { color: 'bg-green-500', text: '🟢 Caption AI Connected', textColor: 'text-green-400' },
+      connecting: { color: 'bg-yellow-500', text: '🟡 Connecting...', textColor: 'text-yellow-400' },
+      warning: { color: 'bg-orange-500', text: '🟠 Connection Uncertain', textColor: 'text-orange-400' },
+      disconnected: { color: 'bg-red-500', text: '🔴 Disconnected', textColor: 'text-red-400' }
     };
     
     return statusConfig[connectionStatus] || statusConfig.disconnected;
@@ -287,30 +292,58 @@ export default function CaptionChatbot() {
   const status = getConnectionStatus();
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-green-50">
+    <div className={`flex flex-col h-screen transition-all duration-300 ${
+      isDarkMode 
+        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-purple-900' 
+        : 'bg-gradient-to-br from-purple-50 via-blue-50 to-green-50'
+    }`}>
       {/* Header */}
-      <div className="bg-white shadow-sm border-b border-purple-200 p-4">
+      <div className={`${
+        isDarkMode 
+          ? 'bg-gray-800/90 border-gray-700' 
+          : 'bg-white/90 border-purple-200'
+      } backdrop-blur-sm shadow-lg border-b p-4 transition-all duration-300`}>
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center shadow-lg">
+              <Sparkles className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Wakamate Caption Generator</h1>
-              <p className="text-sm text-gray-600">AI-powered social media captions</p>
+              <h1 className={`text-2xl font-bold ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>Wakamate Caption Generator</h1>
+              <p className={`text-sm ${
+                isDarkMode ? 'text-gray-300' : 'text-gray-600'
+              }`}>AI-powered social media captions</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-3">
             <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className={`flex items-center gap-2 px-4 py-2 ${
+                isDarkMode 
+                  ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' 
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              } rounded-xl text-sm transition-all duration-300 shadow-md hover:shadow-lg`}
+            >
+              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {isDarkMode ? 'Light' : 'Dark'}
+            </button>
+            
+            <button
               onClick={clearChat}
-              className="flex items-center gap-2 px-3 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg text-sm transition-colors"
+              className={`flex items-center gap-2 px-4 py-2 ${
+                isDarkMode 
+                  ? 'bg-gray-700 text-gray-200 hover:bg-gray-600' 
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              } rounded-xl text-sm transition-all duration-300 shadow-md hover:shadow-lg`}
             >
               <RefreshCw className="w-4 h-4" />
               Clear
             </button>
             
-            <div className={`px-3 py-1 rounded-full text-white text-sm ${status.color}`}>
+            <div className={`px-4 py-2 rounded-xl text-white text-sm shadow-md ${status.color}`}>
               {status.text}
             </div>
           </div>
@@ -320,16 +353,28 @@ export default function CaptionChatbot() {
       {/* Error Display */}
       {error && (
         <div className="max-w-4xl mx-auto w-full px-4 pt-4">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className={`${
+            isDarkMode 
+              ? 'bg-red-900/20 border-red-700' 
+              : 'bg-red-50 border-red-200'
+          } border rounded-xl p-4 shadow-md`}>
             <div className="flex items-center gap-3">
               <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
               <div className="flex-1">
-                <p className="text-red-800 font-medium">Connection Error</p>
-                <p className="text-red-700 text-sm mt-1">{error}</p>
+                <p className={`font-medium ${
+                  isDarkMode ? 'text-red-400' : 'text-red-800'
+                }`}>Connection Error</p>
+                <p className={`text-sm mt-1 ${
+                  isDarkMode ? 'text-red-300' : 'text-red-700'
+                }`}>{error}</p>
               </div>
               <button
                 onClick={() => setError(null)}
-                className="text-red-600 hover:text-red-700 text-sm font-medium"
+                className={`text-sm font-medium transition-colors ${
+                  isDarkMode 
+                    ? 'text-red-400 hover:text-red-300' 
+                    : 'text-red-600 hover:text-red-700'
+                }`}
               >
                 ×
               </button>
@@ -339,33 +384,39 @@ export default function CaptionChatbot() {
       )}
 
       {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-4">
-        <div className="max-w-4xl mx-auto space-y-4">
+      <div className="flex-1 overflow-y-auto px-4 py-6">
+        <div className="max-w-4xl mx-auto space-y-6">
           {messages.map((message) => (
             <div key={message.id} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`flex max-w-[85%] ${message.type === 'user' ? 'flex-row-reverse' : 'flex-row'} items-start space-x-3`}>
                 {/* Avatar */}
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg ${
                   message.type === 'user' 
                     ? 'bg-gradient-to-r from-blue-500 to-purple-500 ml-3' 
                     : 'bg-gradient-to-r from-purple-500 to-pink-500 mr-3'
                 }`}>
                   {message.type === 'user' ? (
-                    <User className="w-4 h-4 text-white" />
+                    <User className="w-5 h-5 text-white" />
                   ) : (
-                    <Bot className="w-4 h-4 text-white" />
+                    <Bot className="w-5 h-5 text-white" />
                   )}
                 </div>
                 
                 {/* Message Content */}
-                <div className={`rounded-2xl px-4 py-3 shadow-sm relative group ${
+                <div className={`rounded-2xl px-5 py-4 shadow-lg backdrop-blur-sm relative group transition-all duration-300 hover:shadow-xl ${
                   message.type === 'user' 
                     ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white' 
-                    : 'bg-white border border-gray-200'
+                    : isDarkMode
+                      ? 'bg-gray-800/80 border border-gray-700'
+                      : 'bg-white/80 border border-gray-200'
                 }`}>
                   <div 
-                    className={`text-sm leading-relaxed ${
-                      message.type === 'user' ? 'text-white' : 'text-gray-800'
+                    className={`leading-relaxed ${
+                      message.type === 'user' 
+                        ? 'text-white' 
+                        : isDarkMode 
+                          ? 'text-gray-200' 
+                          : 'text-gray-800'
                     }`}
                     dangerouslySetInnerHTML={{ 
                       __html: message.type === 'bot' ? formatMessage(message.content) : message.content 
@@ -376,20 +427,30 @@ export default function CaptionChatbot() {
                   {message.type === 'bot' && (
                     <button
                       onClick={() => copyToClipboard(message.content, message.id)}
-                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-100 rounded"
+                      className={`absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 rounded-lg ${
+                        isDarkMode 
+                          ? 'hover:bg-gray-700' 
+                          : 'hover:bg-gray-100'
+                      }`}
                       title="Copy message"
                     >
                       {copiedMessageId === message.id ? (
-                        <Check className="w-3 h-3 text-green-500" />
+                        <Check className="w-4 h-4 text-green-500" />
                       ) : (
-                        <Copy className="w-3 h-3 text-gray-400" />
+                        <Copy className={`w-4 h-4 ${
+                          isDarkMode ? 'text-gray-400' : 'text-gray-400'
+                        }`} />
                       )}
                     </button>
                   )}
                   
                   {/* Timestamp */}
-                  <div className={`text-xs mt-2 ${
-                    message.type === 'user' ? 'text-blue-100' : 'text-gray-400'
+                  <div className={`text-xs mt-3 ${
+                    message.type === 'user' 
+                      ? 'text-blue-100' 
+                      : isDarkMode 
+                        ? 'text-gray-500' 
+                        : 'text-gray-400'
                   }`}>
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </div>
@@ -402,13 +463,19 @@ export default function CaptionChatbot() {
           {isLoading && (
             <div className="flex justify-start">
               <div className="flex items-start space-x-3 max-w-[85%]">
-                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                  <Bot className="w-4 h-4 text-white" />
+                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+                  <Bot className="w-5 h-5 text-white" />
                 </div>
-                <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
-                  <div className="flex items-center space-x-2">
-                    <Loader2 className="w-4 h-4 text-purple-500 animate-spin" />
-                    <span className="text-sm text-gray-600">Wakamate is thinking...</span>
+                <div className={`${
+                  isDarkMode 
+                    ? 'bg-gray-800/80 border-gray-700' 
+                    : 'bg-white/80 border-gray-200'
+                } border rounded-2xl px-5 py-4 shadow-lg backdrop-blur-sm`}>
+                  <div className="flex items-center space-x-3">
+                    <Loader2 className="w-5 h-5 text-purple-500 animate-spin" />
+                    <span className={`${
+                      isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                    }`}>Wakamate is thinking...</span>
                   </div>
                 </div>
               </div>
@@ -421,18 +488,24 @@ export default function CaptionChatbot() {
 
       {/* Suggestion Prompts */}
       {messages.length === 1 && !isLoading && (
-        <div className="px-4 py-2">
+        <div className="px-4 py-3">
           <div className="max-w-4xl mx-auto">
-            <p className="text-sm text-gray-600 mb-3 flex items-center gap-2">
-              <Zap className="w-4 h-4" />
+            <p className={`text-sm mb-4 flex items-center gap-2 ${
+              isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            }`}>
+              <Zap className="w-4 h-4 text-purple-500" />
               Try these suggestions:
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {suggestionPrompts.map((prompt, index) => (
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(prompt)}
-                  className="px-3 py-2 bg-white border border-purple-200 rounded-full text-sm text-gray-700 hover:bg-purple-50 hover:border-purple-300 transition-colors"
+                  className={`px-4 py-3 ${
+                    isDarkMode 
+                      ? 'bg-gray-800/60 border-gray-600 text-gray-200 hover:bg-gray-700/80 hover:border-purple-500' 
+                      : 'bg-white/60 border-purple-200 text-gray-700 hover:bg-purple-50 hover:border-purple-300'
+                  } border rounded-xl text-sm transition-all duration-300 backdrop-blur-sm shadow-md hover:shadow-lg hover:scale-105`}
                 >
                   {prompt}
                 </button>
@@ -443,9 +516,13 @@ export default function CaptionChatbot() {
       )}
 
       {/* Input Area */}
-      <div className="bg-white border-t border-gray-200 p-4">
+      <div className={`${
+        isDarkMode 
+          ? 'bg-gray-800/90 border-gray-700' 
+          : 'bg-white/90 border-gray-200'
+      } backdrop-blur-sm border-t p-4 transition-all duration-300`}>
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-end space-x-3">
+          <div className="flex items-end space-x-4">
             <div className="flex-1 relative">
               <textarea
                 ref={inputRef}
@@ -453,14 +530,20 @@ export default function CaptionChatbot() {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask me to create captions for your products or any topic..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-sm"
+                className={`w-full px-5 py-4 ${
+                  isDarkMode 
+                    ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-purple-500' 
+                    : 'bg-white/50 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-purple-500'
+                } border rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/20 resize-none backdrop-blur-sm transition-all duration-300 shadow-md`}
                 rows="1"
-                style={{ minHeight: '44px', maxHeight: '120px' }}
+                style={{ minHeight: '56px', maxHeight: '120px' }}
                 disabled={isLoading}
               />
               
               {/* Character count */}
-              <div className="absolute bottom-2 right-12 text-xs text-gray-400">
+              <div className={`absolute bottom-3 right-16 text-xs ${
+                isDarkMode ? 'text-gray-500' : 'text-gray-400'
+              }`}>
                 {inputMessage.length}/1000
               </div>
             </div>
@@ -468,34 +551,20 @@ export default function CaptionChatbot() {
             <button
               onClick={handleSendMessage}
               disabled={!inputMessage.trim() || isLoading}
-              className={`p-3 rounded-2xl transition-colors ${
+              className={`p-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl ${
                 inputMessage.trim() && !isLoading
-                  ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600 shadow-lg'
-                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600 hover:scale-105'
+                  : isDarkMode
+                    ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
             >
               {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-6 h-6 animate-spin" />
               ) : (
-                <Send className="w-5 h-5" />
+                <Send className="w-6 h-6" />
               )}
             </button>
-          </div>
-          
-          <div className="flex items-center justify-between mt-3 text-xs text-gray-500">
-            <div className="flex items-center gap-4">
-              <span className={`flex items-center gap-1 ${status.textColor}`}>
-                <MessageSquare className="w-3 h-3" />
-                {status.text}
-              </span>
-              <span>Press Enter to send, Shift+Enter for new line</span>
-            </div>
-            
-            <div className="flex items-center gap-1">
-              <span>Made with</span>
-              <Heart className="w-3 h-3 text-red-500" />
-              <span>by Team Wakamate AI</span>
-            </div>
           </div>
         </div>
       </div>

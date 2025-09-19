@@ -12,6 +12,7 @@ WakaMate AI is an advanced, AI-powered delivery, logistics, and management platf
 - [Frameworks & Technologies Used](#frameworks--technologies-used)
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
+- [Large Files & Git LFS](#large-files--git-lfs)
 - [Core Values](#core-values)
 - [Team](#team)
 - [FAQ](#faq)
@@ -83,6 +84,7 @@ Founded in 2025 by a passionate team, WakaMate AI started with a vision to empow
 - [Node.js](https://nodejs.org/)
 - [MongoDB](https://www.mongodb.com/)
 - [Yarn](https://yarnpkg.com/) or [npm](https://www.npmjs.com/)
+- [Git LFS](https://git-lfs.github.com/) (for large files)
 
 ### Backend Setup
 
@@ -122,6 +124,31 @@ Founded in 2025 by a passionate team, WakaMate AI started with a vision to empow
     npm run dev
     ```
    The frontend will run on `http://localhost:5173`.
+
+---
+
+## Large Files & Git LFS
+
+This repository uses **Git Large File Storage (Git LFS)** and `.gitattributes` to efficiently manage large files such as `.png`, `.mp4`, `.zip`, and other media assets. This helps keep the repository size manageable and ensures smooth cloning and pulling of large files.
+
+**Before cloning or pulling the repo, make sure to install Git LFS:**
+```bash
+git lfs install
+```
+
+**After cloning, pull the large files:**
+```bash
+git lfs pull
+```
+
+**Note:**  
+If you add new large files (e.g., images, videos, zip archives), make sure they are tracked by Git LFS. Example:
+```bash
+git lfs track "*.png"
+git lfs track "*.mp4"
+git lfs track "*.zip"
+```
+This is managed automatically via the `.gitattributes` file in the repo.
 
 ---
 
@@ -209,4 +236,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 We welcome contributions! Please fork the repo, create your feature branch, and submit a pull request.
 
-For further questions or support, please open an issue or contact the
+For further questions or support, check the about-us page for the Co-founders details.

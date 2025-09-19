@@ -21,5 +21,5 @@ workflow:
   llm_name: nim_llm
   max_history: 15
   api_base_url: "http://localhost:1050"
-  auth_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OGUzMmMyMDgxOGY4ZjI3MzU0MzczMyIsImlhdCI6MTc1NTY4MzE4MywiZXhwIjoxNzU2Mjg3OTgzfQ.Blskf_LmiE-ox5h4X39CHrbwPMXdnQtocc3RoznlBD0"  
+  auth_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTIzNWRkZjFkYTA5Yzc3ODI2YWE2ZCIsImlhdCI6MTc1NzM1ODI4NywiZXhwIjoxNzU3OTYzMDg3fQ.u1cQBlLwjGd67rwTlz0bq7JR0vra7jHOAz8Vy5olI9k"  
   description: "AI-Powered Social Media Caption Generator - Wakamate Assistant"

@@ -36,7 +36,7 @@ class WakamateInventoryFunctionConfig(FunctionBaseConfig, name="wakamate_invento
     max_history: int = Field(default=20, description="Maximum conversation history")
     api_base_url: str = Field(default="http://localhost:1050", description="Wakamate API base URL")
     auth_token: Optional[str] = Field(
-        default="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTIzNWRkZjFkYTA5Yzc3ODI2YWE2ZCIsImlhdCI6MTc1NTY1MDc0OSwiZXhwIjoxNzU2MjU1NTQ5fQ.mrdpoOAEHosy5R5k2Xcsdw2-ag2gEZ2ljmz3HnjWLqY", 
+        default="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTIzNWRkZjFkYTA5Yzc3ODI2YWE2ZCIsImlhdCI6MTc1NzM1ODI4NywiZXhwIjoxNzU3OTYzMDg3fQ.u1cQBlLwjGd67rwTlz0bq7JR0vra7jHOAz8Vy5olI9k", 
         description="Authentication token for API"
     )
 

@@ -10,7 +10,9 @@ import {
   Sparkles,
   Plus,
   Loader2,
-  X
+  X,
+  Eye,
+  ArrowDown
 } from 'lucide-react';
 import { Link } from "react-router-dom";
 
@@ -120,6 +122,7 @@ export default function Dashboard() {
   const [products, setProducts] = useState([]);
   const [deliveries, setDeliveries] = useState([]);
   const [showSaleForm, setShowSaleForm] = useState(false);
+  const [showAllTransactions, setShowAllTransactions] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('');
   const [saleQuantity, setSaleQuantity] = useState('');
   const [salePrice, setSalePrice] = useState('');
@@ -196,6 +199,20 @@ export default function Dashboard() {
       const productRevenue = product.sales?.reduce((sum, sale) => sum + sale.amountMade, 0) || 0;
       return total + productRevenue;
     }, 0);
+  }, [products]);
+
+  // Get all transactions sorted by date
+  const allTransactions = React.useMemo(() => {
+    return products
+      .filter(product => product.sales && product.sales.length > 0)
+      .flatMap(product => 
+        product.sales.map(sale => ({
+          ...sale,
+          productName: product.name,
+          productId: product._id
+        }))
+      )
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
   }, [products]);
 
   const handleRecordSale = async () => {
@@ -439,7 +456,7 @@ export default function Dashboard() {
               </button>
             </div>
             
-            {products.length === 0 ? (
+            {allTransactions.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12">
                 <div className="w-20 h-20 text-gray-300 mb-4">
                   <ShoppingCart className="w-full h-full" />
@@ -454,36 +471,39 @@ export default function Dashboard() {
               </div>
             ) : (
               <div className="space-y-3">
-                {/* Display recent sales from products */}
-                {products
-                  .filter(product => product.sales && product.sales.length > 0)
-                  .flatMap(product => 
-                    product.sales.map(sale => ({
-                      ...sale,
-                      productName: product.name,
-                      productId: product._id
-                    }))
-                  )
-                  .sort((a, b) => new Date(b.date) - new Date(a.date))
-                  .slice(0, 5)
-                  .map((sale, index) => (
-                    <div key={`${sale.productId}-${index}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <div>
-                        <p className="font-medium text-gray-900">{sale.productName}</p>
-                        <p className="text-sm text-gray-500">
-                          {sale.quantity} units × {formatCurrency(sale.price)} = {formatCurrency(sale.amountMade)}
-                        </p>
-                        <p className="text-xs text-gray-400">
-                          {new Date(sale.date).toLocaleDateString()} at {new Date(sale.date).toLocaleTimeString()}
-                        </p>
-                      </div>
-                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                        <Banknote className="w-4 h-4 text-green-600" />
-                      </div>
+                {/* Display only first 3 transactions */}
+                {allTransactions.slice(0, 3).map((sale, index) => (
+                  <div key={`${sale.productId}-${index}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium text-gray-900">{sale.productName}</p>
+                      <p className="text-sm text-gray-500">
+                        {sale.quantity} units × {formatCurrency(sale.price)} = {formatCurrency(sale.amountMade)}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {new Date(sale.date).toLocaleDateString()} at {new Date(sale.date).toLocaleTimeString()}
+                      </p>
                     </div>
-                  ))}
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                      <Banknote className="w-4 h-4 text-green-600" />
+                    </div>
+                  </div>
+                ))}
+
+                {/* View All Button - Only show if there are more than 3 transactions */}
+                {allTransactions.length > 3 && (
+                  <div className="flex justify-center mt-4">
+                    <button
+                      onClick={() => setShowAllTransactions(true)}
+                      className="flex items-center gap-2 text-teal-600 hover:text-teal-700 font-medium text-sm py-2 px-4 rounded-lg hover:bg-teal-50 transition-colors"
+                    >
+                      <Eye className="w-4 h-4" />
+                      View All Transactions ({allTransactions.length})
+                      <ArrowDown className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
                 
-                {products.filter(p => p.sales && p.sales.length > 0).length === 0 && (
+                {allTransactions.length === 0 && (
                   <div className="text-center py-8">
                     <ShoppingCart className="w-12 h-12 mx-auto mb-3 text-gray-300" />
                     <p className="text-gray-500">No recent sales found</p>
@@ -589,6 +609,98 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+
+        {/* All Transactions Modal */}
+        {showAllTransactions && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">
+                    <ShoppingCart className="w-4 h-4 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">All Transactions</h3>
+                  <span className="bg-gray-100 text-gray-600 text-sm px-2 py-1 rounded-full">
+                    {allTransactions.length} total
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowAllTransactions(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-6 max-h-[calc(90vh-140px)] overflow-y-auto">
+                {allTransactions.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <ShoppingCart className="w-16 h-16 text-gray-300 mb-4" />
+                    <p className="text-gray-500 text-lg mb-2">No transactions found</p>
+                    <p className="text-gray-400 text-sm">Start by recording your first sale</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {allTransactions.map((sale, index) => (
+                      <div key={`${sale.productId}-${index}`} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between mb-2">
+                            <h4 className="font-medium text-gray-900">{sale.productName}</h4>
+                            <span className="bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full">
+                              Sale #{index + 1}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
+                            <p className="text-gray-600">
+                              <span className="font-medium">Quantity:</span> {sale.quantity} units
+                            </p>
+                            <p className="text-gray-600">
+                              <span className="font-medium">Price:</span> {formatCurrency(sale.price)}
+                            </p>
+                            <p className="text-gray-600">
+                              <span className="font-medium">Total:</span> {formatCurrency(sale.amountMade)}
+                            </p>
+                          </div>
+                          <p className="text-xs text-gray-400 mt-2">
+                            {new Date(sale.date).toLocaleDateString('en-US', {
+                              weekday: 'short',
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric'
+                            })} at {new Date(sale.date).toLocaleTimeString('en-US', {
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </p>
+                        </div>
+                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center ml-4">
+                          <Banknote className="w-5 h-5 text-green-600" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Footer */}
+              <div className="border-t border-gray-200 p-4 bg-gray-50">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-gray-600">
+                    Total Revenue: <span className="font-semibold text-gray-900">{formatCurrency(totalRevenue)}</span>
+                  </div>
+                  <button
+                    onClick={() => setShowAllTransactions(false)}
+                    className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Sale Recording Modal */}
         {showSaleForm && (

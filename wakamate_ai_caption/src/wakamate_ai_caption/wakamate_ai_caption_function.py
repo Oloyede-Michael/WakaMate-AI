@@ -26,7 +26,7 @@ class WakamateAiCaptionFunctionConfig(FunctionBaseConfig, name="wakamate_ai_capt
     description: str = Field(default="AI-Powered Social Media Caption Generator")
     max_history: int = Field(default=15, description="Maximum conversation history")
     api_base_url: str = Field(default="http://localhost:1050", description="Wakamate API base URL")
-    auth_token: Optional[str] = Field(default="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OGUzMmMyMDgxOGY4ZjI3MzU0MzczMyIsImlhdCI6MTc1NTY4MzE4MywiZXhwIjoxNzU2Mjg3OTgzfQ.Blskf_LmiE-ox5h4X39CHrbwPMXdnQtocc3RoznlBD0", description="Authentication token for API")
+    auth_token: Optional[str] = Field(default="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OTIzNWRkZjFkYTA5Yzc3ODI2YWE2ZCIsImlhdCI6MTc1NzM1ODI4NywiZXhwIjoxNzU3OTYzMDg3fQ.u1cQBlLwjGd67rwTlz0bq7JR0vra7jHOAz8Vy5olI9k", description="Authentication token for API")
 
 
 # API Configuration
