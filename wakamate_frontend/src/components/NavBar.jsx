@@ -14,8 +14,8 @@ const NavBar = () => {
       <div className="w-full fixed top-0 z-50  text-white">
         <div className='flex justify-between items-center px-4 sm:px-5 py-4 sm:py-7'>
           {/* Logo */}
-          <Link to="/" className='BigFont z-10 text-lg sm:text-xl md:text-2xl'>
-            WAKAMATE
+          <Link to="/" className='BigFont z-10 text-lg sm:text-xl md:text-3xl'>
+            W.
           </Link>
           
           {/* Desktop Navigation */}

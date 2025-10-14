@@ -1,4 +1,5 @@
 import React from 'react'
+import 'boxicons/css/boxicons.min.css';
   import BlurText from "./BlurText";
 import { motion } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';

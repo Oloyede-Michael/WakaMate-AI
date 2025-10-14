@@ -19,7 +19,7 @@ const Home = () => {
         transition={{ duration: 0.5, delay: 0.3 }}
         className=' sm:text-[7em] text-[4em] md:text-[9em] lg:text-[12em] BigFont item-center mx-auto'>WAKAMATE
         </motion.div>
-        <h2 className=' items-center text-center'>Plan routes, track sales, restock on time and boost your business all in one  smart AI,<br /> for small vendors and everyday hustlers </h2>
+        <h2 className=' items-center -mt-10 text-center'>Plan routes, track sales, restock on time and boost your business all in one  smart AI,<br /> for small vendors and everyday hustlers </h2>
        <a 
           href="/register"
           className="relative group overflow-hidden border-2 font-semibold text-black rounded-br-3xl rounded-tl-3xl text-xl border-green-500 py-4 mt-5 px-9 bg-green-500 transition-transform duration-300 hover:scale-105"
