@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import PhoneSection from './PhoneSection';
 import Testimonial from './Testimonial';
 import FAQ from './FAQ';
-import dashboard from '../assets/dashboard.png';
 
 const Home = () => {
   return (
@@ -30,8 +29,8 @@ const Home = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-700 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
         </a>
       </div>
-      <div className='md:px-0 px-4'>
-        <img src={dashboard} alt=""  className='w-200  mx-auto  rounded-2xl'/>
+      <div className=' px-4'>
+        <img src="/images/dashboard.png" alt=""  className='w-200  mx-auto  rounded-2xl'/>
       </div>
       <div className='px-10 pb-20 pt-45'>
         <h1 className='text-lg text-white/70'>Your Everyday Business Assistant</h1>
