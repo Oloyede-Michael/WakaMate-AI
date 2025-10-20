@@ -2,7 +2,7 @@
 html, body {
   height: 100%;
   margin: 0;
-  background-color: #60e557; /* Tailwind's gray-100 */
+  background-color:#18181B; /* Tailwind's gray-100 */
 }
 /* Roboto Condensed */
 @font-face {
