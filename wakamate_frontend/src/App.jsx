@@ -94,8 +94,8 @@ function App() {
     path === "/caption-generator";
 
   return (
-    <div className="">
-      <div className="relative">
+    <div className="w-full overflow-x-hidden">
+      <div className="">
          {!hideNavFooter && <Navbar />}
        </div>
       <Routes>

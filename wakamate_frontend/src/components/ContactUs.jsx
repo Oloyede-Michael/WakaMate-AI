@@ -41,7 +41,7 @@ const ContactUs = () => {
             </button>
           </form>
                 {/* Right Side - Contact Info */}
-                <section className='pt-10'>
+                <section className='py-10 '>
                 <div className="w-full text-white">
                   <h2 className="text-xl font-medium mb-4">Get in touch</h2>
                   <a

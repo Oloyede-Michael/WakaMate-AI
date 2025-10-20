@@ -10,7 +10,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className='absolute top-0'>
+    <div className='absolute top-0 '>
       <div className="w-full fixed top-0 z-50  text-white">
         <div className='flex justify-between items-center px-4 sm:px-5 py-4 sm:py-7'>
           {/* Logo */}
@@ -78,7 +78,7 @@ const NavBar = () => {
               transition={{ duration: 0.3 }}
               className="md:hidden bg-zinc-900 absolute top-0 w-full   backdrop-blur-md border-t border-white/20"
             >
-              <div className="flex flex-col border-2 space-y-4 px-4 py-40 SmallFont">
+              <div className="flex flex-col  space-y-4 px-4 py-40 SmallFont">
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
