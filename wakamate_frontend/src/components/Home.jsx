@@ -30,7 +30,7 @@ const Home = () => {
         </a>
       </div>
       <div className=' px-4'>
-        <img src="/images/dashboard.png" alt=""  className='w-200  mx-auto  rounded-2xl'/>
+        <img src="/images/dashboard.jpg" alt=""  className='w-200  mx-auto  rounded-2xl'/>
       </div>
       <div className='px-10 pb-20 pt-45'>
         <h1 className='text-lg text-white/70'>Your Everyday Business Assistant</h1>
