@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-// 👇 FloatingInput Component (with eye toggle support)
+// FloatingInput Component
 const FloatingInput = ({
   id,
   label,
@@ -100,7 +100,6 @@ export default function Login() {
 
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-      alert("Login successful! Redirecting to dashboard...");
       navigate("/dashboard");
     } catch (err) {
       console.error("Login error:", err);
@@ -123,9 +122,6 @@ export default function Login() {
           <div className="hidden lg:flex flex-col flex-1 max-w-md">
             <div className="mb-6">
               <span className="font-extrabold text-3xl text-green-500 flex items-center gap-3">
-                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                  <i className="fas fa-brain text-white text-sm"></i>
-                </div>
                 WAKAMATE AI
               </span>
             </div>

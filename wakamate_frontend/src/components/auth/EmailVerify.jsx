@@ -159,9 +159,6 @@ export default function EmailVerify() {
           <div className="hidden lg:flex flex-col flex-1 max-w-md">
             <div className="mb-6">
               <span className="font-extrabold text-3xl text-green-500 flex items-center gap-3">
-                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                  <i className="fas fa-brain text-white text-sm"></i>
-                </div>
                 WAKAMATE AI
               </span>
             </div>
@@ -270,7 +267,7 @@ export default function EmailVerify() {
                   <button
                     type="button"
                     onClick={handleBackToLogin}
-                    className="text-gray-600 hover:text-purple-600 text-sm font-medium underline underline-offset-2 transition-colors"
+                    className="text-gray-600 hover:text-green-600 text-sm font-medium underline underline-offset-2 transition-colors"
                   >
                     ← Back to Login
                   </button>

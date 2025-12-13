@@ -285,36 +285,36 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-zinc-900 flex items-center justify-center">
         <div className="flex items-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
-          <p className="text-gray-600">Loading dashboard...</p>
+          <Loader2 className="w-8 h-8 animate-spin text-green-500" />
+          <p className="text-gray-300">Loading dashboard...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-zinc-900 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+          <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
             👋 Good Morning{user?.firstName ? `, ${user.firstName}!` : ', Hustler!'}
           </h1>
-          <p className="text-gray-600 text-lg">Let's make today profitable. Here's your business overview:</p>
+          <p className="text-gray-400 text-lg">Let's make today profitable. Here's your business overview:</p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+          <div className="bg-red-900/20 border border-red-700 rounded-lg p-4 mb-6">
             <div className="flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-red-600" />
-              <p className="text-red-800">{error}</p>
+              <AlertTriangle className="w-5 h-5 text-red-500" />
+              <p className="text-red-400">{error}</p>
               <button
                 onClick={() => setError(null)}
-                className="ml-auto text-red-600 hover:text-red-800"
+                className="ml-auto text-red-400 hover:text-red-300"
               >
                 ×
               </button>
@@ -325,25 +325,25 @@ export default function Dashboard() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Today's Sales */}
-          <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+          <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6">
             <div className="mb-3">
               <div className="flex items-center gap-2 mb-1">
-                <p className="text-green-600 font-medium text-sm">Today's Sales</p>
+                <p className="text-gray-400 font-medium text-sm">Today's Sales</p>
                 <Banknote className="w-4 h-4 text-green-500" />
               </div>
-              <p className="text-3xl font-bold text-gray-900">{formatCurrency(todaysSales)}</p>
-              <p className="text-sm text-green-600 mt-1">Profit: {formatCurrency(Math.round(todaysSales * 0.3))}</p>
+              <p className="text-3xl font-bold text-white">{formatCurrency(todaysSales)}</p>
+              <p className="text-sm text-green-500 mt-1">Profit: {formatCurrency(Math.round(todaysSales * 0.3))}</p>
             </div>
           </div>
 
           {/* Total Products */}
-          <div className="bg-purple-50 border border-purple-200 rounded-xl p-6">
+          <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <p className="text-purple-600 font-medium text-sm mb-1">Total Products</p>
-                <p className="text-3xl font-bold text-gray-900">{totalProducts}</p>
+                <p className="text-gray-400 font-medium text-sm mb-1">Total Products</p>
+                <p className="text-3xl font-bold text-white">{totalProducts}</p>
                 {lowStockItems.length > 0 && (
-                  <p className="text-sm text-orange-600 mt-1 flex items-center gap-1">
+                  <p className="text-sm text-orange-500 mt-1 flex items-center gap-1">
                     <AlertTriangle className="w-3 h-3" />
                     {lowStockItems.length} low stock
                   </p>
@@ -354,24 +354,24 @@ export default function Dashboard() {
           </div>
 
           {/* Pending Deliveries */}
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+          <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <p className="text-blue-600 font-medium text-sm mb-1">Pending Deliveries</p>
-                <p className="text-3xl font-bold text-gray-900">{pendingDeliveries}</p>
-                <p className="text-sm text-blue-600 mt-1">Ready to deliver</p>
+                <p className="text-gray-400 font-medium text-sm mb-1">Pending Deliveries</p>
+                <p className="text-3xl font-bold text-white">{pendingDeliveries}</p>
+                <p className="text-sm text-blue-400 mt-1">Ready to deliver</p>
               </div>
               <Truck className="w-8 h-8 text-blue-500" />
             </div>
           </div>
 
           {/* Total Revenue */}
-          <div className="bg-orange-50 border border-orange-200 rounded-xl p-6">
+          <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <p className="text-orange-600 font-medium text-sm mb-1">Total Revenue</p>
-                <p className="text-3xl font-bold text-gray-900">{formatCurrency(totalRevenue)}</p>
-                <p className="text-sm text-orange-600 mt-1">All time</p>
+                <p className="text-gray-400 font-medium text-sm mb-1">Total Revenue</p>
+                <p className="text-3xl font-bold text-white">{formatCurrency(totalRevenue)}</p>
+                <p className="text-sm text-orange-500 mt-1">All time</p>
               </div>
               <TrendingUp className="w-8 h-8 text-orange-500" />
             </div>
@@ -379,61 +379,61 @@ export default function Dashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
               <div className="w-4 h-4 border-2 border-white rounded-full"></div>
             </div>
-            <h2 className="text-xl font-semibold text-gray-900">Quick Actions</h2>
+            <h2 className="text-xl font-semibold text-white">Quick Actions</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Plan Route */}
-            <Link to="delivery" className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left">
+            <Link to="delivery" className="bg-zinc-700 border border-zinc-600 rounded-xl p-4 hover:bg-zinc-600 transition-all duration-200 cursor-pointer group text-left">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
                   <Truck className="w-6 h-6 text-white" />
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Plan Route</h3>
-              <p className="text-sm text-gray-600">Optimize your delivery route</p>
+              <h3 className="font-semibold text-white mb-1">Plan Route</h3>
+              <p className="text-sm text-gray-400">Optimize your delivery route</p>
             </Link>
 
             {/* Add Stock */}
-            <Link to="inventory" className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left">
+            <Link to="inventory" className="bg-zinc-700 border border-zinc-600 rounded-xl p-4 hover:bg-zinc-600 transition-all duration-200 cursor-pointer group text-left">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
                   <Package className="w-6 h-6 text-white" />
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Add Stock</h3>
-              <p className="text-sm text-gray-600">Update your inventory</p>
+              <h3 className="font-semibold text-white mb-1">Add Stock</h3>
+              <p className="text-sm text-gray-400">Update your inventory</p>
             </Link>
 
             {/* Generate Caption */}
-            <Link to="ai-caption" className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left">
+            <Link to="ai-caption" className="bg-zinc-700 border border-zinc-600 rounded-xl p-4 hover:bg-zinc-600 transition-all duration-200 cursor-pointer group text-left">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center">
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Generate Caption</h3>
-              <p className="text-sm text-gray-600">Create catchy posts</p>
+              <h3 className="font-semibold text-white mb-1">Generate Caption</h3>
+              <p className="text-sm text-gray-400">Create catchy posts</p>
             </Link>
 
             {/* Record Sale */}
-            <Link to="profitNloss" className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all duration-200 cursor-pointer group text-left">
+            <Link to="profitNloss" className="bg-zinc-700 border border-zinc-600 rounded-xl p-4 hover:bg-zinc-600 transition-all duration-200 cursor-pointer group text-left">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
                   <Banknote className="w-6 h-6 text-white" />
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Record Sale</h3>
-              <p className="text-sm text-gray-600">Log your latest sale</p>
+              <h3 className="font-semibold text-white mb-1">Record Sale</h3>
+              <p className="text-sm text-gray-400">Log your latest sale</p>
             </Link>
           </div>
         </div>
@@ -441,11 +441,11 @@ export default function Dashboard() {
         {/* Bottom Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Recent Sales */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <ShoppingCart className="w-5 h-5 text-teal-500" />
-                <h2 className="text-xl font-semibold text-gray-900">Recent Sales</h2>
+                <ShoppingCart className="w-5 h-5 text-green-500" />
+                <h2 className="text-xl font-semibold text-white">Recent Sales</h2>
               </div>
               <button
                 onClick={() => setShowSaleForm(true)}
@@ -458,10 +458,10 @@ export default function Dashboard() {
             
             {allTransactions.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12">
-                <div className="w-20 h-20 text-gray-300 mb-4">
+                <div className="w-20 h-20 text-gray-600 mb-4">
                   <ShoppingCart className="w-full h-full" />
                 </div>
-                <p className="text-gray-500 text-lg mb-6">No sales data available</p>
+                <p className="text-gray-400 text-lg mb-6">No sales data available</p>
                 <button
                   onClick={loadDashboardData}
                   className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
@@ -473,18 +473,18 @@ export default function Dashboard() {
               <div className="space-y-3">
                 {/* Display only first 3 transactions */}
                 {allTransactions.slice(0, 3).map((sale, index) => (
-                  <div key={`${sale.productId}-${index}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div key={`${sale.productId}-${index}`} className="flex items-center justify-between p-3 bg-zinc-700 rounded-lg">
                     <div>
-                      <p className="font-medium text-gray-900">{sale.productName}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-white">{sale.productName}</p>
+                      <p className="text-sm text-gray-400">
                         {sale.quantity} units × {formatCurrency(sale.price)} = {formatCurrency(sale.amountMade)}
                       </p>
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-gray-500">
                         {new Date(sale.date).toLocaleDateString()} at {new Date(sale.date).toLocaleTimeString()}
                       </p>
                     </div>
-                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                      <Banknote className="w-4 h-4 text-green-600" />
+                    <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+                      <Banknote className="w-4 h-4 text-green-500" />
                     </div>
                   </div>
                 ))}
@@ -494,7 +494,7 @@ export default function Dashboard() {
                   <div className="flex justify-center mt-4">
                     <button
                       onClick={() => setShowAllTransactions(true)}
-                      className="flex items-center gap-2 text-teal-600 hover:text-teal-700 font-medium text-sm py-2 px-4 rounded-lg hover:bg-teal-50 transition-colors"
+                      className="flex items-center gap-2 text-green-500 hover:text-green-400 font-medium text-sm py-2 px-4 rounded-lg hover:bg-zinc-700 transition-colors"
                     >
                       <Eye className="w-4 h-4" />
                       View All Transactions ({allTransactions.length})
@@ -505,8 +505,8 @@ export default function Dashboard() {
                 
                 {allTransactions.length === 0 && (
                   <div className="text-center py-8">
-                    <ShoppingCart className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                    <p className="text-gray-500">No recent sales found</p>
+                    <ShoppingCart className="w-12 h-12 mx-auto mb-3 text-gray-600" />
+                    <p className="text-gray-400">No recent sales found</p>
                     <button
                       onClick={() => setShowSaleForm(true)}
                       className="mt-3 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
@@ -520,33 +520,33 @@ export default function Dashboard() {
           </div>
 
           {/* Stock Alerts */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6">
             <div className="flex items-center gap-3 mb-6">
               <AlertTriangle className="w-5 h-5 text-orange-500" />
-              <h2 className="text-xl font-semibold text-gray-900">Stock Alerts</h2>
+              <h2 className="text-xl font-semibold text-white">Stock Alerts</h2>
             </div>
 
             <div className="space-y-4">
               {lowStockItems.length > 0 ? (
                 <>
                   {lowStockItems.map((item) => (
-                    <div key={item._id} className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                    <div key={item._id} className="bg-zinc-700 border border-zinc-600 rounded-lg p-4">
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-medium text-gray-900">{item.name}</h3>
+                        <h3 className="font-medium text-white">{item.name}</h3>
                         <div className="flex items-center gap-2">
                           {item.stock === 0 ? (
-                            <span className="bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">
+                            <span className="bg-red-900/50 text-red-400 text-xs font-medium px-2 py-1 rounded-full">
                               Out of Stock
                             </span>
                           ) : (
-                            <span className="bg-orange-100 text-orange-700 text-xs font-medium px-2 py-1 rounded-full">
+                            <span className="bg-orange-900/50 text-orange-400 text-xs font-medium px-2 py-1 rounded-full">
                               Low Stock
                             </span>
                           )}
                         </div>
                       </div>
                       <div className="flex items-center justify-between">
-                        <p className="text-orange-600 text-sm">
+                        <p className="text-orange-400 text-sm">
                           {item.stock === 0 ? 'Completely out of stock' : `Only ${item.stock} left`}
                         </p>
                         <p className="text-xs text-gray-500">
@@ -554,7 +554,7 @@ export default function Dashboard() {
                         </p>
                       </div>
                       <div className="mt-3">
-                        <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="w-full bg-zinc-600 rounded-full h-2">
                           <div 
                             className={`h-2 rounded-full ${
                               item.stock === 0 ? 'bg-red-500' : 
@@ -577,16 +577,16 @@ export default function Dashboard() {
                     </div>
                   ))}
                   
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-4">
+                  <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-4 mt-4">
                     <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="w-4 h-4 text-yellow-600" />
-                      <h4 className="font-medium text-yellow-800">Action Required</h4>
+                      <AlertTriangle className="w-4 h-4 text-yellow-500" />
+                      <h4 className="font-medium text-yellow-400">Action Required</h4>
                     </div>
-                    <p className="text-yellow-700 text-sm mb-3">
+                    <p className="text-yellow-300 text-sm mb-3">
                       You have {lowStockItems.length} item{lowStockItems.length !== 1 ? 's' : ''} that need restocking.
                     </p>
                     <Link to="inventory">
-                      <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                      <button className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         Restock Items
                       </button>
                     </Link>
@@ -594,16 +594,16 @@ export default function Dashboard() {
                 </>
               ) : (
                 <div className="text-center py-8">
-                  <Package className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                  <p className="text-gray-500 mb-2">All products are well stocked!</p>
-                  <p className="text-sm text-gray-400">Keep up the good work managing your inventory.</p>
+                  <Package className="w-12 h-12 mx-auto mb-3 text-gray-600" />
+                  <p className="text-gray-400 mb-2">All products are well stocked!</p>
+                  <p className="text-sm text-gray-500">Keep up the good work managing your inventory.</p>
                 </div>
               )}
 
               <Link to="./inventory">
-                <button className="w-full mt-4 flex items-center justify-between p-4 text-left hover:bg-gray-50 rounded-lg transition-colors group">
-                  <span className="font-medium text-gray-900">Manage Inventory</span>
-                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                <button className="w-full mt-4 flex items-center justify-between p-4 text-left hover:bg-zinc-700 rounded-lg transition-colors group">
+                  <span className="font-medium text-white">Manage Inventory</span>
+                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
                 </button>
               </Link>
             </div>
@@ -612,22 +612,22 @@ export default function Dashboard() {
 
         {/* All Transactions Modal */}
         {showAllTransactions && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl">
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-zinc-800 border border-zinc-700 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl">
               {/* Modal Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between p-6 border-b border-zinc-700">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
                     <ShoppingCart className="w-4 h-4 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900">All Transactions</h3>
-                  <span className="bg-gray-100 text-gray-600 text-sm px-2 py-1 rounded-full">
+                  <h3 className="text-xl font-semibold text-white">All Transactions</h3>
+                  <span className="bg-zinc-700 text-gray-300 text-sm px-2 py-1 rounded-full">
                     {allTransactions.length} total
                   </span>
                 </div>
                 <button
                   onClick={() => setShowAllTransactions(false)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  className="text-gray-400 hover:text-gray-300 transition-colors"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -637,33 +637,33 @@ export default function Dashboard() {
               <div className="p-6 max-h-[calc(90vh-140px)] overflow-y-auto">
                 {allTransactions.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-12">
-                    <ShoppingCart className="w-16 h-16 text-gray-300 mb-4" />
-                    <p className="text-gray-500 text-lg mb-2">No transactions found</p>
-                    <p className="text-gray-400 text-sm">Start by recording your first sale</p>
+                    <ShoppingCart className="w-16 h-16 text-gray-600 mb-4" />
+                    <p className="text-gray-400 text-lg mb-2">No transactions found</p>
+                    <p className="text-gray-500 text-sm">Start by recording your first sale</p>
                   </div>
                 ) : (
                   <div className="space-y-3">
                     {allTransactions.map((sale, index) => (
-                      <div key={`${sale.productId}-${index}`} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                      <div key={`${sale.productId}-${index}`} className="flex items-center justify-between p-4 bg-zinc-700 rounded-lg hover:bg-zinc-600 transition-colors">
                         <div className="flex-1">
                           <div className="flex items-center justify-between mb-2">
-                            <h4 className="font-medium text-gray-900">{sale.productName}</h4>
-                            <span className="bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full">
+                            <h4 className="font-medium text-white">{sale.productName}</h4>
+                            <span className="bg-green-500/20 text-green-400 text-xs font-medium px-2 py-1 rounded-full">
                               Sale #{index + 1}
                             </span>
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
-                            <p className="text-gray-600">
+                            <p className="text-gray-400">
                               <span className="font-medium">Quantity:</span> {sale.quantity} units
                             </p>
-                            <p className="text-gray-600">
+                            <p className="text-gray-400">
                               <span className="font-medium">Price:</span> {formatCurrency(sale.price)}
                             </p>
-                            <p className="text-gray-600">
+                            <p className="text-gray-400">
                               <span className="font-medium">Total:</span> {formatCurrency(sale.amountMade)}
                             </p>
                           </div>
-                          <p className="text-xs text-gray-400 mt-2">
+                          <p className="text-xs text-gray-500 mt-2">
                             {new Date(sale.date).toLocaleDateString('en-US', {
                               weekday: 'short',
                               year: 'numeric',
@@ -675,8 +675,8 @@ export default function Dashboard() {
                             })}
                           </p>
                         </div>
-                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center ml-4">
-                          <Banknote className="w-5 h-5 text-green-600" />
+                        <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center ml-4">
+                          <Banknote className="w-5 h-5 text-green-500" />
                         </div>
                       </div>
                     ))}
@@ -685,14 +685,14 @@ export default function Dashboard() {
               </div>
 
               {/* Modal Footer */}
-              <div className="border-t border-gray-200 p-4 bg-gray-50">
+              <div className="border-t border-zinc-700 p-4 bg-zinc-800">
                 <div className="flex items-center justify-between">
-                  <div className="text-sm text-gray-600">
-                    Total Revenue: <span className="font-semibold text-gray-900">{formatCurrency(totalRevenue)}</span>
+                  <div className="text-sm text-gray-400">
+                    Total Revenue: <span className="font-semibold text-white">{formatCurrency(totalRevenue)}</span>
                   </div>
                   <button
                     onClick={() => setShowAllTransactions(false)}
-                    className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                    className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
                   >
                     Close
                   </button>
@@ -704,10 +704,10 @@ export default function Dashboard() {
 
         {/* Sale Recording Modal */}
         {showSaleForm && (
-          <div className="fixed inset-0 bg-white/10 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl">
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-900">Record New Sale</h3>
+                <h3 className="text-lg font-semibold text-white">Record New Sale</h3>
                 <button
                   onClick={() => {
                     setShowSaleForm(false);
@@ -715,7 +715,7 @@ export default function Dashboard() {
                     setSaleQuantity('');
                     setSalePrice('');
                   }}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  className="text-gray-400 hover:text-gray-300 transition-colors"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -724,7 +724,7 @@ export default function Dashboard() {
               <div className="space-y-4">
                 {/* Product Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Select Product *
                   </label>
                   <select
@@ -737,7 +737,7 @@ export default function Dashboard() {
                         setSalePrice(product.sellingPrice.toString());
                       }
                     }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-colors"
+                    className="w-full px-3 py-2 bg-zinc-700 border border-zinc-600 text-white rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-colors"
                   >
                     <option value="">Choose a product...</option>
                     {products.filter(p => p.stock > 0).map((product) => (
@@ -747,13 +747,13 @@ export default function Dashboard() {
                     ))}
                   </select>
                   {products.filter(p => p.stock > 0).length === 0 && (
-                    <p className="text-sm text-red-600 mt-1">No products with stock available</p>
+                    <p className="text-sm text-red-400 mt-1">No products with stock available</p>
                   )}
                 </div>
 
                 {/* Quantity */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Quantity *
                   </label>
                   <input
@@ -763,10 +763,10 @@ export default function Dashboard() {
                     placeholder="Enter quantity sold"
                     min="1"
                     max={selectedProduct ? products.find(p => p._id === selectedProduct)?.stock : undefined}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-colors"
+                    className="w-full px-3 py-2 bg-zinc-700 border border-zinc-600 text-white rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-colors"
                   />
                   {selectedProduct && (
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-400 mt-1">
                       Available stock: {products.find(p => p._id === selectedProduct)?.stock}
                     </p>
                   )}
@@ -774,7 +774,7 @@ export default function Dashboard() {
 
                 {/* Sale Price */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Sale Price (₦) *
                   </label>
                   <input
@@ -784,14 +784,14 @@ export default function Dashboard() {
                     placeholder="Enter sale price per unit"
                     min="0"
                     step="0.01"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-colors"
+                    className="w-full px-3 py-2 bg-zinc-700 border border-zinc-600 text-white rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-colors"
                   />
                 </div>
 
                 {/* Total Amount Display */}
                 {saleQuantity && salePrice && (
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                    <p className="text-sm text-green-700">
+                  <div className="bg-green-500/20 border border-green-500 rounded-lg p-3">
+                    <p className="text-sm text-green-400">
                       Total Amount: <span className="font-semibold">{formatCurrency(parseFloat(saleQuantity) * parseFloat(salePrice))}</span>
                     </p>
                   </div>
@@ -802,7 +802,7 @@ export default function Dashboard() {
                 <button
                   onClick={handleRecordSale}
                   disabled={!selectedProduct || !saleQuantity || !salePrice || saleLoading}
-                  className="flex-1 bg-green-500 hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 bg-green-500 hover:bg-green-600 disabled:bg-zinc-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                 >
                   {saleLoading ? (
                     <>
@@ -824,7 +824,7 @@ export default function Dashboard() {
                     setSalePrice('');
                   }}
                   disabled={saleLoading}
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors"
+                  className="flex-1 bg-zinc-700 hover:bg-zinc-600 disabled:opacity-50 text-white px-4 py-2 rounded-lg font-medium transition-colors"
                 >
                   Cancel
                 </button>
